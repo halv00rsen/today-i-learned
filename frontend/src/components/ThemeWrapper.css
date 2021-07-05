@@ -1,0 +1,9 @@
+[data-theme='light'] {
+  --theme-background-color: white;
+  --default-border-color: gray;
+}
+
+[data-theme='dark'] {
+  --theme-background-color: gray;
+  --default-border-color: black;
+}

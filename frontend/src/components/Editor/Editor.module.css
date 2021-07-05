@@ -1,0 +1,7 @@
+.editor {
+  display: flex;
+}
+
+.editor > * {
+  width: 48%;
+}
