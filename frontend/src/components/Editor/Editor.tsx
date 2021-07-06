@@ -17,6 +17,7 @@ export const Editor = ({ onChange, disabled = false }: Props) => {
   return (
     <div className={styles.editor}>
       <textarea
+        className={styles.textarea}
         disabled={disabled}
         value={markdown}
         onChange={(e) => updateContent(e.target.value)}

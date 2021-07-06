@@ -1,5 +1,7 @@
 .post {
+  overflow: auto;
   border: 1px solid var(--default-border-color);
   padding: var(--default-padding);
   margin: var(--default-margin);
+  word-break: break-all;
 }

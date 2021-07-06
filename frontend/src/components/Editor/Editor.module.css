@@ -1,7 +1,5 @@
-.editor {
-  display: flex;
-}
-
-.editor > * {
-  width: 48%;
+.textarea {
+  resize: vertical;
+  width: 100%;
+  min-height: 50%;
 }

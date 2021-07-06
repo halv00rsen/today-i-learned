@@ -1,0 +1,8 @@
+.splitView {
+  display: flex;
+  justify-content: space-between;
+}
+
+.splitView > * {
+  width: 48%;
+}

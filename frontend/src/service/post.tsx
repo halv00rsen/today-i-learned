@@ -14,14 +14,15 @@ const mapToPost = (
   partialPost: Partial<StoredPost>,
   id: string
 ): StoredPost => {
-  const { content, ownerId, subtitle, title } = partialPost;
-  if (content && ownerId && title) {
+  const { content, ownerId, subtitle, title, tags } = partialPost;
+  if (content && ownerId && title && tags) {
     return {
       id,
       content,
       ownerId,
       title,
       subtitle,
+      tags,
     };
   }
   throw new Error('Post missing data');
