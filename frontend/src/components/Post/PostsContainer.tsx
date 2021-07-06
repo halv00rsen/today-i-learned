@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { query, onSnapshot } from 'firebase/firestore';
+import { query, getDocs } from 'firebase/firestore';
 import { StoredPost } from '../../utils/types/domain';
 import { Post } from './Post';
 import {
@@ -28,24 +28,14 @@ export const PostsContainer = () => {
 
   useEffect(() => {
     const allPosts = query(postsCollection);
-    const unsubscribe = onSnapshot(
-      allPosts,
-      (snapshot) => {
-        try {
-          const posts = snapshot.docs.map(mapSnapshotToPosts);
-          setPostStatus({ type: 'LOADED', posts });
-        } catch {
-          setPostStatus({ type: 'ERROR' });
-        }
-      },
-      (err) => {
-        console.log(err);
+    getDocs(allPosts)
+      .then((data) => {
+        const posts = data.docs.map(mapSnapshotToPosts);
+        setPostStatus({ type: 'LOADED', posts });
+      })
+      .catch((err) => {
         setPostStatus({ type: 'ERROR' });
-      }
-    );
-    return () => {
-      unsubscribe();
-    };
+      });
   }, []);
 
   if (postStatus.type === 'LOADING') {
