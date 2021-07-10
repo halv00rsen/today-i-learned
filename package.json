@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "firebase": "cd firebase && firebase emulators:start",
+    "frontend": "cd frontend && npm run start"
+  }
+}

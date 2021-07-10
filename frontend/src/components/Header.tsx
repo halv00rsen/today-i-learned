@@ -2,7 +2,7 @@ import { signOut } from '@firebase/auth';
 import React from 'react';
 import { useHistory } from 'react-router';
 import { firebaseAuth } from '../firebase';
-import { useUserStatus } from '../utils/useUserStatus';
+import { isAdmin, useUserStatus } from '../utils/useUserStatus';
 
 export const Header = () => {
   const userStatus = useUserStatus();
@@ -16,9 +16,11 @@ export const Header = () => {
           <button onClick={() => signOut(firebaseAuth)}>
             Logg ut
           </button>
-          <button onClick={() => history.push('/addPost')}>
-            Legg til post
-          </button>
+          {isAdmin(userStatus) && (
+            <button onClick={() => history.push('/addPost')}>
+              Legg til post
+            </button>
+          )}
         </div>
       )}
       {userStatus.type === 'UNAUTHENTICATED' && (

@@ -1,4 +1,5 @@
 .themeWrapper {
   height: 100%;
   background-color: var(--theme-background-color);
+  overflow: auto;
 }
