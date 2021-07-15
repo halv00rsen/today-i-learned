@@ -1,9 +1,11 @@
 [data-theme='light'] {
   --theme-background-color: white;
+  --theme-background-color-hover: rgb(212, 212, 212);
   --default-border-color: gray;
 }
 
 [data-theme='dark'] {
   --theme-background-color: gray;
+  --theme-background-color-hover: rgb(160, 160, 160);
   --default-border-color: black;
 }

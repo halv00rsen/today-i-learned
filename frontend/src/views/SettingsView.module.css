@@ -1,0 +1,19 @@
+.editable {
+  cursor: pointer;
+}
+
+.userEntry {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: var(--default-padding);
+  transition: 0.3s;
+}
+
+.userEntry + .userEntry {
+  border-top: 1px solid var(--default-border-color);
+}
+
+.userEntry:hover {
+  background-color: var(--theme-background-color-hover);
+}
