@@ -4,6 +4,7 @@ import { useSetTheme, useTheme } from '../components/ThemeWrapper';
 import { useUserStatus } from '../utils/useUserStatus';
 import styles from './SettingsView.module.css';
 import classNames from 'classnames';
+import { isNonEmptyArray } from '../utils/array';
 
 export const SettingsView = () => {
   const theme = useTheme();
@@ -49,7 +50,10 @@ const UserProfile = ({ user, roles }: UserProfileProps) => {
         <div>Epost</div> <div>{user.email}</div>
       </div>
       <div className={styles.userEntry}>
-        <div>Roles</div> <div>{roles.join(', ')}</div>
+        <div>Roles</div>
+        <div>
+          {isNonEmptyArray(roles) ? roles.join(', ') : 'Ingen'}
+        </div>
       </div>
     </>
   );
