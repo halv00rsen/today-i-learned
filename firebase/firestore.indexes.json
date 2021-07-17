@@ -1,4 +1,14 @@
 {
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "post",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "publishDate", "order": "DESCENDING" },
+        { "fieldPath": "ownerId", "order": "DESCENDING" },
+        { "fieldPath": "published", "order": "DESCENDING" }
+      ]
+    }
+  ],
   "fieldOverrides": []
 }
