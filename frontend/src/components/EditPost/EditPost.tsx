@@ -27,6 +27,10 @@ export const EditPost = ({
 
   const [tag, setTag] = useState('');
 
+  const [published, setPublished] = useState(
+    initialPost?.published || false
+  );
+
   const removeTag = (tag: string) => {
     setTags(tags.filter((t) => t !== tag));
   };
@@ -46,6 +50,7 @@ export const EditPost = ({
     tags,
     title,
     subtitle,
+    published,
   });
 
   return (
@@ -94,9 +99,18 @@ export const EditPost = ({
               ownerId: 'something',
               title,
               tags,
+              published,
             }}
           />
         </div>
+      </div>
+      <div>
+        Publiser posten
+        <input
+          type="checkbox"
+          checked={published}
+          onChange={(e) => setPublished(e.target.checked)}
+        />
       </div>
       <button
         onClick={() => onClick(getPost())}

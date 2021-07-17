@@ -10,10 +10,14 @@ service cloud.firestore {
         return request.auth != null && request.auth.uid == resource.data.ownerId;
       }
 
-      allow read;
+      function isPublishedPost() {
+        return resource.data.published;
+      }
+
+      allow read: if isPublishedPost() || isPostOwner() || isAdminUser();
       allow create: if isAdminUser() && request.auth.uid == request.resource.data.ownerId;
-      allow update: if isAdminUser() && isPostOwner();
-      allow delete: if isAdminUser();
+      allow update: if isPostOwner();
+      allow delete: if isAdminUser() || isPostOwner();
     }
   }
 }

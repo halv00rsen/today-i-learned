@@ -13,6 +13,7 @@ import { EditView } from './EditView';
 import { Home } from './Home';
 import { LoginView } from './LoginView';
 import { SettingsView } from './SettingsView';
+import { UserPostsView } from './UserPostsView';
 
 interface ISecureRoute {
   path: string;
@@ -50,7 +51,10 @@ export const AppRouter = () => {
           {(user) => <AddPostView user={user} />}
         </SecureRoute>
         <SecureRoute path="/edit">
-          {(user) => <EditView />}
+          {() => <EditView />}
+        </SecureRoute>
+        <SecureRoute path="/my-posts">
+          {(user) => <UserPostsView userId={user.uid} />}
         </SecureRoute>
         <Route path="/" exact>
           <Home />

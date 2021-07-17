@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { query, getDocs } from 'firebase/firestore';
 import { StoredPost } from '../../utils/types/domain';
 import { Post } from './Post';
-import {
-  mapSnapshotToPosts,
-  postsCollection,
-} from '../../service/post';
 import { useUserStatus } from '../../utils/useUserStatus';
+
+interface Props {
+  getPosts: () => Promise<StoredPost[]>;
+}
 
 type PostsStatus =
   | {
@@ -20,23 +19,23 @@ type PostsStatus =
       posts: StoredPost[];
     };
 
-export const PostsContainer = () => {
+export const PostsContainer = ({ getPosts }: Props) => {
   const userStatus = useUserStatus();
   const [postStatus, setPostStatus] = useState<PostsStatus>({
     type: 'LOADING',
   });
 
   useEffect(() => {
-    const allPosts = query(postsCollection);
-    getDocs(allPosts)
-      .then((data) => {
-        const posts = data.docs.map(mapSnapshotToPosts);
+    getPosts()
+      .then((posts) => {
+        console.log(posts);
         setPostStatus({ type: 'LOADED', posts });
       })
       .catch((err) => {
+        console.log(err);
         setPostStatus({ type: 'ERROR' });
       });
-  }, []);
+  }, [getPosts]);
 
   if (postStatus.type === 'LOADING') {
     return <div>Laster poster...</div>;

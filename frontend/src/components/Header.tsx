@@ -21,6 +21,9 @@ export const Header = () => {
               Legg til post
             </button>
           )}
+          <button onClick={() => history.push('/my-posts')}>
+            Mine poster
+          </button>
         </div>
       )}
       {userStatus.type === 'UNAUTHENTICATED' && (

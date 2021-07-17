@@ -5,8 +5,14 @@ import {
   DocumentSnapshot,
   setDoc,
   deleteDoc,
+  where,
 } from '@firebase/firestore';
-import { getDoc, updateDoc } from 'firebase/firestore';
+import {
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+} from 'firebase/firestore';
 import { firestore } from '../firebase';
 import { PartialPost, StoredPost } from '../utils/types/domain';
 
@@ -16,15 +22,24 @@ const mapToPost = (
   partialPost: Partial<StoredPost>,
   id: string
 ): StoredPost => {
-  const { content, ownerId, subtitle, title, tags } = partialPost;
-  if (content && ownerId && title && tags) {
+  const { content, ownerId, subtitle, title, tags, published } =
+    partialPost;
+  if (
+    content &&
+    ownerId &&
+    title &&
+    tags &&
+    published !== undefined
+  ) {
     return {
+      ...partialPost,
       id,
       content,
       ownerId,
       title,
       subtitle,
       tags,
+      published,
     };
   }
   throw new Error('Post missing data');
@@ -34,6 +49,7 @@ export const mapSnapshotToPosts = (
   document: DocumentSnapshot
 ): StoredPost => {
   const data = document.data();
+  console.log(data);
   if (!data) {
     throw new Error('Data is undefined!');
   }
@@ -75,4 +91,18 @@ export const getPost = async (
   const postRef = doc(postsCollection, postId);
   const snapshot = await getDoc(postRef);
   return mapSnapshotToPosts(snapshot);
+};
+
+export const getPublishedPosts = async () => {
+  const data = await getDocs(
+    query(postsCollection, where('published', '==', true))
+  );
+  return data.docs.map(mapSnapshotToPosts);
+};
+
+export const getPostsByOwner = async (userId: string) => {
+  const data = await getDocs(
+    query(postsCollection, where('ownerId', '==', userId))
+  );
+  return data.docs.map(mapSnapshotToPosts);
 };
