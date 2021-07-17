@@ -6,9 +6,13 @@ service cloud.firestore {
     }
 
     match /post/{document=**} {
+      function isPostOwner() {
+        return request.auth != null && request.auth.uid == resource.data.ownerId;
+      }
+
       allow read;
-      allow write: if isAdminUser();
-      allow update: if isAdminUser();
+      allow create: if isAdminUser() && request.auth.uid == request.resource.data.ownerId;
+      allow update: if isAdminUser() && isPostOwner();
       allow delete: if isAdminUser();
     }
   }

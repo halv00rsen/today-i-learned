@@ -2,9 +2,11 @@ import { User } from '@firebase/auth';
 import {
   collection,
   doc,
-  QueryDocumentSnapshot,
+  DocumentSnapshot,
   setDoc,
+  deleteDoc,
 } from '@firebase/firestore';
+import { getDoc, updateDoc } from 'firebase/firestore';
 import { firestore } from '../firebase';
 import { PartialPost, StoredPost } from '../utils/types/domain';
 
@@ -29,9 +31,12 @@ const mapToPost = (
 };
 
 export const mapSnapshotToPosts = (
-  document: QueryDocumentSnapshot
+  document: DocumentSnapshot
 ): StoredPost => {
   const data = document.data();
+  if (!data) {
+    throw new Error('Data is undefined!');
+  }
   const id = document.id;
   return mapToPost(data, id);
 };
@@ -49,4 +54,25 @@ export const storePost = async (post: PartialPost, user: User) => {
     );
   }
   return setDoc(doc(postsCollection), data);
+};
+
+export const deletePost = async (postId: string) => {
+  const postRef = doc(postsCollection, postId);
+  return await deleteDoc(postRef);
+};
+
+export const updatePost = async (
+  postId: string,
+  post: PartialPost
+) => {
+  const postRef = doc(postsCollection, postId);
+  return await updateDoc(postRef, post);
+};
+
+export const getPost = async (
+  postId: string
+): Promise<StoredPost> => {
+  const postRef = doc(postsCollection, postId);
+  const snapshot = await getDoc(postRef);
+  return mapSnapshotToPosts(snapshot);
 };

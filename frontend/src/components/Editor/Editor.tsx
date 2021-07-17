@@ -4,10 +4,15 @@ import styles from './Editor.module.css';
 interface Props {
   onChange?: (content: string) => void;
   disabled?: boolean;
+  initialValue?: string;
 }
 
-export const Editor = ({ onChange, disabled = false }: Props) => {
-  const [markdown, setMarkdown] = useState('');
+export const Editor = ({
+  onChange,
+  disabled = false,
+  initialValue,
+}: Props) => {
+  const [markdown, setMarkdown] = useState(initialValue ?? '');
 
   const updateContent = (content: string) => {
     setMarkdown(content);

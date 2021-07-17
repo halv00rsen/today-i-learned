@@ -50,7 +50,8 @@ export const PostsContainer = () => {
             <Post
               key={post.id}
               post={post}
-              displayEdit={
+              deletable={userStatus.type === 'AUTHENTICATED'}
+              editable={
                 userStatus.type === 'AUTHENTICATED' &&
                 userStatus.user.uid === post.ownerId
               }

@@ -9,6 +9,7 @@ import {
 import { Header } from '../components/Header';
 import { useUserStatus } from '../utils/useUserStatus';
 import { AddPostView } from './AddPostView';
+import { EditView } from './EditView';
 import { Home } from './Home';
 import { LoginView } from './LoginView';
 import { SettingsView } from './SettingsView';
@@ -47,6 +48,9 @@ export const AppRouter = () => {
         </Route>
         <SecureRoute path="/addPost">
           {(user) => <AddPostView user={user} />}
+        </SecureRoute>
+        <SecureRoute path="/edit">
+          {(user) => <EditView />}
         </SecureRoute>
         <Route path="/" exact>
           <Home />
