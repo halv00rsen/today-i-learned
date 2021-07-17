@@ -5,13 +5,13 @@ service cloud.firestore {
       return request.auth != null && "admin" in request.auth.token.roles;
     }
 
-    match /post/{document=**} {
+    match /post/{postId} {
       function isPostOwner() {
         return request.auth != null && request.auth.uid == resource.data.ownerId;
       }
 
       function isPublishedPost() {
-        return resource.data.published && resource.data.publishDate < request.time;
+        return resource.data.published;
       }
 
       allow read: if isPublishedPost() || isPostOwner() || isAdminUser();
