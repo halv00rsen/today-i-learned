@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore';
+
 export interface PartialPost {
   title: string;
   content: string;
@@ -13,6 +15,7 @@ export interface StoredPost {
   ownerId: string;
   tags: string[];
   published: boolean;
+  publishDate: Timestamp;
 
   subtitle?: string;
 }

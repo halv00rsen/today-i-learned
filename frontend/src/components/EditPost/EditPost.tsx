@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { PartialPost } from '../../utils/types/domain';
 import { Editor } from '../Editor/Editor';
@@ -99,7 +100,8 @@ export const EditPost = ({
               ownerId: 'something',
               title,
               tags,
-              published,
+              published: true,
+              publishDate: Timestamp.now(),
             }}
           />
         </div>

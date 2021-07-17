@@ -5,3 +5,7 @@
   margin: var(--default-margin);
   word-break: break-all;
 }
+
+.notPublished {
+  opacity: 0.5;
+}

@@ -5,6 +5,29 @@ import { StoredPost } from '../../utils/types/domain';
 import { Markdown } from '../Editor/Markdown';
 import { Tag } from '../Tag/Tag';
 import styles from './Post.module.css';
+import classNames from 'classnames';
+import { Timestamp } from 'firebase/firestore';
+
+type PublishStatus =
+  | 'NOT_PUBLISHED'
+  | 'PUBLISHED'
+  | 'FUTURE_PUBLISH';
+
+const getPublishStatus = ({
+  published,
+  publishDate,
+}: {
+  published: boolean;
+  publishDate: Timestamp;
+}): PublishStatus => {
+  if (!published) {
+    return 'NOT_PUBLISHED';
+  } else if (publishDate > Timestamp.now()) {
+    return 'FUTURE_PUBLISH';
+  } else {
+    return 'PUBLISHED';
+  }
+};
 
 type EditableStatus =
   | 'all'
@@ -73,8 +96,17 @@ export const Post = ({
       return 'none';
     }
   };
+  const publishStatus = getPublishStatus({
+    published: post.published,
+    publishDate: post.publishDate,
+  });
+  const publishDate = post.publishDate.toDate().toISOString();
   return (
-    <div className={styles.post}>
+    <div
+      className={classNames(styles.post, {
+        [styles.notPublished]: !post.published,
+      })}
+    >
       <h3>{post.title}</h3>
       {getStatus() !== 'none' && (
         <Editable postId={post.id} status={getStatus()} />
@@ -85,6 +117,13 @@ export const Post = ({
       {post.tags.map((tag) => (
         <Tag key={tag} tag={tag} />
       ))}
+      <div>
+        {publishStatus === 'FUTURE_PUBLISH'
+          ? `Publiseres på ${publishDate}`
+          : publishStatus === 'PUBLISHED'
+          ? `Publisert: ${publishDate}`
+          : `Ikke publisert`}
+      </div>
     </div>
   );
 };

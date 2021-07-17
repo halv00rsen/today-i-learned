@@ -11,7 +11,7 @@ service cloud.firestore {
       }
 
       function isPublishedPost() {
-        return resource.data.published;
+        return resource.data.published && resource.data.publishDate < request.time;
       }
 
       allow read: if isPublishedPost() || isPostOwner() || isAdminUser();

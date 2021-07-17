@@ -6,11 +6,14 @@ import {
   setDoc,
   deleteDoc,
   where,
+  limit,
 } from '@firebase/firestore';
 import {
   getDoc,
   getDocs,
+  orderBy,
   query,
+  Timestamp,
   updateDoc,
 } from 'firebase/firestore';
 import { firestore } from '../firebase';
@@ -22,13 +25,21 @@ const mapToPost = (
   partialPost: Partial<StoredPost>,
   id: string
 ): StoredPost => {
-  const { content, ownerId, subtitle, title, tags, published } =
-    partialPost;
+  const {
+    content,
+    ownerId,
+    subtitle,
+    title,
+    tags,
+    published,
+    publishDate,
+  } = partialPost;
   if (
     content &&
     ownerId &&
     title &&
     tags &&
+    publishDate &&
     published !== undefined
   ) {
     return {
@@ -40,6 +51,7 @@ const mapToPost = (
       subtitle,
       tags,
       published,
+      publishDate,
     };
   }
   throw new Error('Post missing data');
@@ -58,9 +70,10 @@ export const mapSnapshotToPosts = (
 };
 
 export const storePost = async (post: PartialPost, user: User) => {
-  const data = {
+  const data: Partial<StoredPost> = {
     ...post,
     ownerId: user.uid,
+    publishDate: Timestamp.now(),
   };
   try {
     mapToPost(data, 'mockId');
@@ -95,14 +108,24 @@ export const getPost = async (
 
 export const getPublishedPosts = async () => {
   const data = await getDocs(
-    query(postsCollection, where('published', '==', true))
+    query(
+      postsCollection,
+      where('published', '==', true),
+      where('publishDate', '<=', Timestamp.now()),
+      orderBy('publishDate', 'desc'),
+      limit(10)
+    )
   );
   return data.docs.map(mapSnapshotToPosts);
 };
 
 export const getPostsByOwner = async (userId: string) => {
   const data = await getDocs(
-    query(postsCollection, where('ownerId', '==', userId))
+    query(
+      postsCollection,
+      where('ownerId', '==', userId),
+      orderBy('publishDate', 'desc')
+    )
   );
   return data.docs.map(mapSnapshotToPosts);
 };
