@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/halv00rsen/vanligfyr/compare/v1.0.0...v1.1.0) (2021-07-18)
+
+
+### Features
+
+* visually importved header ([667e7ba](https://github.com/halv00rsen/vanligfyr/commit/667e7bad93455873e07202f52008b29db2c8dccc))
+
 # 1.0.0 (2021-07-18)
 
 
