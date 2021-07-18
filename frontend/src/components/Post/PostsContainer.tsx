@@ -28,7 +28,6 @@ export const PostsContainer = ({ getPosts }: Props) => {
   useEffect(() => {
     getPosts()
       .then((posts) => {
-        console.log(posts);
         setPostStatus({ type: 'LOADED', posts });
       })
       .catch((err) => {

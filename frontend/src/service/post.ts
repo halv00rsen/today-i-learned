@@ -60,7 +60,6 @@ export const mapSnapshotToPosts = (
   document: DocumentSnapshot
 ): StoredPost => {
   const data = document.data();
-  console.log(data);
   if (!data) {
     throw new Error('Data is undefined!');
   }

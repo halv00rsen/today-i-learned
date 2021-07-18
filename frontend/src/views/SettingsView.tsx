@@ -5,6 +5,34 @@ import { useUserStatus } from '../utils/useUserStatus';
 import styles from './SettingsView.module.css';
 import classNames from 'classnames';
 import { isNonEmptyArray } from '../utils/array';
+import { getFormattedDateWithTime } from '../utils/time';
+
+interface EntryProps {
+  title: string;
+  value: string;
+}
+
+const InfoEntry = ({ title, value }: EntryProps) => {
+  return (
+    <div className={classNames(styles.userEntry)}>
+      <div>{title}</div>
+      <div>{value}</div>
+    </div>
+  );
+};
+
+const getClientDeployTime = () => {
+  const time = process.env.REACT_APP_CLIENT_DEPLOY_TIME;
+  if (time) {
+    return new Date(time);
+  } else {
+    return new Date();
+  }
+};
+
+const clientVersion =
+  process.env.REACT_APP_CLIENT_VERSION || 'not-set';
+const clientDeployTime = getClientDeployTime();
 
 export const SettingsView = () => {
   const theme = useTheme();
@@ -30,6 +58,12 @@ export const SettingsView = () => {
           user={userStatus.user}
         />
       )}
+      <h3>Klientinformasjon</h3>
+      <InfoEntry title="Versjon" value={clientVersion} />
+      <InfoEntry
+        title="Byggtidspunkt"
+        value={getFormattedDateWithTime(clientDeployTime)}
+      />
     </div>
   );
 };
