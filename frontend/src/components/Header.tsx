@@ -1,42 +1,40 @@
-import { signOut } from '@firebase/auth';
 import React from 'react';
-import { useHistory } from 'react-router';
-import { firebaseAuth } from '../firebase';
+import { Link } from 'react-router-dom';
 import { isAdmin, useUserStatus } from '../utils/useUserStatus';
+import styles from './Header.module.css';
 
 export const Header = () => {
   const userStatus = useUserStatus();
-  const history = useHistory();
 
   return (
-    <div>
-      {userStatus.type === 'AUTHENTICATED' && (
-        <div>
-          <div>Logget inn som {userStatus.user.displayName}</div>
-          <button onClick={() => signOut(firebaseAuth)}>
-            Logg ut
-          </button>
-          {isAdmin(userStatus) && (
-            <button onClick={() => history.push('/addPost')}>
-              Legg til post
-            </button>
-          )}
-          <button onClick={() => history.push('/my-posts')}>
-            Mine poster
-          </button>
-        </div>
-      )}
-      {userStatus.type === 'UNAUTHENTICATED' && (
-        <div>
-          <button onClick={() => history.push('/login')}>
+    <div className={styles.header}>
+      <div className={styles.headerName}>
+        <Link className={styles.headerLink} to="/">
+          Today I learned
+        </Link>
+      </div>
+      <div className={styles.headerLinks}>
+        {userStatus.type === 'AUTHENTICATED' && (
+          <>
+            {isAdmin(userStatus) && (
+              <Link className={styles.headerLink} to="/addPost">
+                Ny post
+              </Link>
+            )}
+            <Link className={styles.headerLink} to="/my-posts">
+              Mine poster
+            </Link>
+          </>
+        )}
+        {userStatus.type === 'UNAUTHENTICATED' && (
+          <Link className={styles.headerLink} to="/login">
             Logg inn
-          </button>
-        </div>
-      )}
-      <button onClick={() => history.push('/')}>Hjem</button>
-      <button onClick={() => history.push('/settings')}>
-        Innstillinger
-      </button>
+          </Link>
+        )}
+        <Link className={styles.headerLink} to="/settings">
+          Innstillinger
+        </Link>
+      </div>
     </div>
   );
 };

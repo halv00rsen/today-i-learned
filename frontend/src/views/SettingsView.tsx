@@ -1,11 +1,12 @@
 import React from 'react';
-import { User } from 'firebase/auth';
+import { signOut, User } from 'firebase/auth';
 import { useSetTheme, useTheme } from '../components/ThemeWrapper';
 import { useUserStatus } from '../utils/useUserStatus';
 import styles from './SettingsView.module.css';
 import classNames from 'classnames';
 import { isNonEmptyArray } from '../utils/array';
 import { getFormattedDateWithTime } from '../utils/time';
+import { firebaseAuth } from '../firebase';
 
 interface EntryProps {
   title: string;
@@ -84,11 +85,14 @@ const UserProfile = ({ user, roles }: UserProfileProps) => {
         <div>Epost</div> <div>{user.email}</div>
       </div>
       <div className={styles.userEntry}>
-        <div>Roles</div>
+        <div>Roller</div>
         <div>
           {isNonEmptyArray(roles) ? roles.join(', ') : 'Ingen'}
         </div>
       </div>
+      <button onClick={() => signOut(firebaseAuth)}>
+        Logg ut
+      </button>
     </>
   );
 };
