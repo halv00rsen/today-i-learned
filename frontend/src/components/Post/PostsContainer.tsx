@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Post } from './Post';
 import { useUserStatus } from '../../utils/useUserStatus';
-import {
-  LIMIT_POSTS,
-  PostData,
-  shiftPostsWindow,
-} from '../../service/post';
+import { PostData, shiftPostsWindow } from '../../service/post';
+import { InViewport } from '../InViewport';
+import { Spinner } from '../Spinner/Spinner';
 
 interface Props {
   getInitialPosts: () => Promise<PostData>;
@@ -41,7 +39,6 @@ export const PostsContainer = ({ getInitialPosts }: Props) => {
     if (postStatus.type !== 'VALID') {
       return;
     }
-    setPostStatus({ type: 'LOADING' });
     shiftPostsWindow(postStatus, direction)
       .then((status) => {
         setPostStatus(status);
@@ -53,17 +50,16 @@ export const PostsContainer = ({ getInitialPosts }: Props) => {
   };
 
   if (postStatus.type === 'LOADING') {
-    return <div>Laster poster...</div>;
+    return <Spinner />;
   } else if (postStatus.type === 'ERROR') {
     return <div>En feil skjedde under lasting</div>;
   } else if (postStatus.type === 'EMPTY_POSTS') {
     return <div>Ingen poster funnet</div>;
   } else if (postStatus.type === 'VALID') {
-    const { postViewIndex, posts, status } = postStatus.data;
-    const endIndex = postViewIndex + LIMIT_POSTS;
+    const { posts, status } = postStatus.data;
     return (
       <div>
-        {posts.slice(postViewIndex, endIndex).map((post) => {
+        {posts.map((post) => {
           return (
             <Post
               key={post.id}
@@ -76,21 +72,15 @@ export const PostsContainer = ({ getInitialPosts }: Props) => {
             />
           );
         })}
-        <button
-          disabled={postViewIndex === 0}
-          onClick={() => shiftPosts('PREVIOUS')}
-        >
-          Forrige
-        </button>
-        <button
-          disabled={
-            endIndex >= posts.length &&
-            status === 'LAST_POST_FOUND'
-          }
-          onClick={() => shiftPosts('NEXT')}
-        >
-          Neste
-        </button>
+        {status !== 'LAST_POST_FOUND' && (
+          <InViewport
+            onViewportEnter={() => {
+              shiftPosts('NEXT');
+            }}
+          >
+            <Spinner />
+          </InViewport>
+        )}
       </div>
     );
   } else {
