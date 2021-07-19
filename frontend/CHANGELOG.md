@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/halv00rsen/vanligfyr/compare/v1.1.0...v1.2.0) (2021-07-19)
+
+
+### Bug Fixes
+
+* remove redundant headers in home ([3495623](https://github.com/halv00rsen/vanligfyr/commit/34956237709e2709b59eaf6cb2ba013010b44b48))
+
+
+### Features
+
+* load posts on publish date with indexes ([29c9733](https://github.com/halv00rsen/vanligfyr/commit/29c9733ebe35ffe6aae9acf27ccae339ed36d8e4))
+
 # [1.1.0](https://github.com/halv00rsen/vanligfyr/compare/v1.0.0...v1.1.0) (2021-07-18)
 
 
