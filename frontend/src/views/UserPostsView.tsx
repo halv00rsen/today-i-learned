@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { PostsContainer } from '../components/Post/PostsContainer';
-import { getPostsByOwner } from '../service/post';
+import { getInitialUserPosts } from '../service/post';
 
 interface Props {
   userId: string;
@@ -8,13 +8,13 @@ interface Props {
 
 export const UserPostsView = ({ userId }: Props) => {
   const getPosts = useCallback(() => {
-    return getPostsByOwner(userId);
+    return getInitialUserPosts(userId);
   }, [userId]);
 
   return (
     <div>
-      <h3>Dine poster</h3>
-      <PostsContainer getPosts={getPosts} />
+      <h3>Mine poster</h3>
+      <PostsContainer getInitialPosts={getPosts} />
     </div>
   );
 };
