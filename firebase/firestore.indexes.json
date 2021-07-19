@@ -4,9 +4,16 @@
       "collectionGroup": "post",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "publishDate", "order": "DESCENDING" },
-        { "fieldPath": "ownerId", "order": "DESCENDING" },
-        { "fieldPath": "published", "order": "DESCENDING" }
+        { "fieldPath": "published", "order": "ASCENDING" },
+        { "fieldPath": "publishDate", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "post",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "ownerId", "order": "ASCENDING" },
+        { "fieldPath": "publishDate", "order": "DESCENDING" }
       ]
     }
   ],

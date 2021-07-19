@@ -7,6 +7,7 @@ import {
   deleteDoc,
   where,
   limit,
+  orderBy,
 } from '@firebase/firestore';
 import {
   getDoc,
@@ -109,8 +110,8 @@ export const getPublishedPosts = async () => {
     query(
       postsCollection,
       where('published', '==', true),
-      // where('publishDate', '<=', Timestamp.now()),
-      // orderBy('publishDate', 'desc'),
+      where('publishDate', '<=', Timestamp.now()),
+      orderBy('publishDate', 'desc'),
       limit(10)
     )
   );
@@ -121,8 +122,8 @@ export const getPostsByOwner = async (userId: string) => {
   const data = await getDocs(
     query(
       postsCollection,
-      where('ownerId', '==', userId)
-      // orderBy('publishDate', 'desc')
+      where('ownerId', '==', userId),
+      orderBy('publishDate', 'desc')
     )
   );
   return data.docs.map(mapSnapshotToPosts);
