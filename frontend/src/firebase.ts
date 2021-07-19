@@ -27,15 +27,13 @@ const firebaseApp =
   initializeApp(firebaseConfig);
 
 const firestore = getFirestore(firebaseApp);
-if (environment === 'development') {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useFirestoreEmulator(firestore, 'localhost', 8080);
-}
-
 const firebaseAuth = getAuth(firebaseApp);
+
 if (environment === 'development') {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useAuthEmulator(firebaseAuth, 'http://localhost:9099');
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useFirestoreEmulator(firestore, 'localhost', 8080);
 }
 
 export { firestore, firebaseAuth };
