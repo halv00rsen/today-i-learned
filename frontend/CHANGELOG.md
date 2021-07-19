@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/halv00rsen/vanligfyr/compare/v1.2.0...v1.3.0) (2021-07-19)
+
+
+### Features
+
+* infinite scroll on posts ([efc56fa](https://github.com/halv00rsen/vanligfyr/commit/efc56fa101ccdd9ab2b21ea7b83c281600c0bc45))
+* paginate post loading ([d0f5029](https://github.com/halv00rsen/vanligfyr/commit/d0f50296e771b0f0f9b91e34ec96c925b8421705))
+* spinner component ([964c1dd](https://github.com/halv00rsen/vanligfyr/commit/964c1ddc1e079bb0939a5a91f4f589ff97eec1e2))
+
 # [1.2.0](https://github.com/halv00rsen/vanligfyr/compare/v1.1.0...v1.2.0) (2021-07-19)
 
 
