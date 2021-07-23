@@ -4,6 +4,7 @@ import { useUserStatus } from '../../utils/useUserStatus';
 import { PostData, shiftPostsWindow } from '../../service/post';
 import { InViewport } from '../InViewport';
 import { Spinner } from '../Spinner/Spinner';
+import styles from './PostsContainer.module.css';
 
 interface Props {
   getInitialPosts: () => Promise<PostData>;
@@ -80,6 +81,11 @@ export const PostsContainer = ({ getInitialPosts }: Props) => {
           >
             <Spinner />
           </InViewport>
+        )}
+        {status === 'LAST_POST_FOUND' && (
+          <div className={styles.lastPostFound}>
+            <i>Ingen flere poster</i>
+          </div>
         )}
       </div>
     );
