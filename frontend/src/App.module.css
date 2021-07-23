@@ -2,6 +2,6 @@
   height: 100%;
   max-width: var(--page-max-width);
   min-width: var(--page-min-width);
-  margin: auto auto;
+  margin: auto auto 50px;
   padding: 0 10px;
 }
