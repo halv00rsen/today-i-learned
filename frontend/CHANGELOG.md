@@ -1,3 +1,16 @@
+# [1.4.0](https://github.com/halv00rsen/vanligfyr/compare/v1.3.0...v1.4.0) (2021-09-19)
+
+
+### Bug Fixes
+
+* margin to bottom ([93db219](https://github.com/halv00rsen/vanligfyr/commit/93db2198705a6fef43293d80a049410030fb7288))
+
+
+### Features
+
+* add support for tag filtering ([5221b38](https://github.com/halv00rsen/vanligfyr/commit/5221b38817b3472f3da44daa3d035d97ced37113))
+* show text when last post found ([1c93474](https://github.com/halv00rsen/vanligfyr/commit/1c93474a8e6ce042ab24129679dec5647595953d))
+
 # [1.3.0](https://github.com/halv00rsen/vanligfyr/compare/v1.2.0...v1.3.0) (2021-07-19)
 
 
