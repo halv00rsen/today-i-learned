@@ -11,3 +11,7 @@ export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/service-account-file
 ```
 
 For more information, take a look at the [documentation](https://firebase.google.com/docs/admin/setup).
+
+## Todo
+
+* Add warning when trying to exit site to another web page (url)

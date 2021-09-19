@@ -6,6 +6,7 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
+import { ContentWrapper } from '../components/ContentWrapper';
 import { Header } from '../components/Header';
 import { useUserStatus } from '../utils/useUserStatus';
 import { AddPostView } from './AddPostView';
@@ -40,30 +41,32 @@ export const AppRouter = () => {
   return (
     <BrowserRouter>
       <Header />
-      <Switch>
-        <Route path="/settings">
-          <SettingsView />
-        </Route>
-        <Route path="/login">
-          <LoginView />
-        </Route>
-        <SecureRoute path="/addPost">
-          {(user) => <AddPostView user={user} />}
-        </SecureRoute>
-        <SecureRoute path="/edit">
-          {() => <EditView />}
-        </SecureRoute>
-        <SecureRoute path="/my-posts">
-          {(user) => <UserPostsView userId={user.uid} />}
-        </SecureRoute>
-        <Route path="/" exact>
-          <Home />
-        </Route>
-        <Route path="*">
-          <div>Finner ikke siden du leter etter.</div>
-          <div>er vi her egentlig</div>
-        </Route>
-      </Switch>
+      <ContentWrapper>
+        <Switch>
+          <Route path="/settings">
+            <SettingsView />
+          </Route>
+          <Route path="/login">
+            <LoginView />
+          </Route>
+          <SecureRoute path="/addPost">
+            {(user) => <AddPostView user={user} />}
+          </SecureRoute>
+          <SecureRoute path="/edit">
+            {() => <EditView />}
+          </SecureRoute>
+          <SecureRoute path="/my-posts">
+            {(user) => <UserPostsView userId={user.uid} />}
+          </SecureRoute>
+          <Route path="/" exact>
+            <Home />
+          </Route>
+          <Route path="*">
+            <div>Finner ikke siden du leter etter.</div>
+            <div>er vi her egentlig</div>
+          </Route>
+        </Switch>
+      </ContentWrapper>
     </BrowserRouter>
   );
 };

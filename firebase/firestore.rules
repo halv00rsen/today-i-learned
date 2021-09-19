@@ -19,5 +19,10 @@ service cloud.firestore {
       allow update: if isPostOwner();
       allow delete: if isAdminUser() || isPostOwner();
     }
+
+    match /tag/{tagId} {
+      allow read;
+      allow write: if isAdminUser();
+    }
   }
 }

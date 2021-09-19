@@ -1,0 +1,12 @@
+.tag {
+  padding: var(--default-padding);
+  background-color: aliceblue;
+  transition: 0.3s;
+  cursor: pointer;
+  display: inline-block;
+  margin: var(--default-margin);
+}
+
+.chosenTag {
+  background-color: aqua;
+}

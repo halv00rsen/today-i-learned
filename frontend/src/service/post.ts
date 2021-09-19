@@ -23,6 +23,7 @@ import {
 import { firestore } from '../firebase';
 import { isNonEmptyArray, NonEmptyArray } from '../utils/array';
 import { PartialPost, StoredPost } from '../utils/types/domain';
+import { saveTag, Tag } from './tag';
 
 export const postsCollection = collection(firestore, 'post');
 
@@ -86,6 +87,9 @@ export const storePost = async (post: PartialPost, user: User) => {
       'Error while saving, could not build valid post'
     );
   }
+  data.tags?.forEach((tag) => {
+    saveTag(tag).catch();
+  });
   return setDoc(doc(postsCollection), data);
 };
 
@@ -154,10 +158,30 @@ const getInitialPosts = async (
   }
 };
 
-export const getInitialPublishedPosts = async () => {
-  return getInitialPosts([
+const MAX_NUMBER_OF_TAGS = 10;
+
+interface Config {
+  tags?: NonEmptyArray<Tag>;
+}
+
+export const getInitialPublishedPosts = async ({
+  tags,
+}: Config = {}) => {
+  const constraints: NonEmptyArray<QueryConstraint> = [
     where('published', '==', true),
     where('publishDate', '<=', Timestamp.now()),
+  ];
+  if (tags && tags.length <= MAX_NUMBER_OF_TAGS) {
+    constraints.push(
+      where(
+        'tags',
+        'array-contains-any',
+        tags.map((tag) => tag.name)
+      )
+    );
+  }
+  return getInitialPosts([
+    ...constraints,
     orderBy('publishDate', 'desc'),
   ]);
 };
