@@ -1,3 +1,12 @@
+# [1.5.0](https://github.com/halv00rsen/vanligfyr/compare/v1.4.0...v1.5.0) (2021-09-19)
+
+
+### Features
+
+* change button styling ([3491180](https://github.com/halv00rsen/vanligfyr/commit/3491180ccd1abbed417a0a8dd036460bdc655e26))
+* improved visuals posts ([cef2580](https://github.com/halv00rsen/vanligfyr/commit/cef2580cef440eacbecc772138eef5df53e9e49b))
+* publish date position ([c020e47](https://github.com/halv00rsen/vanligfyr/commit/c020e47d458e0bfabe39c2d6d0236a4deb13de97))
+
 # [1.4.0](https://github.com/halv00rsen/vanligfyr/compare/v1.3.0...v1.4.0) (2021-09-19)
 
 
