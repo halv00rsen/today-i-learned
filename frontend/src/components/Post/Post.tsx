@@ -7,6 +7,7 @@ import { Tag } from '../Tag/Tag';
 import styles from './Post.module.css';
 import classNames from 'classnames';
 import { Timestamp } from 'firebase/firestore';
+import { getFormattedDateWithTime } from '../../utils/time';
 
 type PublishStatus =
   | 'NOT_PUBLISHED'
@@ -100,7 +101,9 @@ export const Post = ({
     published: post.published,
     publishDate: post.publishDate,
   });
-  const publishDate = post.publishDate.toDate().toISOString();
+  const publishDate = getFormattedDateWithTime(
+    post.publishDate.toDate()
+  );
   return (
     <div
       className={classNames(styles.post, {
@@ -117,11 +120,11 @@ export const Post = ({
       {post.tags.map((tag) => (
         <Tag key={tag} tag={tag} />
       ))}
-      <div>
+      <div className={styles.publishStatus}>
         {publishStatus === 'FUTURE_PUBLISH'
           ? `Publiseres på ${publishDate}`
           : publishStatus === 'PUBLISHED'
-          ? `Publisert: ${publishDate}`
+          ? `${publishDate}`
           : `Ikke publisert`}
       </div>
     </div>
