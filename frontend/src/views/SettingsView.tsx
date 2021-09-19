@@ -90,7 +90,10 @@ const UserProfile = ({ user, roles }: UserProfileProps) => {
           {isNonEmptyArray(roles) ? roles.join(', ') : 'Ingen'}
         </div>
       </div>
-      <button onClick={() => signOut(firebaseAuth)}>
+      <button
+        className={styles.logoutButton}
+        onClick={() => signOut(firebaseAuth)}
+      >
         Logg ut
       </button>
     </>
