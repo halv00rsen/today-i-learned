@@ -65,7 +65,10 @@ export const PostsContainer = ({ getInitialPosts }: Props) => {
             <Post
               key={post.id}
               post={post}
-              deletable={userStatus.type === 'AUTHENTICATED'}
+              deletable={
+                userStatus.type === 'AUTHENTICATED' &&
+                userStatus.roles.includes('admin')
+              }
               editable={
                 userStatus.type === 'AUTHENTICATED' &&
                 userStatus.user.uid === post.ownerId

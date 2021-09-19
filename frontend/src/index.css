@@ -19,6 +19,10 @@ code {
 
 html {
   --default-font-size: 16px;
+  --font-size-small: 14px;
+  --font-size-medium: 16px;
+  --font-size-large: 20px;
+  --font-size-header: 20px;
 
   --page-max-width: 1000px;
   --page-min-width: 300px;

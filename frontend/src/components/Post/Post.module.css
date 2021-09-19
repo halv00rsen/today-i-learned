@@ -2,8 +2,30 @@
   position: relative;
   overflow: auto;
   border: 1px solid var(--default-border-color);
-  padding: var(--default-padding);
   margin: var(--default-margin);
+}
+
+.header {
+  padding: var(--default-padding);
+  border-bottom: 1px solid var(--default-border-color);
+  display: flex;
+  justify-content: space-between;
+}
+
+.headerText {
+  font-size: var(--font-size-header);
+}
+
+.content {
+  padding: 0 var(--default-padding);
+}
+
+.footer {
+  padding: var(--default-padding);
+  border-top: 1px solid var(--default-border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .notPublished {
@@ -11,10 +33,5 @@
 }
 
 .publishStatus {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  border-top: 1px solid var(--default-border-color);
-  border-left: 1px solid var(--default-border-color);
-  padding: 5px;
+  font-size: var(--font-size-small);
 }

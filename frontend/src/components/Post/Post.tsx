@@ -9,6 +9,36 @@ import classNames from 'classnames';
 import { Timestamp } from 'firebase/firestore';
 import { getFormattedDateWithTime } from '../../utils/time';
 
+interface HeaderProps {
+  text: string;
+  children?: React.ReactNode;
+}
+
+const Header = ({ children, text }: HeaderProps) => {
+  return (
+    <div className={styles.header}>
+      <div className={styles.headerText}>{text}</div>
+      <div className={styles.headerRight}>{children}</div>
+    </div>
+  );
+};
+
+interface ContentProps {
+  children: React.ReactNode;
+}
+
+const Content = ({ children }: ContentProps) => {
+  return <div className={styles.content}>{children}</div>;
+};
+
+interface FooterProps {
+  children: React.ReactNode;
+}
+
+const Footer = ({ children }: FooterProps) => {
+  return <div className={styles.footer}>{children}</div>;
+};
+
 type PublishStatus =
   | 'NOT_PUBLISHED'
   | 'PUBLISHED'
@@ -110,23 +140,29 @@ export const Post = ({
         [styles.notPublished]: !post.published,
       })}
     >
-      <h3>{post.title}</h3>
-      {getStatus() !== 'none' && (
-        <Editable postId={post.id} status={getStatus()} />
-      )}
-      {post.subtitle && <div>{post.subtitle}</div>}
-      <Markdown content={post.content} />
-
-      {post.tags.map((tag) => (
-        <Tag key={tag} tag={tag} />
-      ))}
-      <div className={styles.publishStatus}>
-        {publishStatus === 'FUTURE_PUBLISH'
-          ? `Publiseres på ${publishDate}`
-          : publishStatus === 'PUBLISHED'
-          ? `${publishDate}`
-          : `Ikke publisert`}
-      </div>
+      <Header text={post.title}>
+        {getStatus() !== 'none' && (
+          <Editable postId={post.id} status={getStatus()} />
+        )}
+      </Header>
+      <Content>
+        {post.subtitle && <div>{post.subtitle}</div>}
+        <Markdown content={post.content} />
+      </Content>
+      <Footer>
+        <div>
+          {post.tags.map((tag) => (
+            <Tag key={tag} tag={tag} />
+          ))}
+        </div>
+        <div className={styles.publishStatus}>
+          {publishStatus === 'FUTURE_PUBLISH'
+            ? `Publiseres på ${publishDate}`
+            : publishStatus === 'PUBLISHED'
+            ? `${publishDate}`
+            : `Ikke publisert`}
+        </div>
+      </Footer>
     </div>
   );
 };
