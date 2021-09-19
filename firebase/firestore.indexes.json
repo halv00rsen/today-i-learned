@@ -4,6 +4,7 @@
       "collectionGroup": "post",
       "queryScope": "COLLECTION",
       "fields": [
+        { "fieldPath": "tags", "arrayConfig": "CONTAINS" },
         { "fieldPath": "published", "order": "ASCENDING" },
         { "fieldPath": "publishDate", "order": "DESCENDING" }
       ]
