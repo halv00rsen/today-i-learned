@@ -7,14 +7,24 @@ interface Props {
 }
 
 export const UserPostsView = ({ userId }: Props) => {
-  const getPosts = useCallback(() => {
-    return getInitialUserPosts(userId);
+  const publishedPosts = useCallback(() => {
+    return getInitialUserPosts({ published: true, userId });
+  }, [userId]);
+
+  const unpublishedPosts = useCallback(() => {
+    return getInitialUserPosts({ published: false, userId });
   }, [userId]);
 
   return (
     <div>
+      <h3>Upubliserte poster</h3>
+      <PostsContainer
+        getInitialPosts={unpublishedPosts}
+        noPostsFoundText="Du har ingen upubliserte poster"
+        ignoreLastPostMessage
+      />
       <h3>Mine poster</h3>
-      <PostsContainer getInitialPosts={getPosts} />
+      <PostsContainer getInitialPosts={publishedPosts} />
     </div>
   );
 };

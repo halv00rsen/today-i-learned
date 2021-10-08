@@ -8,6 +8,9 @@ import styles from './PostsContainer.module.css';
 
 interface Props {
   getInitialPosts: () => Promise<PostData>;
+
+  noPostsFoundText?: string;
+  ignoreLastPostMessage?: boolean;
 }
 
 type PostsStatus =
@@ -19,7 +22,11 @@ type PostsStatus =
     }
   | PostData;
 
-export const PostsContainer = ({ getInitialPosts }: Props) => {
+export const PostsContainer = ({
+  getInitialPosts,
+  noPostsFoundText = 'Ingen poster funnet',
+  ignoreLastPostMessage = false,
+}: Props) => {
   const userStatus = useUserStatus();
   const [postStatus, setPostStatus] = useState<PostsStatus>({
     type: 'LOADING',
@@ -55,7 +62,7 @@ export const PostsContainer = ({ getInitialPosts }: Props) => {
   } else if (postStatus.type === 'ERROR') {
     return <div>En feil skjedde under lasting</div>;
   } else if (postStatus.type === 'EMPTY_POSTS') {
-    return <div>Ingen poster funnet</div>;
+    return <div>{noPostsFoundText}</div>;
   } else if (postStatus.type === 'VALID') {
     const { posts, status } = postStatus.data;
     return (
@@ -85,7 +92,7 @@ export const PostsContainer = ({ getInitialPosts }: Props) => {
             <Spinner />
           </InViewport>
         )}
-        {status === 'LAST_POST_FOUND' && (
+        {!ignoreLastPostMessage && status === 'LAST_POST_FOUND' && (
           <div className={styles.lastPostFound}>
             <i>Ingen flere poster</i>
           </div>

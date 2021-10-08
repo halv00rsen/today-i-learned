@@ -186,9 +186,16 @@ export const getInitialPublishedPosts = async ({
   ]);
 };
 
-export const getInitialUserPosts = async (userId: string) => {
+export const getInitialUserPosts = async ({
+  published,
+  userId,
+}: {
+  userId: string;
+  published: boolean;
+}) => {
   return getInitialPosts([
     where('ownerId', '==', userId),
+    where('published', '==', published),
     orderBy('publishDate', 'desc'),
   ]);
 };
