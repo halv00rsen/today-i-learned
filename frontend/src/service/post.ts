@@ -103,7 +103,9 @@ export const updatePost = async (
   post: PartialPost
 ) => {
   const postRef = doc(postsCollection, postId);
-  return await updateDoc(postRef, post);
+  return await updateDoc(postRef, {
+    ...post,
+  });
 };
 
 export const getPost = async (

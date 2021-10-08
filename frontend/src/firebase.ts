@@ -1,9 +1,9 @@
 import { initializeApp, getApps } from '@firebase/app';
 import {
   getFirestore,
-  useFirestoreEmulator,
+  connectFirestoreEmulator,
 } from '@firebase/firestore';
-import { getAuth, useAuthEmulator } from '@firebase/auth';
+import { getAuth, connectAuthEmulator } from '@firebase/auth';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCxk3gdF6plLqNWwnGGtGTNh-BbuyTTGQM',
@@ -30,10 +30,8 @@ const firestore = getFirestore(firebaseApp);
 const firebaseAuth = getAuth(firebaseApp);
 
 if (environment === 'development') {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useAuthEmulator(firebaseAuth, 'http://localhost:9099');
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useFirestoreEmulator(firestore, 'localhost', 8080);
+  connectAuthEmulator(firebaseAuth, 'http://localhost:9099');
+  connectFirestoreEmulator(firestore, 'localhost', 8080);
 }
 
 export { firestore, firebaseAuth };
