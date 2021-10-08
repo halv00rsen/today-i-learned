@@ -1,4 +1,4 @@
-# Vanlig fyr
+# Today I learned
 
 [![Build and deploy](https://github.com/halv00rsen/vanligfyr/actions/workflows/firebase-hosting-merge.yml/badge.svg?branch=main)](https://github.com/halv00rsen/vanligfyr/actions/workflows/firebase-hosting-merge.yml)
 
@@ -14,4 +14,4 @@ For more information, take a look at the [documentation](https://firebase.google
 
 ## Todo
 
-* Add warning when trying to exit site to another web page (url)
+- Add warning when trying to exit site to another web page (url)
