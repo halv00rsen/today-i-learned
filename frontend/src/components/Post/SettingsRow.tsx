@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FitlerContainer } from './FilterContainer';
 import styles from './SettingsRow.module.css';
 

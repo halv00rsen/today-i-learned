@@ -1,4 +1,3 @@
-import React from 'react';
 import { signOut, User } from 'firebase/auth';
 import { useSetTheme, useTheme } from '../components/ThemeWrapper';
 import { useUserStatus } from '../utils/useUserStatus';
@@ -23,7 +22,7 @@ const InfoEntry = ({ title, value }: EntryProps) => {
 };
 
 const getClientDeployTime = () => {
-  const time = process.env.REACT_APP_CLIENT_DEPLOY_TIME;
+  const time = import.meta.env.VITE_CLIENT_DEPLOY_TIME as string;
   if (time) {
     return new Date(time);
   } else {
@@ -32,7 +31,7 @@ const getClientDeployTime = () => {
 };
 
 const clientVersion =
-  process.env.REACT_APP_CLIENT_VERSION || 'not-set';
+  (import.meta.env.VITE_CLIENT_VERSION as string) || 'not-set';
 const clientDeployTime = getClientDeployTime();
 
 export const SettingsView = () => {

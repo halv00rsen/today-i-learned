@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { EditPost } from '../components/EditPost/EditPost';
 import { getPost, updatePost } from '../service/post';

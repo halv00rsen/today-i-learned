@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTagProvider } from '../../context/TagContext';
 import { Tag } from '../../service/tag';
 import styles from './FilterContainer.module.css';

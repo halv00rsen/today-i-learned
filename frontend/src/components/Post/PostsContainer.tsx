@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Post } from './Post';
 import { useUserStatus } from '../../utils/useUserStatus';
 import { PostData, shiftPostsWindow } from '../../service/post';

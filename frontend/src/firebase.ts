@@ -16,8 +16,6 @@ const firebaseConfig = {
   appId: '1:395117634570:web:5630f98224e7c5f2972bf3',
 };
 
-const environment = process.env.NODE_ENV;
-
 const appName = 'vanligfyr';
 
 const allApps = getApps();
@@ -29,7 +27,7 @@ const firebaseApp =
 const firestore = getFirestore(firebaseApp);
 const firebaseAuth = getAuth(firebaseApp);
 
-if (environment === 'development') {
+if (import.meta.env.DEV) {
   connectAuthEmulator(firebaseAuth, 'http://localhost:9099');
   connectFirestoreEmulator(firestore, 'localhost', 8080);
 }

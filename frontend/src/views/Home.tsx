@@ -1,4 +1,3 @@
-import React from 'react';
 import { PostsContainer } from '../components/Post/PostsContainer';
 import { SettingsRow } from '../components/Post/SettingsRow';
 import { useTagProvider } from '../context/TagContext';

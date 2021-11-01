@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './App.module.css';
 import { ThemeWrapper } from './components/ThemeWrapper';
 import { TagContextWrapper } from './context/TagContext';

@@ -1,5 +1,5 @@
 import { Timestamp } from 'firebase/firestore';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { PartialPost } from '../../utils/types/domain';
 import { Editor } from '../Editor/Editor';
 import { Post } from '../Post/Post';

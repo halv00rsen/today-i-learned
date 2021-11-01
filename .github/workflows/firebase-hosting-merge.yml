@@ -23,13 +23,13 @@ jobs:
         run: |
           cd frontend
           npm ci && npm run build
-          echo "Client version: ${REACT_APP_CLIENT_VERSION}"
+          echo "Client version: ${VITE_CLIENT_VERSION}"
         env:
-          REACT_APP_CLIENT_VERSION: ${{ steps.vars.outputs.CLIENT_VERSION }}
-          REACT_APP_CLIENT_DEPLOY_TIME: ${{ steps.vars.outputs.CLIENT_DEPLOY_TIME }}
+          VITE_CLIENT_VERSION: ${{ steps.vars.outputs.CLIENT_VERSION }}
+          VITE_CLIENT_DEPLOY_TIME: ${{ steps.vars.outputs.CLIENT_DEPLOY_TIME }}
       - name: Move built app to firebase dir
         run: |
-          cp -R frontend/build firebase/public
+          cp -R frontend/dist firebase/public
           cd firebase
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:

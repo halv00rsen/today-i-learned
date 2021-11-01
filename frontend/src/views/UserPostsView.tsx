@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { PostsContainer } from '../components/Post/PostsContainer';
 import { getInitialUserPosts } from '../service/post';
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { isAdmin, useUserStatus } from '../utils/useUserStatus';
 import styles from './Header.module.css';

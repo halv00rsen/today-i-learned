@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { User } from '@firebase/auth';
 import { storePost } from '../service/post';
 import { Redirect } from 'react-router';
