@@ -6,6 +6,7 @@ type ButtonProps = JSX.IntrinsicElements['button'];
 type Size = 'small' | 'medium' | 'large';
 
 interface Props extends ButtonProps {
+  fullWidth?: boolean;
   inline?: boolean;
   center?: boolean;
   size?: Size;
@@ -16,6 +17,7 @@ export const Button = ({
   children,
   center = false,
   inline = false,
+  fullWidth = false,
   className,
   ...rest
 }: Props) => {
@@ -29,6 +31,7 @@ export const Button = ({
         {
           [styles.center]: center,
           [styles.inline]: inline,
+          [styles.fullWidth]: fullWidth,
         }
       )}
     >
