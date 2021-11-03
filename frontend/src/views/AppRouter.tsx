@@ -49,7 +49,7 @@ export const AppRouter = () => {
           <Route path="/login">
             <LoginView />
           </Route>
-          <SecureRoute path="/addPost">
+          <SecureRoute path="/add-post">
             {(user) => <AddPostView user={user} />}
           </SecureRoute>
           <SecureRoute path="/edit">

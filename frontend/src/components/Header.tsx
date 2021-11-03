@@ -16,7 +16,7 @@ export const Header = () => {
         {userStatus.type === 'AUTHENTICATED' && (
           <>
             {isAdmin(userStatus) && (
-              <Link className={styles.headerLink} to="/addPost">
+              <Link className={styles.headerLink} to="/add-post">
                 Ny post
               </Link>
             )}
