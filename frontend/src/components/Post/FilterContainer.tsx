@@ -37,42 +37,50 @@ export const FitlerContainer = ({ onFinished }: Props) => {
   return (
     <div>
       <div>Velg hvilke emneknagger du vil filtrere på.</div>
-      <button
-        onClick={() => {
-          setActiveTags(chosenTags);
-          onFinished();
-        }}
-      >
-        Lagre
-      </button>
-      <button
-        onClick={() => {
-          setChosenTags([]);
-          setActiveTags([]);
-          onFinished();
-        }}
-      >
-        Fjern alle
-      </button>
-      {allTags.map((tag) => {
-        const chosen = chosenTags.some((t) => t.name === tag.name);
-        return (
-          <TagComponent
-            key={tag.id}
-            tag={tag}
-            chosen={chosen}
-            onClick={() => {
-              if (chosen) {
-                setChosenTags(
-                  chosenTags.filter((t) => t.name !== tag.name)
-                );
-              } else {
-                setChosenTags([...chosenTags, tag]);
-              }
-            }}
-          />
-        );
-      })}
+      <div>
+        {allTags.map((tag) => {
+          const chosen = chosenTags.some(
+            (t) => t.name === tag.name
+          );
+          return (
+            <TagComponent
+              key={tag.id}
+              tag={tag}
+              chosen={chosen}
+              onClick={() => {
+                if (chosen) {
+                  setChosenTags(
+                    chosenTags.filter((t) => t.name !== tag.name)
+                  );
+                } else {
+                  setChosenTags([...chosenTags, tag]);
+                }
+              }}
+            />
+          );
+        })}
+      </div>
+      <div className={styles.buttonRow}>
+        <button
+          className={styles.button}
+          onClick={() => {
+            setActiveTags(chosenTags);
+            onFinished();
+          }}
+        >
+          Lagre
+        </button>
+        <button
+          className={styles.button}
+          onClick={() => {
+            setChosenTags([]);
+            setActiveTags([]);
+            onFinished();
+          }}
+        >
+          Fjern alle
+        </button>
+      </div>
     </div>
   );
 };

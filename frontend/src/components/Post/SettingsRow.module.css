@@ -1,5 +1,14 @@
+@media only screen and (max-width: 768px) {
+  .popup {
+    left: 20px;
+    right: 20px;
+  }
+}
+
 .settingsRow {
   position: relative;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .popup {
