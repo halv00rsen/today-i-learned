@@ -1,0 +1,39 @@
+.button {
+  display: block;
+  background-color: var(--button-color);
+  border: 2px solid var(--default-border-color);
+  color: black;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.center {
+  margin: 0 auto;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.inline + .inline {
+  margin-left: 1em;
+}
+
+.small {
+  padding: 0.5em 1em;
+  font-size: var(--font-size-small);
+}
+
+.medium {
+  padding: 1em 3em;
+  font-size: var(--font-size-medium);
+}
+
+.large {
+  padding: 1.5em 4em;
+  font-size: var(--font-size-large);
+}

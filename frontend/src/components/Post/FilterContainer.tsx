@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { useState } from 'react';
 import { useTagProvider } from '../../context/TagContext';
 import { Tag } from '../../service/tag';
+import { Button } from '../Button/Button';
 import styles from './FilterContainer.module.css';
 
 interface TagProps {
@@ -61,17 +62,15 @@ export const FitlerContainer = ({ onFinished }: Props) => {
         })}
       </div>
       <div className={styles.buttonRow}>
-        <button
-          className={styles.button}
+        <Button
           onClick={() => {
             setActiveTags(chosenTags);
             onFinished();
           }}
         >
           Lagre
-        </button>
-        <button
-          className={styles.button}
+        </Button>
+        <Button
           onClick={() => {
             setChosenTags([]);
             setActiveTags([]);
@@ -79,7 +78,7 @@ export const FitlerContainer = ({ onFinished }: Props) => {
           }}
         >
           Fjern alle
-        </button>
+        </Button>
       </div>
     </div>
   );

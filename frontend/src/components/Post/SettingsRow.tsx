@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
+import { Button } from '../Button/Button';
 import { FitlerContainer } from './FilterContainer';
 import styles from './SettingsRow.module.css';
 
@@ -22,15 +23,20 @@ export const SettingsRow = () => {
 
   return (
     <div className={styles.settingsRow}>
-      <button onClick={() => setShowFilter(!showFilter)}>
+      <Button
+        size="small"
+        onClick={() => setShowFilter(!showFilter)}
+      >
         Filter
-      </button>
+      </Button>
       <div
         className={classNames(styles.popup, {
           [styles.hidden]: !showFilter,
         })}
       >
-        <button onClick={() => setShowFilter(false)}>Lukk</button>
+        <Button size="small" onClick={() => setShowFilter(false)}>
+          Lukk
+        </Button>
         <FitlerContainer onFinished={() => setShowFilter(false)} />
       </div>
       {showFilter && (

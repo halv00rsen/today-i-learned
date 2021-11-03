@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { deletePost } from '../../service/post';
 import { StoredPost } from '../../utils/types/domain';
 import { Markdown } from '../Editor/Markdown';
@@ -8,6 +8,7 @@ import styles from './Post.module.css';
 import classNames from 'classnames';
 import { Timestamp } from 'firebase/firestore';
 import { getFormattedDateWithTime } from '../../utils/time';
+import { Button } from '../Button/Button';
 
 interface HeaderProps {
   text: string;
@@ -72,20 +73,26 @@ interface EditableProps {
 }
 
 const Editable = ({ postId, status }: EditableProps) => {
+  const history = useHistory();
+
+  const enterPost = () => {
+    history.push({
+      pathname: '/edit',
+      search: `postId=${postId}`,
+    });
+  };
+
   return (
-    <div>
+    <div className={styles.buttonRow}>
       {(status === 'all' || status === 'only-editable') && (
-        <Link
-          to={{
-            pathname: '/edit',
-            search: `postId=${postId}`,
-          }}
-        >
+        <Button inline={true} size="small" onClick={enterPost}>
           Endre
-        </Link>
+        </Button>
       )}
       {(status === 'all' || status === 'only-delete') && (
-        <button
+        <Button
+          inline={true}
+          size="small"
           onClick={() =>
             deletePost(postId)
               .then((e) => {
@@ -99,7 +106,7 @@ const Editable = ({ postId, status }: EditableProps) => {
           }
         >
           Slett
-        </button>
+        </Button>
       )}
     </div>
   );

@@ -1,6 +1,7 @@
 import { Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
 import { PartialPost } from '../../utils/types/domain';
+import { Button } from '../Button/Button';
 import { Editor } from '../Editor/Editor';
 import { Post } from '../Post/Post';
 import styles from './EditPost.module.css';
@@ -77,9 +78,12 @@ export const EditPost = ({
               {tags.map((tag) => (
                 <li key={tag}>
                   {tag}{' '}
-                  <button onClick={() => removeTag(tag)}>
+                  <Button
+                    inline={true}
+                    onClick={() => removeTag(tag)}
+                  >
                     remove
-                  </button>
+                  </Button>
                 </li>
               ))}
             </ul>
@@ -88,7 +92,9 @@ export const EditPost = ({
               value={tag}
               onChange={(e) => setTag(e.target.value)}
             />
-            <button onClick={addTag}>Legg til tag</button>
+            <Button inline={true} onClick={addTag}>
+              Legg til tag
+            </Button>
           </div>
         </div>
         <div>
@@ -114,12 +120,14 @@ export const EditPost = ({
           onChange={(e) => setPublished(e.target.checked)}
         />
       </div>
-      <button
+      <Button
+        size="medium"
+        center={true}
         onClick={() => onClick(getPost())}
         disabled={disabled}
       >
         Lagre post
-      </button>
+      </Button>
     </div>
   );
 };

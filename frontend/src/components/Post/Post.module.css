@@ -10,10 +10,15 @@
   border-bottom: 1px solid var(--default-border-color);
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .headerText {
   font-size: var(--font-size-header);
+}
+
+.buttonRow {
+  display: inline-flex;
 }
 
 .content {

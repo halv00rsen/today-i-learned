@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { isNonEmptyArray } from '../utils/array';
 import { getFormattedDateWithTime } from '../utils/time';
 import { firebaseAuth } from '../firebase';
+import { Button } from '../components/Button/Button';
 
 interface EntryProps {
   title: string;
@@ -89,12 +90,13 @@ const UserProfile = ({ user, roles }: UserProfileProps) => {
           {isNonEmptyArray(roles) ? roles.join(', ') : 'Ingen'}
         </div>
       </div>
-      <button
+      <Button
         className={styles.logoutButton}
+        center={true}
         onClick={() => signOut(firebaseAuth)}
       >
         Logg ut
-      </button>
+      </Button>
     </>
   );
 };

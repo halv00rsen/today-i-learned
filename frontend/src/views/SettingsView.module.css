@@ -17,18 +17,3 @@
 .userEntry:hover {
   background-color: var(--theme-background-color-hover);
 }
-
-.logoutButton {
-  display: block;
-  margin: 0 auto;
-  padding: 5px 10px;
-  font-size: var(--font-size-medium);
-  background-color: var(--button-color);
-  border: 1px solid var(--default-border-color);
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.logoutButton:hover {
-  opacity: 0.9;
-}
