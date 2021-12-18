@@ -31,9 +31,11 @@ interface Props {
 }
 
 export const FitlerContainer = ({ onFinished }: Props) => {
-  const { allTags, setActiveTags } = useTagProvider();
+  const { allTags, setActiveTags, activeTags } = useTagProvider();
 
-  const [chosenTags, setChosenTags] = useState<Tag[]>([]);
+  const [chosenTags, setChosenTags] = useState<Tag[]>(
+    activeTags ? [...activeTags] : []
+  );
 
   return (
     <div>
