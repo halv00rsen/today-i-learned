@@ -1,13 +1,17 @@
+/* Generated with https://coolors.co/faffd8-ecffb0-9aa899-54577c-4a7b9d */
 [data-theme='light'] {
-  --theme-background-color: white;
-  --theme-background-color-hover: rgb(212, 212, 212);
-  --default-border-color: gray;
-  --button-color: gray;
+  --theme-background-color: #ecffb0;
+  --background-second: #9aa899;
+  --theme-background-color-hover: #e6fc9f;
+  --default-border-color: black;
+  --button-color: #f2e29f;
 }
 
+/* Generated with https://coolors.co/bbdb9b-abc4a1-9db4ab-8d9d90-878e76 */
 [data-theme='dark'] {
-  --theme-background-color: gray;
-  --theme-background-color-hover: rgb(160, 160, 160);
+  --theme-background-color: #abc4a1;
+  --background-second: #878e76;
+  --theme-background-color-hover: #a6c49a;
   --default-border-color: black;
-  --button-color: #cdc9c9;
+  --button-color: #bbdb9b;
 }
