@@ -9,6 +9,7 @@ import {
   FirestoreErrorCode,
 } from 'firebase/firestore';
 import { getFirestoreError } from '../utils/error';
+import { useTextsPrefix } from '../context/TextContext';
 
 type EditState =
   | { type: 'empty' }
@@ -18,6 +19,7 @@ type EditState =
   | { type: 'error'; firestoreErrorCode: FirestoreErrorCode };
 
 export const EditView = () => {
+  const texts = useTextsPrefix('NEWPOST');
   const { postId } = useQueryParams('postId');
   const [editStatus, setEditStatus] = useState<EditState>({
     type: 'empty',
@@ -61,6 +63,7 @@ export const EditView = () => {
       <div>
         <h4>Endre posten</h4>
         <EditPost
+          texts={texts}
           initialPost={editStatus.post}
           disabled={editStatus.type === 'updating'}
           onClick={(post) => {
