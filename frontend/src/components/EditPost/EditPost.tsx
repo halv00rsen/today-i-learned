@@ -1,13 +1,16 @@
 import { Timestamp } from 'firebase/firestore';
 import { useState } from 'react';
+import { Texts } from '../../utils/texts';
 import { PartialPost } from '../../utils/types/domain';
 import { Button } from '../Button/Button';
 import { Editor } from '../Editor/Editor';
 import { Post } from '../Post/Post';
+import { getText, Text } from '../Texts/Text';
 import styles from './EditPost.module.css';
 
 interface Props {
   onClick: (post: PartialPost) => void;
+  texts: Texts;
 
   initialPost?: PartialPost;
   disabled?: boolean;
@@ -15,6 +18,7 @@ interface Props {
 
 export const EditPost = ({
   onClick,
+  texts,
   disabled = false,
   initialPost,
 }: Props) => {
@@ -59,12 +63,12 @@ export const EditPost = ({
     <div>
       <div className={styles.splitView}>
         <div>
-          <h4>Legg til ny post</h4>
+          <Text value="TITLE" texts={texts} tag="h4" />
           <input
             type="text"
             disabled={disabled}
             value={title}
-            placeholder="Tittel"
+            placeholder={getText({ texts, value: 'TITLE' })}
             onChange={(e) => setTitle(e.target.value)}
           />
           <Editor
@@ -73,7 +77,7 @@ export const EditPost = ({
             initialValue={initialPost?.content}
           />
           <div>
-            <div>Emneknagger</div>
+            <Text value="HASHTAG.TITLE" texts={texts} />
             <ul>
               {tags.map((tag) => (
                 <li key={tag}>
@@ -82,7 +86,11 @@ export const EditPost = ({
                     inline={true}
                     onClick={() => removeTag(tag)}
                   >
-                    remove
+                    <Text
+                      value="SHARED.REMOVE"
+                      texts={texts}
+                      tag="text"
+                    />
                   </Button>
                 </li>
               ))}
@@ -93,12 +101,12 @@ export const EditPost = ({
               onChange={(e) => setTag(e.target.value)}
             />
             <Button inline={true} onClick={addTag}>
-              Legg til tag
+              <Text value="HASHTAG.ADD" texts={texts} tag="text" />
             </Button>
           </div>
         </div>
         <div>
-          <h4>Forhåndsvisning av post</h4>
+          <Text value="preview.title" texts={texts} tag="h4" />
           <Post
             post={{
               content,
@@ -113,7 +121,7 @@ export const EditPost = ({
         </div>
       </div>
       <div>
-        Publiser posten
+        <Text value="publish" texts={texts} tag="text" />
         <input
           type="checkbox"
           checked={published}
@@ -126,7 +134,7 @@ export const EditPost = ({
         onClick={() => onClick(getPost())}
         disabled={disabled}
       >
-        Lagre post
+        <Text value="save" texts={texts} tag="text" />
       </Button>
     </div>
   );

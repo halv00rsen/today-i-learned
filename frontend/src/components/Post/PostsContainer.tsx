@@ -5,6 +5,8 @@ import { PostData, shiftPostsWindow } from '../../service/post';
 import { InViewport } from '../InViewport';
 import { Spinner } from '../Spinner/Spinner';
 import styles from './PostsContainer.module.css';
+import { Text } from '../Texts/Text';
+import { useTextsPrefix } from '../../context/TextContext';
 
 interface Props {
   getInitialPosts: () => Promise<PostData>;
@@ -27,6 +29,7 @@ export const PostsContainer = ({
   noPostsFoundText = 'Ingen poster funnet',
   ignoreLastPostMessage = false,
 }: Props) => {
+  const texts = useTextsPrefix('POSTS');
   const userStatus = useUserStatus();
   const [postStatus, setPostStatus] = useState<PostsStatus>({
     type: 'LOADING',
@@ -60,7 +63,7 @@ export const PostsContainer = ({
   if (postStatus.type === 'LOADING') {
     return <Spinner />;
   } else if (postStatus.type === 'ERROR') {
-    return <div>En feil skjedde under lasting</div>;
+    return <Text value="error" texts={texts} />;
   } else if (postStatus.type === 'EMPTY_POSTS') {
     return <div>{noPostsFoundText}</div>;
   } else if (postStatus.type === 'VALID') {
@@ -94,7 +97,7 @@ export const PostsContainer = ({
         )}
         {!ignoreLastPostMessage && status === 'LAST_POST_FOUND' && (
           <div className={styles.lastPostFound}>
-            <i>Ingen flere poster</i>
+            <Text value="LAST" texts={texts} tag="i" />
           </div>
         )}
       </div>

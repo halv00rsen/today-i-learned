@@ -7,16 +7,25 @@ import { isNonEmptyArray } from '../utils/array';
 import { getFormattedDateWithTime } from '../utils/time';
 import { firebaseAuth } from '../firebase';
 import { Button } from '../components/Button/Button';
+import { getText, Text } from '../components/Texts/Text';
+import { useTextsPrefix } from '../context/TextContext';
+import {
+  isSupportedLanguage,
+  languages,
+  Texts,
+} from '../utils/texts';
+import { useSettings } from '../context/SettingsContext';
 
 interface EntryProps {
   title: string;
   value: string;
+  texts: Texts;
 }
 
-const InfoEntry = ({ title, value }: EntryProps) => {
+const InfoEntry = ({ title, value, texts }: EntryProps) => {
   return (
     <div className={classNames(styles.userEntry)}>
-      <div>{title}</div>
+      <Text value={title} texts={texts} tag="div" />
       <div>{value}</div>
     </div>
   );
@@ -36,13 +45,19 @@ const clientVersion =
 const clientDeployTime = getClientDeployTime();
 
 export const SettingsView = () => {
+  const texts = useTextsPrefix('SETTINGS');
+  const userinfoTexts = useTextsPrefix('USERINFO', texts);
+  const languageTexts = useTextsPrefix('LANGUAGE', texts);
+
   const theme = useTheme();
   const setTheme = useSetTheme();
   const userStatus = useUserStatus();
 
+  const { settings, updateSettings } = useSettings();
+
   return (
     <div>
-      <h3>Instillinger</h3>
+      <Text value="TITLE" texts={texts} tag="h3" />
       <div
         className={classNames(styles.userEntry, styles.editable)}
         role="button"
@@ -50,19 +65,55 @@ export const SettingsView = () => {
           setTheme(theme === 'dark' ? 'light' : 'dark')
         }
       >
-        <div>Nattmodus</div>
-        <div>{theme === 'dark' ? 'På' : 'Av'}</div>
+        <Text value="NIGHTMODE" texts={texts} tag="div" />
+        <Text
+          value={theme === 'dark' ? 'ON' : 'OFF'}
+          texts={texts}
+          tag="div"
+        />
+      </div>
+      <div className={classNames(styles.userEntry)}>
+        <Text value="LANGUAGE" texts={texts} tag="div" />
+        <div>
+          <select
+            value={settings.language}
+            onChange={(event) => {
+              const language = event.target.value;
+              if (isSupportedLanguage(language)) {
+                updateSettings({
+                  ...settings,
+                  language,
+                });
+              }
+            }}
+          >
+            {languages.map((language) => (
+              <option value={language} key={language}>
+                {getText({
+                  texts: languageTexts,
+                  value: language,
+                })}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       {userStatus.type === 'AUTHENTICATED' && (
         <UserProfile
+          texts={userinfoTexts}
           roles={userStatus.roles}
           user={userStatus.user}
         />
       )}
-      <h3>Klientinformasjon</h3>
-      <InfoEntry title="Versjon" value={clientVersion} />
+      <Text value="CLIENTINFO" texts={texts} tag="h3" />
       <InfoEntry
-        title="Byggtidspunkt"
+        title="VERSION"
+        value={clientVersion}
+        texts={texts}
+      />
+      <InfoEntry
+        title="BUILDTIME"
+        texts={texts}
         value={getFormattedDateWithTime(clientDeployTime)}
       />
     </div>
@@ -72,20 +123,23 @@ export const SettingsView = () => {
 interface UserProfileProps {
   user: User;
   roles: string[];
+  texts: Texts;
 }
 
-const UserProfile = ({ user, roles }: UserProfileProps) => {
+const UserProfile = ({ user, roles, texts }: UserProfileProps) => {
   return (
     <>
-      <h3>Brukerinfo</h3>
+      <Text value="TITLE" texts={texts} tag="h3" />
       <div className={styles.userEntry}>
-        <div>Navn</div> <div>{user.displayName}</div>
+        <Text value="NAME" texts={texts} tag="div" />
+        <div>{user.displayName}</div>
       </div>
       <div className={styles.userEntry}>
-        <div>Epost</div> <div>{user.email}</div>
+        <Text value="EMAIL" texts={texts} tag="div" />
+        <div>{user.email}</div>
       </div>
       <div className={styles.userEntry}>
-        <div>Roller</div>
+        <Text value="ROLES" texts={texts} tag="div" />
         <div>
           {isNonEmptyArray(roles) ? roles.join(', ') : 'Ingen'}
         </div>
@@ -95,7 +149,7 @@ const UserProfile = ({ user, roles }: UserProfileProps) => {
         center={true}
         onClick={() => signOut(firebaseAuth)}
       >
-        Logg ut
+        <Text value="LOGOUT" texts={texts} tag="div" />
       </Button>
     </>
   );

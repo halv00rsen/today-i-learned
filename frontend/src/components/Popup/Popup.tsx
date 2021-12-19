@@ -1,5 +1,7 @@
 import { useCallback, useEffect } from 'react';
+import { useTextsPrefix } from '../../context/TextContext';
 import { Button } from '../Button/Button';
+import { Text } from '../Texts/Text';
 import styles from './Popup.module.css';
 
 interface Props {
@@ -9,6 +11,8 @@ interface Props {
 }
 
 export const Popup = ({ children, open, onClose }: Props) => {
+  const texts = useTextsPrefix('SHARED');
+
   const closeModal = useCallback(() => {
     onClose();
   }, [onClose]);
@@ -36,7 +40,7 @@ export const Popup = ({ children, open, onClose }: Props) => {
             onClick={closeModal}
             fullWidth
           >
-            Lukk
+            <Text texts={texts} value="CLOSE" />
           </Button>
           {children}
         </div>

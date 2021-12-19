@@ -1,8 +1,10 @@
 import classNames from 'classnames';
 import { useState } from 'react';
 import { useTagProvider } from '../../context/TagContext';
+import { useTextsPrefix } from '../../context/TextContext';
 import { Tag } from '../../service/tag';
 import { Button } from '../Button/Button';
+import { Text } from '../Texts/Text';
 import styles from './FilterContainer.module.css';
 
 interface TagProps {
@@ -31,6 +33,8 @@ interface Props {
 }
 
 export const FitlerContainer = ({ onFinished }: Props) => {
+  const texts = useTextsPrefix('FILTERS');
+
   const { allTags, setActiveTags, activeTags } = useTagProvider();
 
   const [chosenTags, setChosenTags] = useState<Tag[]>(
@@ -39,7 +43,7 @@ export const FitlerContainer = ({ onFinished }: Props) => {
 
   return (
     <div>
-      <div>Velg hvilke emneknagger du vil filtrere på.</div>
+      <Text value="TITLE" texts={texts} />
       <div>
         {allTags.map((tag) => {
           const chosen = chosenTags.some(
@@ -70,7 +74,7 @@ export const FitlerContainer = ({ onFinished }: Props) => {
             onFinished();
           }}
         >
-          Lagre
+          <Text value="SHARED.SAVE" texts={texts} tag="text" />
         </Button>
         <Button
           onClick={() => {
@@ -79,7 +83,11 @@ export const FitlerContainer = ({ onFinished }: Props) => {
             onFinished();
           }}
         >
-          Fjern alle
+          <Text
+            value="SHARED.REMOVEALL"
+            texts={texts}
+            tag="text"
+          />
         </Button>
       </div>
     </div>

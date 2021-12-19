@@ -9,6 +9,9 @@ import classNames from 'classnames';
 import { Timestamp } from 'firebase/firestore';
 import { getFormattedDateWithTime } from '../../utils/time';
 import { Button } from '../Button/Button';
+import { Texts } from '../../utils/texts';
+import { getInterpolatedText, getText, Text } from '../Texts/Text';
+import { useTextsPrefix } from '../../context/TextContext';
 
 interface HeaderProps {
   text: string;
@@ -70,9 +73,10 @@ type EditableStatus =
 interface EditableProps {
   postId: string;
   status: EditableStatus;
+  texts: Texts;
 }
 
-const Editable = ({ postId, status }: EditableProps) => {
+const Editable = ({ postId, status, texts }: EditableProps) => {
   const history = useHistory();
 
   const enterPost = () => {
@@ -86,7 +90,7 @@ const Editable = ({ postId, status }: EditableProps) => {
     <div className={styles.buttonRow}>
       {(status === 'all' || status === 'only-editable') && (
         <Button inline={true} size="small" onClick={enterPost}>
-          Endre
+          <Text value="edit" texts={texts} tag="text" />
         </Button>
       )}
       {(status === 'all' || status === 'only-delete') && (
@@ -105,7 +109,7 @@ const Editable = ({ postId, status }: EditableProps) => {
               })
           }
         >
-          Slett
+          <Text value="delete" texts={texts} tag="text" />
         </Button>
       )}
     </div>
@@ -123,6 +127,8 @@ export const Post = ({
   editable = false,
   deletable = false,
 }: Props) => {
+  const texts = useTextsPrefix('POST');
+
   const getStatus = (): EditableStatus => {
     if (editable && deletable) {
       return 'all';
@@ -149,7 +155,11 @@ export const Post = ({
     >
       <Header text={post.title}>
         {getStatus() !== 'none' && (
-          <Editable postId={post.id} status={getStatus()} />
+          <Editable
+            postId={post.id}
+            status={getStatus()}
+            texts={texts}
+          />
         )}
       </Header>
       <Content>
@@ -164,10 +174,17 @@ export const Post = ({
         </div>
         <div className={styles.publishStatus}>
           {publishStatus === 'FUTURE_PUBLISH'
-            ? `Publiseres på ${publishDate}`
+            ? getInterpolatedText({
+                texts,
+                value: 'FUTURE_PUBLISH_DATE',
+                interpolate: [publishDate],
+              })
             : publishStatus === 'PUBLISHED'
             ? `${publishDate}`
-            : `Ikke publisert`}
+            : getText({
+                texts,
+                value: 'NOT_PUBLISHED',
+              })}
         </div>
       </Footer>
     </div>

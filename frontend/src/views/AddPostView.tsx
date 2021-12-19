@@ -6,6 +6,8 @@ import { EditPost } from '../components/EditPost/EditPost';
 import { PartialPost } from '../utils/types/domain';
 import { FirestoreError } from 'firebase/firestore';
 import { getFirestoreError } from '../utils/error';
+import { useTextsPrefix } from '../context/TextContext';
+import { Text } from '../components/Texts/Text';
 
 interface Props {
   user: User;
@@ -15,6 +17,8 @@ type AddingStatus = 'CREATING' | 'CREATED' | 'ERROR' | 'INIT';
 
 export const AddPostView = ({ user }: Props) => {
   const [status, setStatus] = useState<AddingStatus>('INIT');
+
+  const texts = useTextsPrefix('NEWPOST');
 
   const addPost = (post: PartialPost) => {
     setStatus('CREATING');
@@ -33,10 +37,13 @@ export const AddPostView = ({ user }: Props) => {
   }
   return (
     <div>
-      {status === 'ERROR' && <div>En feil skjedde</div>}
+      {status === 'ERROR' && (
+        <Text value="SHARED.ERROR" texts={texts} tag="div" />
+      )}
       <EditPost
         onClick={addPost}
         disabled={status === 'CREATING'}
+        texts={texts}
       />
     </div>
   );
