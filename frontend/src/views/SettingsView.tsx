@@ -1,5 +1,4 @@
 import { signOut, User } from 'firebase/auth';
-import { useSetTheme, useTheme } from '../components/ThemeWrapper';
 import { useUserStatus } from '../utils/useUserStatus';
 import styles from './SettingsView.module.css';
 import classNames from 'classnames';
@@ -49,8 +48,6 @@ export const SettingsView = () => {
   const userinfoTexts = useTextsPrefix('USERINFO', texts);
   const languageTexts = useTextsPrefix('LANGUAGE', texts);
 
-  const theme = useTheme();
-  const setTheme = useSetTheme();
   const userStatus = useUserStatus();
 
   const { settings, updateSettings } = useSettings();
@@ -62,12 +59,15 @@ export const SettingsView = () => {
         className={classNames(styles.userEntry, styles.editable)}
         role="button"
         onClick={() =>
-          setTheme(theme === 'dark' ? 'light' : 'dark')
+          updateSettings({
+            ...settings,
+            theme: settings.theme === 'dark' ? 'light' : 'dark',
+          })
         }
       >
         <Text value="NIGHTMODE" texts={texts} tag="div" />
         <Text
-          value={theme === 'dark' ? 'ON' : 'OFF'}
+          value={settings.theme === 'dark' ? 'ON' : 'OFF'}
           texts={texts}
           tag="div"
         />

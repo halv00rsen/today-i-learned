@@ -7,8 +7,8 @@ import { SettingsProvider } from './context/SettingsContext';
 
 const App = () => {
   return (
-    <ThemeWrapper>
-      <SettingsProvider>
+    <SettingsProvider>
+      <ThemeWrapper>
         <TextProvider>
           <TagContextWrapper>
             <div className={styles.wrapper}>
@@ -16,8 +16,8 @@ const App = () => {
             </div>
           </TagContextWrapper>
         </TextProvider>
-      </SettingsProvider>
-    </ThemeWrapper>
+      </ThemeWrapper>
+    </SettingsProvider>
   );
 };
 

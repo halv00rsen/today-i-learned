@@ -1,10 +1,18 @@
 import { createContext, useContext, useState } from 'react';
 import { Language } from '../utils/texts';
 
+interface Settings {
+  language: Language;
+  theme: Theme;
+}
+
+type Theme = 'dark' | 'light';
+
 const SETTINGS_KEY = 'settings';
 
 const defaultSettings: Settings = {
   language: 'NO',
+  theme: 'dark',
 };
 
 const getSettingsLocalStorage = (): Settings => {
@@ -24,10 +32,6 @@ const getSettingsLocalStorage = (): Settings => {
     ...defaultSettings,
   };
 };
-
-interface Settings {
-  language: Language;
-}
 
 interface SettingsData {
   settings: Settings;
@@ -67,7 +71,9 @@ export const SettingsProvider = ({ children }: Props) => {
         updateSettings,
       }}
     >
-      {children}
+      <div data-theme={settings.theme} style={{ height: '100%' }}>
+        {children}
+      </div>
     </SettingsContext.Provider>
   );
 };
