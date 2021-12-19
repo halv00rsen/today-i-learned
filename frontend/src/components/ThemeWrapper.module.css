@@ -1,5 +1,4 @@
 .themeWrapper {
-  height: 100vh;
+  min-height: 100vh;
   background-color: var(--theme-background-color);
-  overflow-y: scroll;
 }

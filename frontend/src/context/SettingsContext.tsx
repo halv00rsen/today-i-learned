@@ -71,7 +71,10 @@ export const SettingsProvider = ({ children }: Props) => {
         updateSettings,
       }}
     >
-      <div data-theme={settings.theme} style={{ height: '100%' }}>
+      <div
+        data-theme={settings.theme}
+        style={{ minHeight: '100vh' }}
+      >
         {children}
       </div>
     </SettingsContext.Provider>
