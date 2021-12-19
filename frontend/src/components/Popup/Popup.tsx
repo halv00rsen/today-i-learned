@@ -25,7 +25,7 @@ export const Popup = ({ children, open, onClose }: Props) => {
     return () => {
       document.removeEventListener('keydown', hideOnEscape);
     };
-  }, [open]);
+  }, [open, closeModal]);
 
   if (open) {
     return (

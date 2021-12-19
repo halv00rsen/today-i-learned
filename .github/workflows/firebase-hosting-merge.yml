@@ -23,6 +23,7 @@ jobs:
         run: |
           cd frontend
           npm ci && npm run build
+          npm run lint
           echo "Client version: ${VITE_CLIENT_VERSION}"
         env:
           VITE_CLIENT_VERSION: ${{ steps.vars.outputs.CLIENT_VERSION }}

@@ -10,8 +10,9 @@ const components: Components = {
         style={vscDarkPlus}
         language={match[1]}
         PreTag="div"
-        children={String(children).replace(/\n$/, '')}
-      />
+      >
+        {String(children).replace(/\n$/, '')}
+      </SyntaxHighlighter>
     ) : (
       <code className={className} {...props}>
         {children}
@@ -26,6 +27,8 @@ interface Props {
 
 export const Markdown = ({ content }: Props) => {
   return (
-    <ReactMarkdown components={components} children={content} />
+    <ReactMarkdown components={components}>
+      {content}
+    </ReactMarkdown>
   );
 };

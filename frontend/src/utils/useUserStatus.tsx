@@ -45,7 +45,7 @@ export const useUserStatus = (): UserStatus => {
                 roles: roles || [],
               });
             })
-            .catch(() => {});
+            .catch(console.log);
         } else {
           setUserStatus({ type: 'UNAUTHENTICATED' });
         }

@@ -11,7 +11,7 @@ interface ThemeProvider {
 
 const ThemeContext = createContext<ThemeProvider>({
   theme: 'dark',
-  setTheme: () => {},
+  setTheme: console.log,
 });
 
 interface Props {
