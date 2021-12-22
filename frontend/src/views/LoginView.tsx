@@ -5,6 +5,12 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { firebaseAuth } from '../firebase';
 import { useTextsPrefix } from '../context/TextContext';
 import { getText, Text } from '../components/Texts/Text';
+import { Button } from '../components/Button/Button';
+
+const inputStyle: React.CSSProperties = {
+  margin: '0 0 1em',
+  padding: '0.5em',
+};
 
 export const LoginView = () => {
   const userStatus = useUserStatus();
@@ -30,12 +36,19 @@ export const LoginView = () => {
     return <Redirect to="/" />;
   }
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
       <Text value="TITLE" texts={texts} tag="h3" />
       {error && <Text value="ERROR" texts={texts} tag="div" />}
       <input
         type="text"
         value={email}
+        style={inputStyle}
         onChange={(e) => setEmail(e.target.value)}
         placeholder={getText({
           texts,
@@ -45,15 +58,16 @@ export const LoginView = () => {
       <input
         type="password"
         value={password}
+        style={inputStyle}
         onChange={(e) => setPassword(e.target.value)}
         placeholder={getText({
           texts,
           value: 'PASSWORD.PLACEHOLDER',
         })}
       />
-      <button onClick={login}>
+      <Button onClick={login}>
         <Text value="ACTION" texts={texts} />
-      </button>
+      </Button>
     </div>
   );
 };
