@@ -48,9 +48,8 @@ readline.question('Email? ', async (email) => {
         }
         readline.close();
       });
-    } catch {
-      console.log('An error happend.');
-      console.log(`Could not find user "${email}"`);
+    } catch (error) {
+      console.log(`Error: ${error.code}`);
       readline.close();
     }
   } else {
