@@ -32,7 +32,8 @@ jobs:
         run: |
           cp -R frontend/dist firebase/public
           cd firebase
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Deploy application to firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           entryPoint: "firebase/"
