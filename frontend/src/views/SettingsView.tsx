@@ -1,5 +1,5 @@
 import { signOut, User } from 'firebase/auth';
-import { useUserStatus } from '../utils/useUserStatus';
+import { isAdmin, useUserStatus } from '../utils/useUserStatus';
 import styles from './SettingsView.module.css';
 import classNames from 'classnames';
 import { isNonEmptyArray } from '../utils/array';
@@ -14,6 +14,7 @@ import {
   Texts,
 } from '../utils/texts';
 import { useSettings } from '../context/SettingsContext';
+import { Link } from 'react-router-dom';
 
 interface EntryProps {
   title: string;
@@ -116,6 +117,10 @@ export const SettingsView = () => {
         texts={texts}
         value={getFormattedDateWithTime(clientDeployTime)}
       />
+      {userStatus.type === 'AUTHENTICATED' &&
+        isAdmin(userStatus) && (
+          <Link to="/settings/admin">Admin-side</Link>
+        )}
     </div>
   );
 };

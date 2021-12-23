@@ -1,0 +1,30 @@
+.grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-items: stretch;
+  align-items: center;
+}
+
+.entry {
+  padding: 0.5em;
+}
+
+.entry:nth-child(3n + 1) {
+  background-color: #abc4a1b0;
+}
+.entry:nth-child(3n + 2) {
+  background-color: #abc4a1b0;
+}
+.entry:nth-child(3n + 3) {
+  background-color: #abc4a1b0;
+}
+
+.entry:nth-child(6n + 1) {
+  background-color: #92a88ab0;
+}
+.entry:nth-child(6n + 2) {
+  background-color: #92a88ab0;
+}
+.entry:nth-child(6n + 3) {
+  background-color: #92a88ab0;
+}

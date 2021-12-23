@@ -46,6 +46,7 @@ const no: Omit<Texts, typeof LANGUAGE_KEY> = {
   'posts.last': 'Ingen flere poster',
   'posts.error': 'En feil skjedde under lasting',
   'filters.title': 'Velg hvilke emneknagger du vil filtrere på',
+  'admin.title': 'Administrasjon',
 };
 
 const en: Omit<Texts, typeof LANGUAGE_KEY> = {
@@ -96,6 +97,7 @@ const en: Omit<Texts, typeof LANGUAGE_KEY> = {
   'posts.last': 'Last post reached',
   'posts.error': 'An error happend during loading',
   'filters.title': 'Choose which hashtags to filter on',
+  'admin.title': 'Administration',
 };
 
 export const languages = ['EN', 'NO'] as const;

@@ -1,4 +1,3 @@
-import { User } from '@firebase/auth';
 import React from 'react';
 import {
   BrowserRouter,
@@ -8,8 +7,12 @@ import {
 } from 'react-router-dom';
 import { ContentWrapper } from '../components/ContentWrapper';
 import { Header } from '../components/Header';
-import { useUserStatus } from '../utils/useUserStatus';
+import {
+  AuthenticatedUser,
+  useUserStatus,
+} from '../utils/useUserStatus';
 import { AddPostView } from './AddPostView';
+import { AdminView } from './AdminView';
 import { EditView } from './EditView';
 import { Home } from './Home';
 import { LoginView } from './LoginView';
@@ -20,7 +23,9 @@ interface ISecureRoute {
   path: string;
 
   exact?: boolean;
-  children: (user: User) => React.ReactNode;
+  children: (
+    authenticatedUser: AuthenticatedUser
+  ) => React.ReactNode;
 }
 
 const SecureRoute = ({ path, children, exact }: ISecureRoute) => {
@@ -28,7 +33,7 @@ const SecureRoute = ({ path, children, exact }: ISecureRoute) => {
   if (userStatus.type === 'AUTHENTICATED') {
     return (
       <Route path={path} exact={exact}>
-        {children(userStatus.user)}
+        {children(userStatus)}
       </Route>
     );
   } else if (userStatus.type === 'UNAUTHENTICATED') {
@@ -43,20 +48,23 @@ export const AppRouter = () => {
       <Header />
       <ContentWrapper>
         <Switch>
-          <Route path="/settings">
+          <Route exact path="/settings">
             <SettingsView />
           </Route>
+          <SecureRoute path="/settings/admin">
+            {(userStatus) => <AdminView userStatus={userStatus} />}
+          </SecureRoute>
           <Route path="/login">
             <LoginView />
           </Route>
           <SecureRoute path="/add-post">
-            {(user) => <AddPostView user={user} />}
+            {({ user }) => <AddPostView user={user} />}
           </SecureRoute>
           <SecureRoute path="/edit">
             {() => <EditView />}
           </SecureRoute>
           <SecureRoute path="/my-posts">
-            {(user) => <UserPostsView userId={user.uid} />}
+            {({ user }) => <UserPostsView userId={user.uid} />}
           </SecureRoute>
           <Route path="/" exact>
             <Home />

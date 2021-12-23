@@ -2,15 +2,15 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { firebaseAuth } from '../firebase';
 
-type UserRole = 'admin';
+export type UserRole = 'admin';
 
-type AuthenticatedUser = {
+export type AuthenticatedUser = {
   type: 'AUTHENTICATED';
   user: User;
   roles: UserRole[];
 };
 
-type UserStatus =
+export type UserStatus =
   | {
       type: 'UNKNOWN';
     }
@@ -57,4 +57,10 @@ export const useUserStatus = (): UserStatus => {
   }, []);
 
   return userStatus;
+};
+
+export const getIdToken = async (
+  user: AuthenticatedUser
+): Promise<string> => {
+  return await user.user.getIdToken();
 };
