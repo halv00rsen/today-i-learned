@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "dev-functions": "cd functions && npm run watch",
+    "start-emulators": "firebase emulators:start --import mock-data",
+    "export-mock-data": "firebase emulators:export mock-data",
+    "update-e2e-data": "firebase emulators:export integration-test-data",
+    "start-e2e-server": "firebase emulators:start --import integration-test-data"
+  },
+  "dependencies": {
+    "firebase-tools": "^10.0.1"
+  }
+}

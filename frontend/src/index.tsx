@@ -7,6 +7,7 @@ console.log(
   `Client version: ${import.meta.env.VITE_CLIENT_VERSION}`
 );
 
+console.log(`Environment: ${import.meta.env.MODE}`);
 ReactDOM.render(
   <React.StrictMode>
     <App />

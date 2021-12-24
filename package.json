@@ -1,8 +1,7 @@
 {
   "scripts": {
-    "firebase": "cd firebase && firebase emulators:start --import mock-data",
-    "function": "cd firebase/functions && npm run watch",
-    "frontend": "cd frontend && npm run dev",
-    "export": "cd firebase && firebase emulators:export mock-data"
+    "firebase": "cd firebase && npm run start-emulators",
+    "functions": "cd firebase && npm run start-functions",
+    "frontend": "cd frontend && npm run dev"
   }
 }

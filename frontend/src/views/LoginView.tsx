@@ -19,6 +19,7 @@ export const LoginView = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  const [logError, setLogError] = useState('');
 
   const login = () => {
     signInWithEmailAndPassword(
@@ -26,6 +27,7 @@ export const LoginView = () => {
       email,
       password
     ).catch((err) => {
+      setLogError(err.message || err.status || Object.keys(err));
       console.log(err);
       setError(true);
       setPassword('');
@@ -45,8 +47,10 @@ export const LoginView = () => {
     >
       <Text value="TITLE" texts={texts} tag="h3" />
       {error && <Text value="ERROR" texts={texts} tag="div" />}
+      {logError && <div>{logError}</div>}
       <input
         type="text"
+        name="email"
         value={email}
         style={inputStyle}
         onChange={(e) => setEmail(e.target.value)}
@@ -57,6 +61,7 @@ export const LoginView = () => {
       />
       <input
         type="password"
+        name="password"
         value={password}
         style={inputStyle}
         onChange={(e) => setPassword(e.target.value)}
@@ -65,7 +70,7 @@ export const LoginView = () => {
           value: 'PASSWORD.PLACEHOLDER',
         })}
       />
-      <Button onClick={login}>
+      <Button onClick={login} name="submit">
         <Text value="ACTION" texts={texts} />
       </Button>
     </div>

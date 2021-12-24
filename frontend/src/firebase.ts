@@ -1,9 +1,16 @@
 import { initializeApp, getApps } from '@firebase/app';
 import {
   getFirestore,
+  initializeFirestore,
   connectFirestoreEmulator,
 } from '@firebase/firestore';
 import { getAuth, connectAuthEmulator } from '@firebase/auth';
+
+declare global {
+  interface Window {
+    Cypress?: unknown;
+  }
+}
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCxk3gdF6plLqNWwnGGtGTNh-BbuyTTGQM',
@@ -23,6 +30,15 @@ const allApps = getApps();
 const firebaseApp =
   allApps.find((app) => app.name === appName) ??
   initializeApp(firebaseConfig);
+
+if (import.meta.env.DEV && window.Cypress) {
+  console.warn(
+    "Only used for Cypress as XHR requests and firestore don't work."
+  );
+  initializeFirestore(firebaseApp, {
+    experimentalForceLongPolling: true,
+  });
+}
 
 const firestore = getFirestore(firebaseApp);
 const firebaseAuth = getAuth(firebaseApp);

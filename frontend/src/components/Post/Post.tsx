@@ -20,7 +20,7 @@ interface HeaderProps {
 
 const Header = ({ children, text }: HeaderProps) => {
   return (
-    <div className={styles.header}>
+    <div className={styles.header} data-test-id="post-header">
       <div className={styles.headerText}>{text}</div>
       <div className={styles.headerRight}>{children}</div>
     </div>

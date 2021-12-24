@@ -11,7 +11,11 @@ export const Header = () => {
   return (
     <div className={styles.header}>
       <div className={styles.headerName}>
-        <Link className={styles.headerLink} to="/">
+        <Link
+          className={styles.headerLink}
+          to="/"
+          data-test-id="header-title"
+        >
           <Text value="TITLE" texts={texts} />
         </Link>
       </div>
@@ -29,7 +33,11 @@ export const Header = () => {
           </>
         )}
         {userStatus.type === 'UNAUTHENTICATED' && (
-          <Link className={styles.headerLink} to="/login">
+          <Link
+            className={styles.headerLink}
+            to="/login"
+            data-test-id="header-login"
+          >
             <Text value="LOGIN" texts={texts} tag="text" />
           </Link>
         )}
