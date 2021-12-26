@@ -1,6 +1,8 @@
 # Today I learned
 
-[![Build and deploy](https://github.com/halv00rsen/vanligfyr/actions/workflows/firebase-hosting-merge.yml/badge.svg?branch=main)](https://github.com/halv00rsen/vanligfyr/actions/workflows/firebase-hosting-merge.yml)
+[![Integrations Tests](https://github.com/halv00rsen/today-i-learned/actions/workflows/integration-tests.yml/badge.svg?branch=main)](https://github.com/halv00rsen/today-i-learned/actions/workflows/integration-tests.yml)
+
+[![Production build and deploy](https://github.com/halv00rsen/today-i-learned/actions/workflows/build-and-deploy.yml/badge.svg?branch=main)](https://github.com/halv00rsen/today-i-learned/actions/workflows/build-and-deploy.yml)
 
 Website for writing and editing personal TIL.
 
