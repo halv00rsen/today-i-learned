@@ -11,6 +11,17 @@
     var(--default-padding) 0;
 }
 
+.logoHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.logo {
+  margin-right: 1em;
+}
+
 .headerLinks {
   padding: var(--default-padding) 0;
 }
