@@ -65,6 +65,7 @@ export const EditPost = ({
         <div>
           <Text value="TITLE" texts={texts} tag="h4" />
           <input
+            data-test-id="edit-post-title"
             type="text"
             disabled={disabled}
             value={title}
@@ -96,11 +97,16 @@ export const EditPost = ({
               ))}
             </ul>
             <input
+              data-test-id="edit-post-tag"
               type="text"
               value={tag}
               onChange={(e) => setTag(e.target.value)}
             />
-            <Button inline={true} onClick={addTag}>
+            <Button
+              inline={true}
+              onClick={addTag}
+              data-test-id="add-tag-button"
+            >
               <Text value="HASHTAG.ADD" texts={texts} tag="text" />
             </Button>
           </div>
@@ -123,12 +129,14 @@ export const EditPost = ({
       <div>
         <Text value="publish" texts={texts} tag="text" />
         <input
+          data-test-id="publish-checkbox"
           type="checkbox"
           checked={published}
           onChange={(e) => setPublished(e.target.checked)}
         />
       </div>
       <Button
+        data-test-id="save-post-button"
         size="medium"
         center={true}
         onClick={() => onClick(getPost())}

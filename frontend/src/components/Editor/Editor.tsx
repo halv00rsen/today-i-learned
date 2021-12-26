@@ -22,6 +22,7 @@ export const Editor = ({
   return (
     <div className={styles.editor}>
       <textarea
+        data-test-id="editor"
         className={styles.textarea}
         disabled={disabled}
         value={markdown}

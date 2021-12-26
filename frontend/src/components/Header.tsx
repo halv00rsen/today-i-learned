@@ -23,7 +23,11 @@ export const Header = () => {
         {userStatus.type === 'AUTHENTICATED' && (
           <>
             {isAdmin(userStatus) && (
-              <Link className={styles.headerLink} to="/add-post">
+              <Link
+                className={styles.headerLink}
+                to="/add-post"
+                data-test-id="header-add-posts"
+              >
                 <Text value="NEWPOST" texts={texts} tag="text" />
               </Link>
             )}
@@ -41,7 +45,11 @@ export const Header = () => {
             <Text value="LOGIN" texts={texts} tag="text" />
           </Link>
         )}
-        <Link className={styles.headerLink} to="/settings">
+        <Link
+          className={styles.headerLink}
+          to="/settings"
+          data-test-id="header-settings"
+        >
           <Text value="SETTINGS" texts={texts} tag="text" />
         </Link>
       </div>

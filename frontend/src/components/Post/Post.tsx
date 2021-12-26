@@ -95,6 +95,7 @@ const Editable = ({ postId, status, texts }: EditableProps) => {
       )}
       {(status === 'all' || status === 'only-delete') && (
         <Button
+          data-test-id="delete-post-button"
           inline={true}
           size="small"
           onClick={() =>

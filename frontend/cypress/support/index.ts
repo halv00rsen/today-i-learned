@@ -1,20 +1,23 @@
-// ***********************************************************
-// This example support/index.js is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
+import './commands';
 
-// Import commands.js using ES2015 syntax:
-import './commands'
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Cypress {
+    interface Chainable {
+      resetClientFirebase: () => Chainable<Element>;
+      login: (props: {
+        email: string;
+        password: string;
+      }) => Chainable<Element>;
+      logout: () => Chainable<Element>;
+      isUrl: (view: View) => Chainable<Element>;
+    }
+  }
+}
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+export enum View {
+  HOME = '/',
+  SETTINGS = '/settings',
+  LOGIN = '/login',
+  ADD_POST = '/add-post',
+}

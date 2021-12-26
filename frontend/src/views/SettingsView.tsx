@@ -150,6 +150,7 @@ const UserProfile = ({ user, roles, texts }: UserProfileProps) => {
         </div>
       </div>
       <Button
+        data-test-id="logout-button"
         className={styles.logoutButton}
         center={true}
         onClick={() => signOut(firebaseAuth)}
