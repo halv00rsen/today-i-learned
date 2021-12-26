@@ -17,6 +17,12 @@
   top: 20px;
   background-color: beige;
   padding: var(--default-padding);
+  display: flex;
+  flex-direction: column;
+}
+
+.popupReverse {
+  flex-direction: column-reverse;
 }
 
 .overlay {

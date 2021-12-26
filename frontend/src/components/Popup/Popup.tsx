@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useCallback, useEffect } from 'react';
 import { useTextsPrefix } from '../../context/TextContext';
 import { Button } from '../Button/Button';
@@ -8,9 +9,15 @@ interface Props {
   children: React.ReactNode;
   open: boolean;
   onClose: () => void;
+  closeButtonOnBottom?: boolean;
 }
 
-export const Popup = ({ children, open, onClose }: Props) => {
+export const Popup = ({
+  children,
+  open,
+  onClose,
+  closeButtonOnBottom = false,
+}: Props) => {
   const texts = useTextsPrefix('SHARED');
 
   const closeModal = useCallback(() => {
@@ -34,11 +41,14 @@ export const Popup = ({ children, open, onClose }: Props) => {
   if (open) {
     return (
       <>
-        <div className={styles.popup}>
+        <div
+          className={classNames(styles.popup, {
+            [styles.popupReverse]: closeButtonOnBottom,
+          })}
+        >
           <Button
             className={styles.closeButton}
             onClick={closeModal}
-            fullWidth
           >
             <Text texts={texts} value="CLOSE" />
           </Button>

@@ -29,5 +29,7 @@ html {
   --default-padding: 10px;
   --default-margin: 10px;
 
+  --max-mobile: 600px;
+
   font-size: var(--default-font-size);
 }
