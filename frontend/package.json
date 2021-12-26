@@ -17,6 +17,7 @@
     "build-test": "tsc && vite build --mode test",
     "tsc": "tsc",
     "cy:open": "cypress open",
+    "cy:run": "cypress run",
     "e2e:run": "cypress run --config baseUrl=http://localhost:5000",
     "prettier": "prettier -c src/",
     "lint": "eslint --ext .ts,.tsx --ignore-path .gitignore src",

@@ -3,7 +3,7 @@ import { adminUser, newPost, regularUser } from '../support/data';
 
 describe('posts view', () => {
   describe('unauthenticated user', () => {
-    before(() => {
+    beforeEach(() => {
       cy.resetClientFirebase();
       cy.visit(View.HOME);
     });
@@ -20,7 +20,7 @@ describe('posts view', () => {
   });
 
   describe('authenticated regular user', () => {
-    before(() => {
+    beforeEach(() => {
       cy.resetClientFirebase();
       cy.visit(View.HOME);
       cy.login(regularUser);
@@ -39,7 +39,7 @@ describe('posts view', () => {
   });
 
   describe('authenticated admin user', () => {
-    before(() => {
+    beforeEach(() => {
       cy.resetClientFirebase();
       cy.visit(View.HOME);
       cy.login(adminUser);
