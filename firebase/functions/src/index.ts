@@ -1,12 +1,10 @@
-import { Request, https, firestore } from 'firebase-functions';
+import { Request, https } from 'firebase-functions';
 import { auth, initializeApp } from 'firebase-admin';
-// import * as getCors from 'cors';
 
 interface User extends auth.DecodedIdToken {
   roles?: string[];
 }
 
-// const cors = getCors({ origin: true });
 initializeApp();
 
 const toApiUser = (user: auth.UserRecord) => ({
@@ -47,8 +45,6 @@ const getUserRecord = async (uid: string) => {
 };
 
 exports.user = https.onRequest(async (request, response) => {
-  // cors(request, response, async () => {
-  // functions.logger.log('Sending Formatted date:', formattedDate);
   const userToken = await getUserToken(request);
   if (userToken) {
     if (!isAdmin(userToken)) {
@@ -64,12 +60,6 @@ exports.user = https.onRequest(async (request, response) => {
       response.json(await getAllUsers());
     } else if (request.method === 'PUT') {
       const body = JSON.parse(request.body);
-      console.log(body);
-      // response.status(400);
-      // response.json({
-      //   error: 400,
-      // });
-      console.log(`finding user: ${body.id}`);
 
       const userRecord = await getUserRecord(body.id);
       if (userRecord) {
@@ -123,12 +113,11 @@ exports.user = https.onRequest(async (request, response) => {
       message: 'Not authorized',
     });
   }
-  // });
 });
 
-exports.validatePost = firestore
-  .document('post/{postId}')
-  .onCreate(async (snapshot) => {
-    console.log('creating new post');
-    console.log(snapshot.data());
-  });
+// exports.validatePost = firestore
+//   .document('post/{postId}')
+//   .onCreate(async (snapshot) => {
+//     console.log('creating new post');
+//     console.log(snapshot.data());
+//   });
