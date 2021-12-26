@@ -1,4 +1,4 @@
-import headerImg from '../../public/android-chrome-512x512.png';
+import headerImg from '/android-chrome-512x512.png';
 import { Link } from 'react-router-dom';
 import { useTextsPrefix } from '../context/TextContext';
 import { isAdmin, useUserStatus } from '../utils/useUserStatus';
