@@ -1,0 +1,19 @@
+.tabButton {
+  display: block;
+  border: 1px solid transparent;
+  background-color: var(--theme-background-color);
+  padding: 1em;
+  width: 100%;
+  transition: 0.3s;
+}
+
+.active {
+  background-color: var(--theme-background-color-hover);
+}
+
+.tabButtons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: stretch;
+}
