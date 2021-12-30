@@ -32,6 +32,7 @@ html {
   --max-mobile: 600px;
 
   font-size: var(--default-font-size);
+  min-width: 300px;
 }
 
 h1,
