@@ -5,19 +5,22 @@ import { TagContextWrapper } from './context/TagContext';
 import { AppRouter } from './views/AppRouter';
 import { SettingsProvider } from './context/SettingsContext';
 import { CookieConsentWrapper } from './components/CookieConsentWrapper';
+import { AlertWrapper } from './components/Alert/Alert';
 
 const App = () => {
   return (
     <SettingsProvider>
       <ThemeWrapper>
         <TextProvider>
-          <CookieConsentWrapper>
-            <TagContextWrapper>
-              <div className={styles.wrapper}>
-                <AppRouter />
-              </div>
-            </TagContextWrapper>
-          </CookieConsentWrapper>
+          <AlertWrapper>
+            <CookieConsentWrapper>
+              <TagContextWrapper>
+                <div className={styles.wrapper}>
+                  <AppRouter />
+                </div>
+              </TagContextWrapper>
+            </CookieConsentWrapper>
+          </AlertWrapper>
         </TextProvider>
       </ThemeWrapper>
     </SettingsProvider>

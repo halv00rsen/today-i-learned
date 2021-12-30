@@ -1,0 +1,48 @@
+.alertWrapper {
+  position: relative;
+}
+
+.alerts {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 8;
+}
+
+.alert {
+  margin: 0.5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  border-radius: 7px;
+  max-width: 500px;
+  transition: 0.3s;
+  opacity: 0;
+}
+
+.open {
+  opacity: 1;
+  transition: 0.7s;
+}
+
+.alertText {
+  padding: 0.5em 1em;
+  margin: auto 0;
+}
+
+.alertCloseButton {
+  background-color: transparent;
+  padding: 1.5em;
+  border: none;
+  border-left: 1px solid gray;
+  cursor: pointer;
+}
+
+.info {
+  background-color: rgb(83, 173, 173);
+}
+
+.error {
+  background-color: rgb(201, 142, 142);
+}
