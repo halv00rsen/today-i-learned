@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { deletePost } from '../../service/post';
 import { StoredPost } from '../../utils/types/domain';
@@ -119,6 +119,23 @@ const Editable = ({ postId, status, texts }: EditableProps) => {
   );
 };
 
+type CopyState = 'ok' | 'idle' | 'error';
+
+const CopyStatus = ({
+  state,
+  children,
+}: {
+  state: CopyState;
+  children: React.ReactNode;
+}) => {
+  if (state === 'ok') {
+    return <div style={{ color: 'green' }}>(y) {children}</div>;
+  } else if (state === 'error') {
+    return <div style={{ color: 'red' }}>(x) {children}</div>;
+  }
+  return <>{children}</>;
+};
+
 interface Props {
   post: StoredPost;
   editable?: boolean;
@@ -133,6 +150,10 @@ export const Post = ({
   const texts = useTextsPrefix('POST');
 
   const { showErrorMessage, showInfoMessage } = useMessageAlert();
+
+  const [copyState, setCopyState] = useState<
+    'ok' | 'idle' | 'error'
+  >('idle');
 
   const getStatus = (): EditableStatus => {
     if (editable && deletable) {
@@ -171,19 +192,32 @@ export const Post = ({
             inline
             size="small"
             onClick={() => {
+              setCopyState('idle');
               navigator.clipboard
                 .writeText(generatePostUrl(post.id))
                 .then(() => {
+                  setCopyState('ok');
                   showInfoMessage(
-                    'Lenken ble kopiert til utklippstavlen'
+                    getText({
+                      texts,
+                      value: 'COPY_LINK_SUCCESS',
+                    })
                   );
                 })
                 .catch(() => {
-                  showErrorMessage('Klarte ikke kopiere lenken');
+                  setCopyState('error');
+                  showErrorMessage(
+                    getText({
+                      texts,
+                      value: 'COPY_LINK_ERROR',
+                    })
+                  );
                 });
             }}
           >
-            <Text value="COPY_LINK" texts={texts} />
+            <CopyStatus state={copyState}>
+              <Text value="COPY_LINK" texts={texts} tag="text" />
+            </CopyStatus>
           </Button>
         </div>
       </Header>

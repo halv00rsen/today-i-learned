@@ -61,6 +61,9 @@ const no: Omit<Texts, typeof LANGUAGE_KEY> = {
   'post.not_found_alert':
     'Klarte ikke finne innlegget du leter etter',
   'post.copy_link': 'Kopier lenke',
+  'post.copy_link_success':
+    'Lenken ble kopiert til utklippstavlen',
+  'post.copy_link_error': 'Klarte ikke kopiere lenken',
 };
 
 const en: Omit<Texts, typeof LANGUAGE_KEY> = {
@@ -125,6 +128,8 @@ const en: Omit<Texts, typeof LANGUAGE_KEY> = {
   'cookie.allow_access': 'Allow cookie usage',
   'post.not_found_alert': 'Unable to locate the requested post',
   'post.copy_link': 'Copy link',
+  'post.copy_link_success': 'The link was copied to the clipboard',
+  'post.copy_link_error': 'Did not manage to copy the link',
 };
 
 export const languages = ['EN', 'NO'] as const;
