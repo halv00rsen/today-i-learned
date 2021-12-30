@@ -1,0 +1,21 @@
+.desktop {
+  display: block;
+  visibility: visible;
+}
+
+.mobile {
+  display: none;
+  visibility: hidden;
+}
+
+@media only screen and (max-width: 600px) {
+  .mobile {
+    display: block;
+    visibility: visible;
+  }
+
+  .desktop {
+    display: none;
+    visibility: hidden;
+  }
+}
