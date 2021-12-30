@@ -25,12 +25,13 @@ export const Tabs = ({ tabs, defaultActiveTabId }: Props) => {
     <>
       <div className={styles.tabButtons}>
         {tabs.map(({ id, tabTitle }) => {
+          const active = id === activeTabId;
           return (
             <button
               key={id}
-              onClick={() => setActiveTabId(id)}
+              onClick={() => !active && setActiveTabId(id)}
               className={classNames(styles.tabButton, {
-                [styles.active]: activeTab?.id === id,
+                [styles.active]: active,
               })}
             >
               {tabTitle}
