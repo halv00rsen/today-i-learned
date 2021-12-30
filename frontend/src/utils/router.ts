@@ -19,3 +19,7 @@ export const useQueryParams = <Parameter extends string>(
     };
   }, {} as QueryParameters<Parameter>);
 };
+
+export const generatePostUrl = (postId: string): string => {
+  return `${window.location.origin}/post/${postId}`;
+};

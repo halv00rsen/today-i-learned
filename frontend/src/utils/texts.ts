@@ -58,6 +58,9 @@ const no: Omit<Texts, typeof LANGUAGE_KEY> = {
   'cookie.denied': 'Cookies ikke tillatt',
   'cookie.deny_access': 'Fjern bruken av cookies',
   'cookie.allow_access': 'Tillat bruken av cookies',
+  'post.not_found_alert':
+    'Klarte ikke finne innlegget du leter etter',
+  'post.copy_link': 'Kopier lenke',
 };
 
 const en: Omit<Texts, typeof LANGUAGE_KEY> = {
@@ -120,6 +123,8 @@ const en: Omit<Texts, typeof LANGUAGE_KEY> = {
   'cookie.denied': 'Cookies denied',
   'cookie.deny_access': 'Remove cookie usage',
   'cookie.allow_access': 'Allow cookie usage',
+  'post.not_found_alert': 'Unable to locate the requested post',
+  'post.copy_link': 'Copy link',
 };
 
 export const languages = ['EN', 'NO'] as const;

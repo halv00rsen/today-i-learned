@@ -12,6 +12,8 @@ import { Button } from '../Button/Button';
 import { Texts } from '../../utils/texts';
 import { getInterpolatedText, getText, Text } from '../Texts/Text';
 import { useTextsPrefix } from '../../context/TextContext';
+import { generatePostUrl } from '../../utils/router';
+import { useMessageAlert } from '../Alert/Alert';
 
 interface HeaderProps {
   text: string;
@@ -87,7 +89,7 @@ const Editable = ({ postId, status, texts }: EditableProps) => {
   };
 
   return (
-    <div className={styles.buttonRow}>
+    <>
       {(status === 'all' || status === 'only-editable') && (
         <Button inline={true} size="small" onClick={enterPost}>
           <Text value="edit" texts={texts} tag="text" />
@@ -113,7 +115,7 @@ const Editable = ({ postId, status, texts }: EditableProps) => {
           <Text value="delete" texts={texts} tag="text" />
         </Button>
       )}
-    </div>
+    </>
   );
 };
 
@@ -129,6 +131,8 @@ export const Post = ({
   deletable = false,
 }: Props) => {
   const texts = useTextsPrefix('POST');
+
+  const { showErrorMessage, showInfoMessage } = useMessageAlert();
 
   const getStatus = (): EditableStatus => {
     if (editable && deletable) {
@@ -155,13 +159,33 @@ export const Post = ({
       })}
     >
       <Header text={post.title}>
-        {getStatus() !== 'none' && (
-          <Editable
-            postId={post.id}
-            status={getStatus()}
-            texts={texts}
-          />
-        )}
+        <div className={styles.buttonRow}>
+          {getStatus() !== 'none' && (
+            <Editable
+              postId={post.id}
+              status={getStatus()}
+              texts={texts}
+            />
+          )}
+          <Button
+            inline
+            size="small"
+            onClick={() => {
+              navigator.clipboard
+                .writeText(generatePostUrl(post.id))
+                .then(() => {
+                  showInfoMessage(
+                    'Lenken ble kopiert til utklippstavlen'
+                  );
+                })
+                .catch(() => {
+                  showErrorMessage('Klarte ikke kopiere lenken');
+                });
+            }}
+          >
+            <Text value="COPY_LINK" texts={texts} />
+          </Button>
+        </div>
       </Header>
       <Content>
         {post.subtitle && <div>{post.subtitle}</div>}

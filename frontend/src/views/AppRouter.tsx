@@ -16,6 +16,7 @@ import { AdminView } from './AdminView';
 import { EditView } from './EditView';
 import { Home } from './Home';
 import { LoginView } from './LoginView';
+import { PostView } from './PostView';
 import { SettingsView } from './SettingsView';
 import { UserPostsView } from './UserPostsView';
 
@@ -66,12 +67,14 @@ export const AppRouter = () => {
           <SecureRoute path="/my-posts">
             {({ user }) => <UserPostsView userId={user.uid} />}
           </SecureRoute>
+          <Route path="/post/:postId">
+            <PostView />
+          </Route>
           <Route path="/" exact>
             <Home />
           </Route>
           <Route path="*">
             <div>Finner ikke siden du leter etter.</div>
-            <div>er vi her egentlig</div>
           </Route>
         </Switch>
       </ContentWrapper>
