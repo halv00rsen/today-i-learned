@@ -48,6 +48,7 @@ export const SettingsView = () => {
   const texts = useTextsPrefix('SETTINGS');
   const userinfoTexts = useTextsPrefix('USERINFO', texts);
   const languageTexts = useTextsPrefix('LANGUAGE', texts);
+  const cookieTexts = useTextsPrefix('COOKIE');
 
   const userStatus = useUserStatus();
 
@@ -98,6 +99,34 @@ export const SettingsView = () => {
             ))}
           </select>
         </div>
+      </div>
+      <div className={styles.userEntry}>
+        <Text
+          value={
+            settings.cookieConsent === 'allowed'
+              ? 'ALLOWED'
+              : 'DENIED'
+          }
+          texts={cookieTexts}
+          tag="div"
+        />
+        <Button
+          onClick={() => {
+            updateSettings({
+              ...settings,
+              cookieConsent:
+                settings.cookieConsent === 'allowed'
+                  ? 'denied'
+                  : 'allowed',
+            });
+          }}
+        >
+          {settings.cookieConsent === 'allowed' ? (
+            <Text value="DENY_ACCESS" texts={cookieTexts} />
+          ) : (
+            <Text value="ALLOW_ACCESS" texts={cookieTexts} />
+          )}
+        </Button>
       </div>
       {userStatus.type === 'AUTHENTICATED' && (
         <UserProfile

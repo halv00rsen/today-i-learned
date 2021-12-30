@@ -4,6 +4,7 @@ import { Language } from '../utils/texts';
 interface Settings {
   language: Language;
   theme: Theme;
+  cookieConsent: 'not_answered' | 'denied' | 'allowed';
 }
 
 type Theme = 'dark' | 'light';
@@ -13,6 +14,7 @@ const SETTINGS_KEY = 'settings';
 const defaultSettings: Settings = {
   language: 'NO',
   theme: 'dark',
+  cookieConsent: 'not_answered',
 };
 
 const getSettingsLocalStorage = (): Settings => {
@@ -61,7 +63,11 @@ export const SettingsProvider = ({ children }: Props) => {
 
   const updateSettings = (settings: Settings) => {
     setSettings(settings);
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    if (settings.cookieConsent === 'allowed') {
+      localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    } else {
+      localStorage.clear();
+    }
   };
 
   return (

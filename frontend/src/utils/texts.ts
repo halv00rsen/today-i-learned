@@ -5,6 +5,8 @@ const no: Omit<Texts, typeof LANGUAGE_KEY> = {
   'shared.removeall': 'Fjern alle',
   'shared.filter': 'Filter',
   'shared.save': 'Lagre',
+  'shared.allow': 'Tillat',
+  'shared.deny': 'Avvis',
   'settings.title': 'Innstillinger',
   'settings.nightmode': 'Nattmodus',
   'settings.language': 'Språk',
@@ -49,6 +51,13 @@ const no: Omit<Texts, typeof LANGUAGE_KEY> = {
   'posts.error': 'En feil skjedde under lasting',
   'filters.title': 'Velg hvilke emneknagger du vil filtrere på',
   'admin.title': 'Administrasjon',
+  'cookie.title': 'Tillat bruken av cookies',
+  'cookie.info':
+    'Vi bruker cookies for å lagre dine innstillinger lokalt i nettleseren til neste besøk.',
+  'cookie.allowed': 'Cookies tillatt',
+  'cookie.denied': 'Cookies ikke tillatt',
+  'cookie.deny_access': 'Fjern bruken av cookies',
+  'cookie.allow_access': 'Tillat bruken av cookies',
 };
 
 const en: Omit<Texts, typeof LANGUAGE_KEY> = {
@@ -58,6 +67,8 @@ const en: Omit<Texts, typeof LANGUAGE_KEY> = {
   'shared.filter': 'Filters',
   'shared.removeall': 'Remove all',
   'shared.save': 'Save',
+  'shared.allow': 'Allow',
+  'shared.deny': 'Deny',
   'settings.title': 'Settings',
   'settings.nightmode': 'Night mode',
   'settings.language': 'Language',
@@ -102,6 +113,13 @@ const en: Omit<Texts, typeof LANGUAGE_KEY> = {
   'posts.error': 'An error happend during loading',
   'filters.title': 'Choose which hashtags to filter on',
   'admin.title': 'Administration',
+  'cookie.title': 'Allow usage of cookies',
+  'cookie.info':
+    'We use cookies to save your local settings for your next visit.',
+  'cookie.allowed': 'Cookies allowed',
+  'cookie.denied': 'Cookies denied',
+  'cookie.deny_access': 'Remove cookie usage',
+  'cookie.allow_access': 'Allow cookie usage',
 };
 
 export const languages = ['EN', 'NO'] as const;

@@ -1,0 +1,17 @@
+.wrapper {
+  position: relative;
+}
+
+.consentBox {
+  position: fixed;
+  bottom: 2em;
+  right: 1em;
+  left: 1em;
+  background-color: var(--background-second);
+  border: 3px solid var(--default-border-color);
+  padding: 1em;
+}
+
+.infoBox {
+  padding: 1em 0;
+}
