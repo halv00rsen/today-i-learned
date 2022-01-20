@@ -1,0 +1,21 @@
+name: Create test link
+
+on: [pull_request]
+
+jobs:
+  generate:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Comment test link
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const branchName = context.payload.pull_request.head.ref;
+
+            const testUrl = `https://til.jorgehal.no?branch=${branchName}`;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Branchen kan testes ut på ${testUrl}`
+            })
