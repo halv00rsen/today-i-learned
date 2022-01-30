@@ -1,4 +1,8 @@
-import { initializeApp, getApps } from '@firebase/app';
+import {
+  initializeApp,
+  getApps,
+  FirebaseOptions,
+} from '@firebase/app';
 import {
   getFirestore,
   initializeFirestore,
@@ -12,7 +16,7 @@ declare global {
   }
 }
 
-const firebaseConfig = {
+const firebaseConfig: FirebaseOptions = {
   apiKey: 'AIzaSyCxk3gdF6plLqNWwnGGtGTNh-BbuyTTGQM',
   authDomain: 'vanligfyr.firebaseapp.com',
   databaseURL:
@@ -37,6 +41,11 @@ if (import.meta.env.DEV && window.Cypress) {
   );
   initializeFirestore(firebaseApp, {
     experimentalForceLongPolling: true,
+    ignoreUndefinedProperties: true,
+  });
+} else {
+  initializeFirestore(firebaseApp, {
+    ignoreUndefinedProperties: true,
   });
 }
 
