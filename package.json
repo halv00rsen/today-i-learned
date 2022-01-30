@@ -1,7 +1,7 @@
 {
   "scripts": {
     "firebase": "cd firebase && npm run start-emulators",
-    "functions": "cd firebase && npm run start-functions",
+    "functions": "cd firebase && npm run dev-functions",
     "frontend": "cd frontend && npm run dev"
   }
 }
