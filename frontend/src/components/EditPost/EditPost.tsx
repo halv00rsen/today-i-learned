@@ -75,7 +75,12 @@ export const EditPost = ({
         data-test-id="save-post-button"
         size="medium"
         center={true}
-        onClick={() => onClick(partialPost)}
+        onClick={() =>
+          onClick({
+            ...partialPost,
+            published,
+          })
+        }
         disabled={disabled}
       >
         <Text value="save" texts={texts} tag="text" />
