@@ -36,14 +36,22 @@ export const PostsContainer = ({
   });
 
   useEffect(() => {
+    let active = true;
     getInitialPosts()
       .then((status) => {
-        setPostStatus(status);
+        if (active) {
+          setPostStatus(status);
+        }
       })
       .catch((err) => {
         console.log(err);
-        setPostStatus({ type: 'ERROR' });
+        if (active) {
+          setPostStatus({ type: 'ERROR' });
+        }
       });
+    return () => {
+      active = false;
+    };
   }, [getInitialPosts]);
 
   const shiftPosts = (direction: 'NEXT' | 'PREVIOUS') => {
