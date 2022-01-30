@@ -31,11 +31,6 @@ describe('posts view', () => {
         'not.exist'
       );
     });
-
-    it('redirects to home if authenticated', () => {
-      cy.visit(View.LOGIN);
-      cy.isUrl(View.HOME);
-    });
   });
 
   describe('authenticated admin user', () => {
