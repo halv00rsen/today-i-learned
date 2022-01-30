@@ -25,6 +25,7 @@ export const CookieConsentWrapper = ({ children }: Props) => {
             <Text value="INFO" texts={texts} tag="text" />
           </div>
           <Button
+            data-test-id="cookie-allow-btn"
             inline
             onClick={() =>
               updateSettings({
@@ -36,6 +37,7 @@ export const CookieConsentWrapper = ({ children }: Props) => {
             <Text value="SHARED.ALLOW" texts={texts} tag="text" />
           </Button>
           <Button
+            data-test-id="cookie-deny-btn"
             inline
             onClick={() =>
               updateSettings({

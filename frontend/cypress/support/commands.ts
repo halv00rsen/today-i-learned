@@ -3,6 +3,7 @@ Cypress.Commands.add('resetClientFirebase', () => {
 });
 
 Cypress.Commands.add('login', ({ password, email }) => {
+  cy.get('[data-test-id="cookie-allow-btn"]').click();
   cy.get('[data-test-id="header-login"]').click();
   cy.get('input[name="email"]').type(email);
   cy.get('input[name="password"]').type(password);
