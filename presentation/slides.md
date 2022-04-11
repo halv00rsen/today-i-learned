@@ -3,93 +3,95 @@ theme: default
 layout: cover
 ---
 
-# Firebase Emulators with Cypress in Github Actions
-
-Integration tests in a CI/CD envioronment with Firebase Emulators
-
----
-
-# Motivation
-
-- Test setup almost equal to production setup
+<!-- # Integrasjonstesting med Firebase Emulators -->
+# Firebase Emulators med Cypress
 
 ---
 
-# Technologies
+# Hovedmotivasjon
+
+Være så nært prod som mulig når man kjører integrasjonstester - både i CI men også lokalt.
+
+Spinne opp hele arkitekturen i en container/action for å kjøre
+integrasjonstester på
+
+<!-- "Et produksjonsmiljø i lomma" -->
+
+---
+
+# Teknologier
 
 - **Firebase**
-- **Firebase emulators**
+- **Firebase Emulators**
 - **Github Actions**
 - **Cypress**
 
+<!--
+Kanskje noen av teknologiene er litt kjente for folk her?
+Eller er alt nytt kanskje?
+-->
+
 ---
-layout: two-cols
----
 
-# What is Firebase?
-
-Simple and easy way of hosting a proof of consept with strong capabilities.
-
-<v-clicks>
-
-## Some Features
+# Firebase
 
 - Hosting with domain and HTTPS
 - Database with Firestore
 - Functions
 - Authentication
 
-## !! Firebase Emulators !!
-
-</v-clicks>
-
-::right::
-
-<img src="images/firebase-logo.svg" class="m-20 h-20"/>
-
-<!--
-This is a note on multiple lines
--->
-
+<!-- Spør rommet om kjennskap - kanskje denne kan sløyfes -->
 ---
 
 # Firebase Emulators
 
-Emulate the entire setup locally or in a CI/CD environment. No need of an internet connection for full development.
+<img src="https://firebase.google.cn/docs/emulator-suite/images/emulator-suite-usecase.png" class="h-100 rounded shadow" />
+
+<!-- ![emulator-suite](https://firebase.google.cn/docs/emulator-suite/images/emulator-suite-usecase.png) -->
+
+<!--
+Gjør seg i en kommentar kanskje? "Integration Tests: each individual product emulator in the Emulator Suite responds to SDK and REST API calls just like production Firebase services. So you can use your own testing tools to write self-contained integration tests that use the Local Emulator Suite as the backend."
+-->
 
 ---
-
-# Additional Technologies
-
-- Github Actions
-- Cypress
-- Web application
-
-<!-- Describe each technology briefly -->
-
+layout: two-cols
 ---
 
-# firebase.json
+<template v-slot:default>
 
-```json
+# Firebase Emulators
+
+*Eksempel på en konfigurasjon firebase.json*
+
+</template>
+<template v-slot:right>
+
+```json {all|16-21}
 {
-  // ...
-  "emulators": {
-    "auth": {
-        "port": 9099
-    },
-    "firestore": {
-        "port": 8080
-    },
-    "hosting": {
-        "port": 5000
-    },
-    "ui": {
-        "enabled": true
-    }
-    // ... other emulators supported as well
+  "hosting": {
+    "public": "public",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "/user",
+        "function": "user"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   },
-  // ...
+  "emulators": {
+    "auth": { "port": 9099 },
+    "firestore": { "port": 8080 },
+    "hosting": { "port": 5000 },
+    "ui": { "enabled": true }
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
 }
 ```
 
@@ -98,9 +100,41 @@ Standard ports and configuration for the emulators.
 This is all you need for setting up these emulators.
 -->
 
+</template>
+
 ---
 
-# Web app code for interaction with Firebase
+# Firebase Emulators
+
+```bash
+# First time
+firebase emulators:start
+
+# ... create test data using your application ...
+
+# Export data created within the emulators
+firebase emulators:export mock-data
+
+# Start emulators with mock data
+firebase emulators:start --import mock-data
+
+# Alternatively
+git add mock-data/
+
+```
+
+<!--
+- *Run emulators with mock data*
+- Integration Tests: each individual product emulator in the Emulator Suite responds to SDK and REST API calls just like production Firebase services. So you can use your own testing tools to write self-contained integration tests that use the Local Emulator Suite as the backend.
+- Save in commit history
+- Use these test data for your integration tests
+
+-->
+
+---
+
+
+# Kode for applikasjonen
 
 ```js
 // Configuration for Firebase project
@@ -129,96 +163,78 @@ export { firestore, firebaseAuth };
 Cypress intercepts some XHR-requests (fetch?). This doesn't work quite well with the connection with firestore which uses some kind of sockets. This forces each request within the socket to be handled correctly.
 
 experimentalForceLongPolling: isCypress
+
+Nevn at kalling av functions ikke trenger noe mer magi enn det som er definert i firebase.json
  -->
 
 ---
 
-# Mocking of test data
+# CI/CD pipeline
 
-Play around in your web application, for example create some test users in authenticator. Create test data which can be used for integration tests and local development.
+- Installer emulatorene
+- Bygg "prodbygg"
+- Flytt "prodbygg" til firebase hosting mappen
+- Start emulatorene
+- Kjør integrasjonstester
 
-```bash
-# Start emulators
-firebase emulators:start --import mock-data
-
-# Export data created within the emulators
-firebase emulators:export mock-data
-```
-
-- Save in commit history
-- Use these test data for your integration tests
-
----
-
-# CI/CD setup
-
-- Build frontend application
-- Move assets to firebase folder
-- Build and install dependencies for emulators
-- Start emulators with hosting, functions, database
-- Run integrations tests
+<!--
+Forklar hvorfor "prodbygg" (siden jeg har definert at
+import.meta.env.DEV er måten jeg bestemmer om jeg skal kommunisere med emulatorene), kan jeg ikke bruke prodbygget.
+Viser kun de mest relevante delene av integration-tests.yml
+-->
 
 ---
 
-# Directory setup
-
-```bash
-cd application
-
-firebase/
-firebase/functions
-frontend/
-```
-
----
-
-# Github Action
-
-My app consists of three different applications
-
-- frontend app
-- firebase emulators/app
-- custom firebase functions
-
-Each of these is built independent
+# Github Action - Integration test
 
 ```yml
 - name: Install dependencies
   uses: bahmutov/npm-install@v1
   with:
     working-directory: |
-    firebase/functions
-    frontend
-    firebase
+      firebase/functions
+      frontend
+      firebase
 ```
+
+Full action-fil kan sees i [Github repo](https://github.com/halv00rsen/today-i-learned)
+
+<!--
+- Webapp (./frontend/)
+- Diverse firebase (./firebase/)
+- Funksjoner (./firebase/functions)
+-->
 
 ---
 
-# Github Action
+# Github Action - Integration test
 
 ```yml {all|3|4}
 - name: Build frontend CI app
   run: |
-    npm run build-test
+    tsc && vite build --mode test
     cp -R dist ../firebase/public
   working-directory: frontend
 ```
 
 <!--
 npm run build-test creates a build for the CI/CD env. Similar to the local build just for hosting/prod
+
+Verd å nevne at flere av kommandoene kommer fra package.json
+De er skrevet full ut for enkelhets skyld.
+
+Siden vi har definert at hosting emulatoren skal bruke /public for
+hosting av nettsiden, må vi flytte bygde filer dit.
  -->
 
 ---
 
-# Github Action
+# Github Action - Integration test
 
-Start emulators in the background
-
-```yml {all|3,4|6}
+```yml {all|3,6}
 - name: Start Firebase emulators
   run: |
     firebase emulators:start --import integration-test-data &
-    # npm run start-e2e-server &
   env:
     FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
   working-directory: firebase
@@ -228,35 +244,43 @@ Start emulators in the background
 Note the last '&' - this comes from bash/linux and runs that command in the background
 
 Note that we include the test data folder here
+Kommandoen kan puttes inn i package.json
+
+Nevn hvorfor firebase token er her - er kanskje overflødig?
+
+Kanskje nevn at funksjonene (om de er der) også må installeres og
+bygges
+
+Dette steget er faktisk alt som skal til for å ha en fullt kjørende
+versjon av applikasjonen med emulatorene og webappen.
 -->
 
 ---
 
-# Github Action
+# Github Action - Integration test
 
-Run the integration tests.
-
-```yml {all|2|4,5|7}
+```yml {all|2|4,5|6}
 - name: Cypress run
   uses: cypress-io/github-action@v2
   with:
-    # cypress run --config baseUrl=http://localhost:5000
-    command: npm run e2e:run
+    command: cypress run --config baseUrl=http://localhost:5000 # Mulig denne er feil, kan hende det må være en npm kommando
     working-directory: frontend
     wait-on: "http://localhost:5000" # as defined in firebase.json
 ```
 
+<!--
+* Kanskje ha en kort intro til Cypress her? Luft stemninga
+
+* This action gives some setup from Cypress out of the box.
+
 If this step goes OK, the tests have passed and we can merge to main.
 
-<!--
-* This action gives some setup from Cypress out of the box.
+Den "wait-on" er ganske viktig, forklar denne
 -->
 
 ---
 
-# Github Action
-
-If the tests fail, persist artifacts
+# Github Action - Integration test
 
 ```yml {all|1|2|3,4|10,11|all}
 - uses: actions/upload-artifact@v2
@@ -274,8 +298,12 @@ If the tests fail, persist artifacts
 ```
 
 <!--
+If the tests fail, persist artifacts
+
 Save artifacts from failed build straight into the view.
 TODO: Add screenshot of failure
+
+Denne er mest for bonus, har jeg lite tid så sløyfer jeg denne
 -->
 
 ---
@@ -300,24 +328,43 @@ describe('authentication', () => {
 ```
 
 <!--
-Comment on usage of data-test-id
+* Comment on usage of data-test-id
+
+* Forklar hvilke firebase tjenester som er i bruk på hvert steg
+  Typ hosting, auth, database, functions etc.
+
+* Vurder å legge inn flere test caser her, en som bruker functions,
+  firestore etc
  -->
 
 ---
 
-# Known flaws and things to think about
+# Pros
 
-- Need to maintain mock/test data
-- Divide test data and data used for integration tests
-- Cannot replace a full testing environment in Firebase
-- Indexing of database queries isn't supported/needed in Firebase Emulators
+- Enkelt å sette opp
+- Simulering av fult oppsett
+- Brukes for lokal utvikling
+- Brukes i CI for automatiske tester
 
 ---
 
-# Questions?
+# Cons (ting å tenke på)
+
+- Mock data må vedlikeholdes
+- Indeksering av databasespørringer blir ikke gjort i emulatoren
+- Ikke 100% likt prodmiljø
+- Ikke tatt med caching ol. i GA her.
+
+---
+
+# Spørsmål?
 
 ---
 
 # Docs
 
-Used for my [today I learned site](https://til.jorgehal.no), [repository](https://github.com/halv00rsen/today-i-learned)
+- [TIL-side](https://til.jorgehal.no)
+- [Github-repo](https://github.com/halv00rsen/today-i-learned)
+- [Firebase emulators](https://firebase.google.cn/docs/emulator-suite?hl=en&%3Bskip_cache=false&skip_cache=false)
+- [Cypress](https://www.cypress.io/)
+- [Github Actions](https://github.com/features/actions)
