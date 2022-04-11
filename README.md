@@ -41,6 +41,11 @@ export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/service-account-file
 
 For more information, take a look at the [documentation](https://firebase.google.com/docs/admin/setup).
 
+## Presentation
+
+There is created a presentation using [slidev](https://sli.dev/). This is present in the `presentation` folder. The presentation can be built using the workflow trigger for the action `Build presentation`.
+The presentation can be seen [here](https://capracon22.jorgehal.no).
+
 ## Todo
 
 - Add warning when trying to exit site to another web page (url)
