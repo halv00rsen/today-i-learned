@@ -1,0 +1,29 @@
+name: Build presentation
+on: workflow_dispatch
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+        with:
+          working-directory: presentation
+      - name: Build presentation SPA
+        run: |
+          npm run build
+        working-directory: presentation
+      - name: Move built app to firebase dir
+        run: cp -R presentation/dist firebase/presentation
+      - name: Deploy presentation to firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          entryPoint: "firebase/"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_VANLIGFYR }}"
+          channelId: live
+          projectId: vanligfyr
+          target: presentation

@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "vanligfyr"
+  },
+  "targets": {
+    "vanligfyr": {
+      "hosting": {
+        "webapp": [
+          "vanligfyr"
+        ],
+        "presentation": [
+          "vanligfyr-presentation"
+        ]
+      }
+    }
   }
 }
