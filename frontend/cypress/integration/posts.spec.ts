@@ -63,15 +63,15 @@ describe('posts view', () => {
         .first()
         .contains(title);
 
+      cy.get('[data-test-id="edit-post-button"]').first().click();
+
       cy.get('[data-test-id="delete-post-button"]')
         .first()
         .click();
 
-      // uncomment when this works on same page
-      // cy.get('[data-test-id="post-header"]')
-      //   .first()
-      //   .contains(title)
-      //   .should('be.false');
+      cy.get('[data-test-id="post-header"]')
+        .first()
+        .should('not.contain.text', title);
     });
   });
 });

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { EditPost } from '../components/EditPost/EditPost';
-import { getPost, updatePost } from '../service/post';
+import { deletePost, getPost, updatePost } from '../service/post';
 import { useQueryParams } from '../utils/router';
 import { StoredPost } from '../utils/types/domain';
 import {
@@ -10,6 +10,8 @@ import {
 } from 'firebase/firestore';
 import { getFirestoreError } from '../utils/error';
 import { useTextsPrefix } from '../context/TextContext';
+import { useMessageAlert } from '../components/Alert/Alert';
+import { getText } from '../components/Texts/Text';
 
 type EditState =
   | { type: 'empty' }
@@ -24,6 +26,8 @@ export const EditView = () => {
   const [editStatus, setEditStatus] = useState<EditState>({
     type: 'empty',
   });
+  const history = useHistory();
+  const { showErrorMessage, showInfoMessage } = useMessageAlert();
 
   useEffect(() => {
     if (!postId) {
@@ -66,6 +70,20 @@ export const EditView = () => {
           texts={texts}
           initialPost={editStatus.post}
           disabled={editStatus.type === 'updating'}
+          onRemove={() => {
+            deletePost(postId)
+              .then(() => {
+                showInfoMessage(
+                  getText({ texts, value: 'delete.success' })
+                );
+                history.push('/');
+              })
+              .catch(() => {
+                showErrorMessage(
+                  getText({ texts, value: 'delete.error' })
+                );
+              });
+          }}
           onClick={(post) => {
             setEditStatus({
               type: 'updating',

@@ -41,6 +41,10 @@ const no: Omit<Texts, typeof LANGUAGE_KEY> = {
   'newpost.preview.title': 'Forhåndsvisning av innlegg',
   'newpost.publish': 'Publiser',
   'newpost.save': 'Lagre arbeid',
+  'newpost.delete': 'Slett post',
+  'newpost.delete.error':
+    'En feil har skjedd, klarte ikke å slette innlegget',
+  'newpost.delete.success': 'Innlegget ble slettet',
   'userpost.unpublished': 'Upubliserte innlegg',
   'userpost.published': 'Dine publiserte innlegg',
   'post.edit': 'Endre',
@@ -109,6 +113,10 @@ const en: Omit<Texts, typeof LANGUAGE_KEY> = {
   'newpost.preview.title': 'Preview of post',
   'newpost.publish': 'Publish',
   'newpost.save': 'Save work',
+  'newpost.delete': 'Delete post',
+  'newpost.delete.error':
+    'An error occured while deleting the post',
+  'newpost.delete.success': 'The post was deleted',
   'userpost.unpublished': 'Unpublished posts',
   'userpost.published': 'Your published posts',
   'post.edit': 'Edit',

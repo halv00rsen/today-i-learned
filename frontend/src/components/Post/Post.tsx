@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { deletePost } from '../../service/post';
 import { StoredPost } from '../../utils/types/domain';
 import { Markdown } from '../Editor/Markdown';
 import { Tag } from '../Tag/Tag';
@@ -17,7 +16,6 @@ import { useMessageAlert } from '../Alert/Alert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEdit,
-  faTrashCan,
   faClipboard,
   faClipboardQuestion,
 } from '@fortawesome/free-solid-svg-icons';
@@ -99,33 +97,13 @@ const Editable = ({ postId, status, texts }: EditableProps) => {
     <>
       {(status === 'all' || status === 'only-editable') && (
         <Button
+          data-test-id="edit-post-button"
           inline={true}
           size="small"
           onClick={enterPost}
           title={getText({ texts, value: 'edit' })}
         >
           <FontAwesomeIcon icon={faEdit} />
-        </Button>
-      )}
-      {(status === 'all' || status === 'only-delete') && (
-        <Button
-          data-test-id="delete-post-button"
-          inline={true}
-          size="small"
-          title={getText({ texts, value: 'delete' })}
-          onClick={() =>
-            deletePost(postId)
-              .then((e) => {
-                console.log('success');
-                console.log(e);
-              })
-              .catch((e) => {
-                console.log('error');
-                console.log(e);
-              })
-          }
-        >
-          <FontAwesomeIcon icon={faTrashCan} />
         </Button>
       )}
     </>

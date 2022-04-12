@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { User } from '@firebase/auth';
 import { storePost } from '../service/post';
-import { Redirect } from 'react-router';
+import { Redirect, useHistory } from 'react-router';
 import { EditPost } from '../components/EditPost/EditPost';
 import { PartialPost } from '../utils/types/domain';
 import { FirestoreError } from 'firebase/firestore';
@@ -19,6 +19,7 @@ export const AddPostView = ({ user }: Props) => {
   const [status, setStatus] = useState<AddingStatus>('INIT');
 
   const texts = useTextsPrefix('NEWPOST');
+  const history = useHistory();
 
   const addPost = (post: PartialPost) => {
     setStatus('CREATING');
@@ -41,6 +42,7 @@ export const AddPostView = ({ user }: Props) => {
         <Text value="SHARED.ERROR" texts={texts} tag="div" />
       )}
       <EditPost
+        onRemove={() => history.push('/')}
         onClick={addPost}
         disabled={status === 'CREATING'}
         texts={texts}

@@ -6,3 +6,8 @@
 .splitView > * {
   width: 48%;
 }
+
+.deleteButton {
+  background-color: var(--color-red);
+  margin-top: var(--default-margin);
+}

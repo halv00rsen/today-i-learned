@@ -29,6 +29,7 @@ const PostsCreatingContext = createContext<PostContext>({
 
 interface Props {
   onClick: (post: PartialPost) => void;
+  onRemove: () => void;
   texts: Texts;
 
   initialPost?: PartialPost;
@@ -37,6 +38,7 @@ interface Props {
 
 export const EditPost = ({
   onClick,
+  onRemove,
   texts,
   disabled = false,
   initialPost,
@@ -84,6 +86,16 @@ export const EditPost = ({
         disabled={disabled}
       >
         <Text value="save" texts={texts} tag="text" />
+      </Button>
+      <Button
+        data-test-id="delete-post-button"
+        onClick={onRemove}
+        className={styles.deleteButton}
+        center={true}
+        size="medium"
+        disabled={disabled}
+      >
+        <Text value="delete" texts={texts} tag="text" />
       </Button>
     </PostsCreatingContext.Provider>
   );
