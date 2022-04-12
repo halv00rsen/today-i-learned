@@ -10,10 +10,17 @@ import { Timestamp } from 'firebase/firestore';
 import { getFormattedDateWithTime } from '../../utils/time';
 import { Button } from '../Button/Button';
 import { Texts } from '../../utils/texts';
-import { getInterpolatedText, getText, Text } from '../Texts/Text';
+import { getInterpolatedText, getText } from '../Texts/Text';
 import { useTextsPrefix } from '../../context/TextContext';
 import { generatePostUrl } from '../../utils/router';
 import { useMessageAlert } from '../Alert/Alert';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faEdit,
+  faTrashCan,
+  faClipboard,
+  faClipboardQuestion,
+} from '@fortawesome/free-solid-svg-icons';
 
 interface HeaderProps {
   text: string;
@@ -91,8 +98,13 @@ const Editable = ({ postId, status, texts }: EditableProps) => {
   return (
     <>
       {(status === 'all' || status === 'only-editable') && (
-        <Button inline={true} size="small" onClick={enterPost}>
-          <Text value="edit" texts={texts} tag="text" />
+        <Button
+          inline={true}
+          size="small"
+          onClick={enterPost}
+          title={getText({ texts, value: 'edit' })}
+        >
+          <FontAwesomeIcon icon={faEdit} />
         </Button>
       )}
       {(status === 'all' || status === 'only-delete') && (
@@ -100,6 +112,7 @@ const Editable = ({ postId, status, texts }: EditableProps) => {
           data-test-id="delete-post-button"
           inline={true}
           size="small"
+          title={getText({ texts, value: 'delete' })}
           onClick={() =>
             deletePost(postId)
               .then((e) => {
@@ -112,7 +125,7 @@ const Editable = ({ postId, status, texts }: EditableProps) => {
               })
           }
         >
-          <Text value="delete" texts={texts} tag="text" />
+          <FontAwesomeIcon icon={faTrashCan} />
         </Button>
       )}
     </>
@@ -121,19 +134,23 @@ const Editable = ({ postId, status, texts }: EditableProps) => {
 
 type CopyState = 'ok' | 'idle' | 'error';
 
-const CopyStatus = ({
-  state,
-  children,
-}: {
-  state: CopyState;
-  children: React.ReactNode;
-}) => {
+const CopyStatus = ({ state }: { state: CopyState }) => {
   if (state === 'ok') {
-    return <div style={{ color: 'green' }}>(y) {children}</div>;
+    return (
+      <FontAwesomeIcon
+        icon={faClipboard}
+        style={{ color: 'green' }}
+      />
+    );
   } else if (state === 'error') {
-    return <div style={{ color: 'red' }}>(x) {children}</div>;
+    return (
+      <FontAwesomeIcon
+        icon={faClipboardQuestion}
+        style={{ color: 'red' }}
+      />
+    );
   }
-  return <>{children}</>;
+  return <FontAwesomeIcon icon={faClipboard} />;
 };
 
 interface Props {
@@ -181,15 +198,9 @@ export const Post = ({
     >
       <Header text={post.title}>
         <div className={styles.buttonRow}>
-          {getStatus() !== 'none' && (
-            <Editable
-              postId={post.id}
-              status={getStatus()}
-              texts={texts}
-            />
-          )}
           <Button
             inline
+            title={getText({ texts, value: 'COPY_LINK' })}
             size="small"
             onClick={() => {
               setCopyState('idle');
@@ -215,10 +226,15 @@ export const Post = ({
                 });
             }}
           >
-            <CopyStatus state={copyState}>
-              <Text value="COPY_LINK" texts={texts} tag="text" />
-            </CopyStatus>
+            <CopyStatus state={copyState} />
           </Button>
+          {getStatus() !== 'none' && (
+            <Editable
+              postId={post.id}
+              status={getStatus()}
+              texts={texts}
+            />
+          )}
         </div>
       </Header>
       <Content>
