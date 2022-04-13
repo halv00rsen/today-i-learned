@@ -59,19 +59,16 @@ describe('posts view', () => {
 
       cy.isUrl(View.HOME);
 
-      cy.get('[data-test-id="post-header"]')
-        .first()
-        .contains(title);
+      cy.get('[data-test-id="post-header"]').contains(title);
 
       cy.get('[data-test-id="edit-post-button"]').first().click();
 
-      cy.get('[data-test-id="delete-post-button"]')
-        .first()
-        .click();
+      cy.get('[data-test-id="delete-post-button"]').click();
 
-      cy.get('[data-test-id="post-header"]')
-        .first()
-        .should('not.contain.text', title);
+      cy.get('[data-test-id="post-header"]').should(
+        'not.contain.text',
+        title
+      );
     });
   });
 });
