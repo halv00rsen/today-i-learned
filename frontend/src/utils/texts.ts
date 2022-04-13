@@ -44,6 +44,8 @@ const no: Omit<Texts, typeof LANGUAGE_KEY> = {
   'newpost.delete': 'Slett post',
   'newpost.delete.error':
     'En feil har skjedd, klarte ikke å slette innlegget',
+  'newpost.editing': 'Endringer ikke lagret',
+  'newpost.persisted': 'Endringene lagret',
   'newpost.delete.success': 'Innlegget ble slettet',
   'userpost.unpublished': 'Upubliserte innlegg',
   'userpost.published': 'Dine publiserte innlegg',
@@ -116,7 +118,9 @@ const en: Omit<Texts, typeof LANGUAGE_KEY> = {
   'newpost.delete': 'Delete post',
   'newpost.delete.error':
     'An error occured while deleting the post',
-  'newpost.delete.success': 'The post was deleted',
+  'Data savednewpost.delete.success': 'The post was deleted',
+  'newpost.editing': 'Unsaved changes',
+  'newpost.persisted': 'Saved',
   'userpost.unpublished': 'Unpublished posts',
   'userpost.published': 'Your published posts',
   'post.edit': 'Edit',

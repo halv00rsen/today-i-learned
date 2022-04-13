@@ -1,7 +1,17 @@
+import {
+  faCheckCircle,
+  faPencil,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Timestamp } from 'firebase/firestore';
-import { createContext, useContext, useState } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { Texts } from '../../utils/texts';
-import { PartialPost } from '../../utils/types/domain';
+import { PartialPost, StoredPost } from '../../utils/types/domain';
 import { Button } from '../Button/Button';
 import { Editor } from '../Editor/Editor';
 import { Post } from '../Post/Post';
@@ -27,12 +37,69 @@ const PostsCreatingContext = createContext<PostContext>({
   setPartialPost: console.log,
 });
 
+const toPartialPost = (
+  post: StoredPost | PartialPost
+): PartialPost => ({
+  content: post.content,
+  published: post.published,
+  tags: post.tags,
+  title: post.title,
+  subtitle: post.subtitle,
+});
+
+const getSanitizedPost = (): { post: PartialPost; id: string } => {
+  const partialPost = sessionStorage.getItem(STORAGE_KEY);
+  if (!partialPost) {
+    throw new Error('Missing post in session storage');
+  }
+  const { post, id } = JSON.parse(partialPost) as {
+    post: PartialPost;
+    id: string;
+  };
+
+  return {
+    post: toPartialPost(post),
+    id,
+  };
+};
+
+const STORAGE_KEY = 'partial-post';
+const NEW_POST_ID = 'new-post-id';
+const SAVE_TIMEOUT = 1500;
+
+const getInitialStoragePost = (
+  initialPost?: StoredPost
+): PartialPost => {
+  try {
+    const { post, id } = getSanitizedPost();
+    if (initialPost) {
+      if (initialPost.id === id) {
+        return post;
+      }
+      return toPartialPost(initialPost);
+    }
+    if (id === NEW_POST_ID) {
+      return post;
+    }
+    return initialPartialPost;
+  } catch {
+    return (
+      (initialPost && toPartialPost(initialPost)) ||
+      initialPartialPost
+    );
+  }
+};
+
+const clearStorage = () => {
+  sessionStorage.removeItem(STORAGE_KEY);
+};
+
 interface Props {
   onClick: (post: PartialPost) => void;
   onRemove: () => void;
   texts: Texts;
 
-  initialPost?: PartialPost;
+  initialPost?: StoredPost;
   disabled?: boolean;
 }
 
@@ -43,12 +110,34 @@ export const EditPost = ({
   disabled = false,
   initialPost,
 }: Props) => {
-  const [partialPost, setPartialPost] = useState<PartialPost>(
-    initialPost || initialPartialPost
+  const [partialPost, setPartialPost] = useState<PartialPost>(() =>
+    getInitialStoragePost(initialPost)
   );
   const [published, setPublished] = useState(
     initialPost?.published || false
   );
+  const { id: postId = NEW_POST_ID } = initialPost || {};
+
+  const [persistedStatus, setPersistedStatus] = useState<
+    'saved' | 'changing'
+  >('saved');
+
+  useEffect(() => {
+    setPersistedStatus('changing');
+    const timeout = setTimeout(() => {
+      sessionStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify({
+          post: partialPost,
+          id: postId,
+        })
+      );
+      setPersistedStatus('saved');
+    }, SAVE_TIMEOUT);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [partialPost, postId]);
 
   return (
     <PostsCreatingContext.Provider
@@ -73,6 +162,17 @@ export const EditPost = ({
           onChange={(e) => setPublished(e.target.checked)}
         />
       </div>
+      {persistedStatus === 'saved' ? (
+        <div style={{ color: 'green' }}>
+          <FontAwesomeIcon icon={faCheckCircle} />
+          <Text texts={texts} value="PERSISTED" tag="text" />
+        </div>
+      ) : (
+        <div>
+          <FontAwesomeIcon icon={faPencil} />
+          <Text texts={texts} value="EDITING" tag="text" />
+        </div>
+      )}
       <Button
         data-test-id="save-post-button"
         size="medium"
@@ -89,7 +189,10 @@ export const EditPost = ({
       </Button>
       <Button
         data-test-id="delete-post-button"
-        onClick={onRemove}
+        onClick={() => {
+          clearStorage();
+          onRemove();
+        }}
         className={styles.deleteButton}
         center={true}
         size="medium"
