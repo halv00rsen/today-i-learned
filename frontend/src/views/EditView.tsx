@@ -65,7 +65,6 @@ export const EditView = () => {
   ) {
     return (
       <div>
-        <h4>Endre posten</h4>
         <EditPost
           texts={texts}
           initialPost={editStatus.post}

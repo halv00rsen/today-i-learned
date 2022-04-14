@@ -16,6 +16,7 @@ type Tag =
   | 'i'
   | 'b'
   | 'div'
+  | 'label'
   | 'text';
 
 interface Props {

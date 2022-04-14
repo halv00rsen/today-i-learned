@@ -135,12 +135,14 @@ interface Props {
   post: StoredPost;
   editable?: boolean;
   deletable?: boolean;
+  className?: string;
 }
 
 export const Post = ({
   post,
   editable = false,
   deletable = false,
+  className,
 }: Props) => {
   const texts = useTextsPrefix('POST');
 
@@ -170,7 +172,7 @@ export const Post = ({
   );
   return (
     <div
-      className={classNames(styles.post, {
+      className={classNames(styles.post, className, {
         [styles.notPublished]: !post.published,
       })}
     >

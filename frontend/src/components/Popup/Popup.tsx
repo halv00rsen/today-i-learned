@@ -10,6 +10,9 @@ interface Props {
   open: boolean;
   onClose: () => void;
   closeButtonOnBottom?: boolean;
+  relative?: {
+    direction: 'above' | 'below';
+  };
 }
 
 export const Popup = ({
@@ -17,6 +20,7 @@ export const Popup = ({
   open,
   onClose,
   closeButtonOnBottom = false,
+  relative,
 }: Props) => {
   const texts = useTextsPrefix('SHARED');
 
@@ -44,6 +48,9 @@ export const Popup = ({
         <div
           className={classNames(styles.popup, {
             [styles.popupReverse]: closeButtonOnBottom,
+            [styles.relative]: !!relative,
+            [styles.unrelative]: !relative,
+            [styles[relative?.direction || 'below']]: !!relative,
           })}
         >
           <Button
@@ -52,7 +59,7 @@ export const Popup = ({
           >
             <Text texts={texts} value="CLOSE" />
           </Button>
-          {children}
+          <span>{children}</span>
         </div>
         <div className={styles.overlay} onClick={closeModal} />
       </>

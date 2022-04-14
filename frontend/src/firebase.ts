@@ -53,8 +53,11 @@ const firestore = getFirestore(firebaseApp);
 const firebaseAuth = getAuth(firebaseApp);
 
 if (import.meta.env.DEV) {
-  connectAuthEmulator(firebaseAuth, 'http://localhost:9099');
+  connectAuthEmulator(firebaseAuth, 'http://localhost:9099', {
+    disableWarnings: true,
+  });
   connectFirestoreEmulator(firestore, 'localhost', 8080);
+  console.warn('Using firebase emulators');
 }
 
 export { firestore, firebaseAuth };

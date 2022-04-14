@@ -14,6 +14,7 @@ import { Texts } from '../../utils/texts';
 import { PartialPost, StoredPost } from '../../utils/types/domain';
 import { Button } from '../Button/Button';
 import { Editor } from '../Editor/Editor';
+import { Popup } from '../Popup/Popup';
 import { Post } from '../Post/Post';
 import { OnDesktop, OnMobile } from '../ScreenSize/ScreenSize';
 import { Tabs } from '../Tabs/Tabs';
@@ -122,6 +123,30 @@ export const EditPost = ({
     'saved' | 'changing'
   >('saved');
 
+  const [editTags, setEditTags] = useState(false);
+
+  const { tags } = partialPost;
+  const [tag, setTag] = useState('');
+
+  const removeTag = (tag: string) => {
+    setPartialPost({
+      ...partialPost,
+      tags: tags.filter((t) => t !== tag),
+    });
+  };
+
+  const addTag = () => {
+    const lowercaseTag = tag.toLowerCase();
+    if (!lowercaseTag || tags.includes(lowercaseTag)) {
+      setTag('');
+      return;
+    }
+    setPartialPost({
+      ...partialPost,
+      tags: [...tags, lowercaseTag],
+    });
+    setTag('');
+  };
   useEffect(() => {
     setPersistedStatus('changing');
     const timeout = setTimeout(() => {
@@ -149,57 +174,119 @@ export const EditPost = ({
       <OnDesktop>
         <div className={styles.splitView}>
           <EditorView disabled={disabled} texts={texts} />
-          <Preview texts={texts} />
+          <Preview />
         </div>
       </OnDesktop>
       <MobileView disabled={disabled} texts={texts} />
-      <div>
-        <Text value="publish" texts={texts} tag="text" />
-        <input
-          data-test-id="publish-checkbox"
-          type="checkbox"
-          checked={published}
-          onChange={(e) => setPublished(e.target.checked)}
-        />
+      <div className={styles.tools}>
+        {persistedStatus === 'saved' ? (
+          <div style={{ color: 'green' }}>
+            <FontAwesomeIcon
+              icon={faCheckCircle}
+              className={styles.statusIcon}
+            />
+            <Text texts={texts} value="PERSISTED" tag="text" />
+          </div>
+        ) : (
+          <div>
+            <FontAwesomeIcon
+              icon={faPencil}
+              className={styles.statusIcon}
+            />
+            <Text texts={texts} value="EDITING" tag="text" />
+          </div>
+        )}
+        <div className={styles.buttonRow}>
+          <div>
+            <label>
+              <Text value="publish" texts={texts} tag="label" />
+              <input
+                data-test-id="publish-checkbox"
+                type="checkbox"
+                checked={published}
+                onChange={(e) => setPublished(e.target.checked)}
+              />
+            </label>
+          </div>
+          <div className={styles.popupAchor}>
+            <Popup
+              open={editTags}
+              onClose={() => setEditTags(false)}
+              closeButtonOnBottom={true}
+              relative={{ direction: 'above' }}
+            >
+              <Text value="HASHTAG.TITLE" texts={texts} />
+              <ul>
+                {tags.map((tag) => (
+                  <li key={tag}>
+                    {tag}{' '}
+                    <Button
+                      inline={true}
+                      onClick={() => removeTag(tag)}
+                    >
+                      <Text
+                        value="SHARED.REMOVE"
+                        texts={texts}
+                        tag="text"
+                      />
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+              <input
+                data-test-id="edit-post-tag"
+                type="text"
+                value={tag}
+                onChange={(e) => setTag(e.target.value)}
+              />
+              <Button
+                inline={true}
+                onClick={addTag}
+                data-test-id="add-tag-button"
+              >
+                <Text
+                  value="HASHTAG.ADD"
+                  texts={texts}
+                  tag="text"
+                />
+              </Button>
+            </Popup>
+            <Button
+              inline={true}
+              onClick={() => setEditTags(!editTags)}
+            >
+              <Text
+                value="HASHTAG.TITLE"
+                texts={texts}
+                tag="text"
+              />
+            </Button>
+          </div>
+          <Button
+            data-test-id="save-post-button"
+            onClick={() =>
+              onClick({
+                ...partialPost,
+                published,
+              })
+            }
+            disabled={disabled}
+          >
+            <Text value="save" texts={texts} tag="text" />
+          </Button>
+          <Button
+            data-test-id="delete-post-button"
+            onClick={() => {
+              clearStorage();
+              onRemove();
+            }}
+            className={styles.deleteButton}
+            disabled={disabled}
+          >
+            <Text value="delete" texts={texts} tag="text" />
+          </Button>
+        </div>
       </div>
-      {persistedStatus === 'saved' ? (
-        <div style={{ color: 'green' }}>
-          <FontAwesomeIcon icon={faCheckCircle} />
-          <Text texts={texts} value="PERSISTED" tag="text" />
-        </div>
-      ) : (
-        <div>
-          <FontAwesomeIcon icon={faPencil} />
-          <Text texts={texts} value="EDITING" tag="text" />
-        </div>
-      )}
-      <Button
-        data-test-id="save-post-button"
-        size="medium"
-        center={true}
-        onClick={() =>
-          onClick({
-            ...partialPost,
-            published,
-          })
-        }
-        disabled={disabled}
-      >
-        <Text value="save" texts={texts} tag="text" />
-      </Button>
-      <Button
-        data-test-id="delete-post-button"
-        onClick={() => {
-          clearStorage();
-          onRemove();
-        }}
-        className={styles.deleteButton}
-        center={true}
-        size="medium"
-        disabled={disabled}
-      >
-        <Text value="delete" texts={texts} tag="text" />
-      </Button>
     </PostsCreatingContext.Provider>
   );
 };
@@ -215,38 +302,18 @@ const EditorView = ({
     PostsCreatingContext
   );
 
-  const { content, tags, title } = partialPost;
-  const [tag, setTag] = useState('');
+  const { content, title } = partialPost;
 
-  const removeTag = (tag: string) => {
-    setPartialPost({
-      ...partialPost,
-      tags: tags.filter((t) => t !== tag),
-    });
-  };
-
-  const addTag = () => {
-    const lowercaseTag = tag.toLowerCase();
-    if (!lowercaseTag || tags.includes(lowercaseTag)) {
-      setTag('');
-      return;
-    }
-    setPartialPost({
-      ...partialPost,
-      tags: [...tags, lowercaseTag],
-    });
-    setTag('');
-  };
   return (
     <>
       <div>
-        <Text value="TITLE" texts={texts} tag="h4" />
         <input
           data-test-id="edit-post-title"
           type="text"
           disabled={disabled}
           value={title}
           placeholder={getText({ texts, value: 'TITLE' })}
+          className={styles.headerInput}
           onChange={(e) =>
             setPartialPost({
               ...partialPost,
@@ -264,51 +331,18 @@ const EditorView = ({
           }
           initialValue={content}
         />
-        <div>
-          <Text value="HASHTAG.TITLE" texts={texts} />
-          <ul>
-            {tags.map((tag) => (
-              <li key={tag}>
-                {tag}{' '}
-                <Button
-                  inline={true}
-                  onClick={() => removeTag(tag)}
-                >
-                  <Text
-                    value="SHARED.REMOVE"
-                    texts={texts}
-                    tag="text"
-                  />
-                </Button>
-              </li>
-            ))}
-          </ul>
-          <input
-            data-test-id="edit-post-tag"
-            type="text"
-            value={tag}
-            onChange={(e) => setTag(e.target.value)}
-          />
-          <Button
-            inline={true}
-            onClick={addTag}
-            data-test-id="add-tag-button"
-          >
-            <Text value="HASHTAG.ADD" texts={texts} tag="text" />
-          </Button>
-        </div>
       </div>
     </>
   );
 };
 
-const Preview = ({ texts }: { texts: Texts }) => {
+const Preview = () => {
   const { partialPost } = useContext(PostsCreatingContext);
 
   return (
     <div>
-      <Text value="preview.title" texts={texts} tag="h4" />
       <Post
+        className={styles.noMargin}
         post={{
           ...partialPost,
           id: 'mock-id',
@@ -342,7 +376,7 @@ const MobileView = ({
           {
             id: 'preview',
             tabTitle: 'Preview',
-            content: <Preview texts={texts} />,
+            content: <Preview />,
           },
         ]}
       />

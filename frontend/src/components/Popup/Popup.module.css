@@ -1,5 +1,5 @@
 @media only screen and (max-width: 768px) {
-  .popup {
+  .unrelative {
     left: 20px;
     right: 20px;
   }
@@ -14,11 +14,30 @@
   transition: 0.3s;
   opacity: 1;
   z-index: 10;
-  top: 20px;
   background-color: beige;
   padding: var(--default-padding);
   display: flex;
   flex-direction: column;
+}
+
+.unrelative {
+  top: 20px;
+}
+
+.relative {
+  position: absolute;
+  left: -50%;
+}
+
+.above {
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.below {
+  top: 100%;
+  left: 50%;
 }
 
 .popupReverse {
