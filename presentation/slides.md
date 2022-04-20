@@ -4,18 +4,20 @@ layout: cover
 ---
 
 <!-- # Integrasjonstesting med Firebase Emulators -->
-# Firebase Emulators med Cypress
+# E2E-tester med Firebase Emulators
 
 ---
 
-# Hovedmotivasjon
+# Hva skal du sitte igjen med?
 
-Være så nært prod som mulig når man kjører integrasjonstester - både i CI men også lokalt.
+* Spennende teknologier
+* Nysgjerrighet
 
-Spinne opp hele arkitekturen i en container/action for å kjøre
-integrasjonstester på
-
-<!-- "Et produksjonsmiljø i lomma" -->
+<!--
+* Hørt om noen nye teknologier
+* Lært et par fordeler med å ha en hel emulator suite lokalt
+* Fordelen med å ha ende til ende tester på et tilnærmet likt prod miljø
+-->
 
 ---
 
@@ -136,7 +138,7 @@ git add mock-data/
 
 # Kode for applikasjonen
 
-```js
+```js{all|8|15-18|all}
 // Configuration for Firebase project
 const firebaseConfig = { ... };
 
@@ -169,7 +171,7 @@ Nevn at kalling av functions ikke trenger noe mer magi enn det som er definert i
 
 ---
 
-# CI/CD pipeline
+# Github Action - pipeline
 
 - Installer emulatorene
 - Bygg "prodbygg"
@@ -209,7 +211,7 @@ Full action-fil kan sees i [Github repo](https://github.com/halv00rsen/today-i-l
 
 # Github Action - Integration test
 
-```yml {all|3|4}
+```yml
 - name: Build frontend CI app
   run: |
     tsc && vite build --mode test
@@ -259,11 +261,11 @@ versjon av applikasjonen med emulatorene og webappen.
 
 # Github Action - Integration test
 
-```yml {all|2|4,5|6}
+```yml {all|4,5|6}
 - name: Cypress run
   uses: cypress-io/github-action@v2
   with:
-    command: cypress run --config baseUrl=http://localhost:5000 # Mulig denne er feil, kan hende det må være en npm kommando
+    command: cypress run --config baseUrl=http://localhost:5000
     working-directory: frontend
     wait-on: "http://localhost:5000" # as defined in firebase.json
 ```
@@ -282,7 +284,7 @@ Den "wait-on" er ganske viktig, forklar denne
 
 # Github Action - Integration test
 
-```yml {all|1|2|3,4|10,11|all}
+```yml
 - uses: actions/upload-artifact@v2
   if: failure()
   with:
@@ -321,7 +323,7 @@ describe('authentication', () => {
     cy.get('input[name="email"]').type('admin@admin.admin');
     cy.get('input[name="password"]').type('passord');
     cy.get('button[name="submit"]').click();
-    cy.isUrl(View.HOME);
+    cy.url().should('include', '/profile');
     cy.get('[data-test-id="profile-view"]').should('exist');
   });
 });
@@ -336,24 +338,6 @@ describe('authentication', () => {
 * Vurder å legge inn flere test caser her, en som bruker functions,
   firestore etc
  -->
-
----
-
-# Pros
-
-- Enkelt å sette opp
-- Simulering av fult oppsett
-- Brukes for lokal utvikling
-- Brukes i CI for automatiske tester
-
----
-
-# Cons (ting å tenke på)
-
-- Mock data må vedlikeholdes
-- Indeksering av databasespørringer blir ikke gjort i emulatoren
-- Ikke 100% likt prodmiljø
-- Ikke tatt med caching ol. i GA her.
 
 ---
 
