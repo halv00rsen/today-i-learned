@@ -251,6 +251,7 @@ export const EditPost = ({
               </Button>
             </Popup>
             <Button
+              data-test-id="open-edit-tags-button"
               inline={true}
               onClick={() => setEditTags(!editTags)}
             >

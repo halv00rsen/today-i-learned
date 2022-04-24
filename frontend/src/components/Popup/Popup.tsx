@@ -55,6 +55,7 @@ export const Popup = ({
           })}
         >
           <Button
+            data-test-id="popup-close-button"
             className={styles.closeButton}
             onClick={closeModal}
           >

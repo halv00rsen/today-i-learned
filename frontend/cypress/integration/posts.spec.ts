@@ -48,10 +48,12 @@ describe('posts view', () => {
       cy.get('[data-test-id="edit-post-title"]').type(title);
       cy.get('[data-test-id="editor"]').type(content);
 
+      cy.get('[data-test-id="open-edit-tags-button"]').click();
       tags.forEach((tag) => {
         cy.get('[data-test-id="edit-post-tag"]').type(tag);
         cy.get('[data-test-id="add-tag-button"]').click();
       });
+      cy.get('[data-test-id="popup-close-button"]').click();
 
       cy.get('[data-test-id="publish-checkbox"]').check();
 
