@@ -83,6 +83,7 @@ exports.user = https.onRequest(async (request, response) => {
             toApiUser({
               ...userRecord,
               customClaims: newClaims,
+              toJSON: async () => '',
             })
           );
         } catch (error) {
