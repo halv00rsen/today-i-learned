@@ -66,3 +66,17 @@
 .statusIcon {
   margin-right: 5px;
 }
+
+.tags {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 5px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* .tags > div:nth-child(4n + 1),
+.tags > div:nth-child(4n + 2) {
+  border-bottom: 1px solid gray;
+  border-top: 1px solid gray;
+} */

@@ -25,6 +25,8 @@
 }
 
 .relative {
+  width: max-content;
+  max-width: 80vw;
   position: absolute;
   left: -50%;
 }

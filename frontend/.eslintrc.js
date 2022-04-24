@@ -15,6 +15,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
     'prettier',
     'plugin:@typescript-eslint/recommended',
+    'plugin:jsx-a11y/recommended',
   ],
   rules: {
     'react-hooks/rules-of-hooks': 'error',
@@ -24,6 +25,11 @@ module.exports = {
   settings: {
     react: {
       version: 'detect',
+    },
+    'jsx-a11y': {
+      components: {
+        Button: 'button',
+      },
     },
   },
 };

@@ -1,10 +1,11 @@
 import {
   faCheckCircle,
   faPencil,
+  faRemove,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Timestamp } from 'firebase/firestore';
-import {
+import React, {
   createContext,
   useContext,
   useEffect,
@@ -12,8 +13,9 @@ import {
 } from 'react';
 import { Texts } from '../../utils/texts';
 import { PartialPost, StoredPost } from '../../utils/types/domain';
-import { Button } from '../Button/Button';
+import { Button, IconButton } from '../Button/Button';
 import { Editor } from '../Editor/Editor';
+import { Input } from '../Input/Input';
 import { Popup } from '../Popup/Popup';
 import { Post } from '../Post/Post';
 import { OnDesktop, OnMobile } from '../ScreenSize/ScreenSize';
@@ -215,25 +217,22 @@ export const EditPost = ({
               closeButtonOnBottom={true}
               relative={{ direction: 'above' }}
             >
-              <Text value="HASHTAG.TITLE" texts={texts} />
-              <ul>
+              <Text value="HASHTAG.TITLE" texts={texts} tag="h3" />
+              <div className={styles.tags}>
                 {tags.map((tag) => (
-                  <li key={tag}>
-                    {tag}{' '}
-                    <Button
-                      inline={true}
-                      onClick={() => removeTag(tag)}
-                    >
-                      <Text
-                        value="SHARED.REMOVE"
-                        texts={texts}
-                        tag="text"
+                  <React.Fragment key={tag}>
+                    <div>{tag}</div>
+                    <div>
+                      <IconButton
+                        inline={true}
+                        onClick={() => removeTag(tag)}
+                        icon={<FontAwesomeIcon icon={faRemove} />}
                       />
-                    </Button>
-                  </li>
+                    </div>
+                  </React.Fragment>
                 ))}
-              </ul>
-              <input
+              </div>
+              <Input
                 data-test-id="edit-post-tag"
                 type="text"
                 value={tag}

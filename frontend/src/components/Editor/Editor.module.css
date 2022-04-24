@@ -9,4 +9,7 @@
   border-radius: 4px;
   background-color: #f8f8f8;
   resize: none;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
 }

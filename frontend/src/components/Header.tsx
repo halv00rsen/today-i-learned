@@ -104,6 +104,7 @@ const LogoTitle = () => {
         height={60}
         width={60}
         className={styles.logo}
+        alt="logo"
       />
       <Text value="TITLE" texts={texts} tag="h3" />
     </div>

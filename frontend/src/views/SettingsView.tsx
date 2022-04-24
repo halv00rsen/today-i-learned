@@ -57,9 +57,10 @@ export const SettingsView = () => {
   return (
     <div>
       <Text value="TITLE" texts={texts} tag="h3" />
-      <div
+      <Button
+        fullWidth={true}
+        noBorder={true}
         className={classNames(styles.userEntry, styles.editable)}
-        role="button"
         onClick={() =>
           updateSettings({
             ...settings,
@@ -73,7 +74,7 @@ export const SettingsView = () => {
           texts={texts}
           tag="div"
         />
-      </div>
+      </Button>
       <div className={classNames(styles.userEntry)}>
         <Text value="LANGUAGE" texts={texts} tag="div" />
         <div>

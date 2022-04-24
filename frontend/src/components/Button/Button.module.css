@@ -7,8 +7,17 @@
   transition: 0.3s;
 }
 
+.iconButton {
+  border-radius: 25%;
+  padding: 4px 7px;
+}
+
 .button:hover {
   opacity: 0.9;
+}
+
+.button:focus {
+  border: 2px solid orange;
 }
 
 .center {
@@ -28,7 +37,7 @@
 }
 
 .small {
-  padding: 0.5em 1em;
+  padding: 7px 14px;
   font-size: var(--font-size-small);
 }
 
@@ -40,4 +49,8 @@
 .large {
   padding: 1.5em 4em;
   font-size: var(--font-size-large);
+}
+
+.noBorder {
+  border: 2px solid transparent;
 }

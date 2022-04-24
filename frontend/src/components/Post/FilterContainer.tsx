@@ -15,16 +15,17 @@ interface TagProps {
 
 const TagComponent = ({ tag, chosen, onClick }: TagProps) => {
   return (
-    <div
-      className={classNames(styles.tag, {
-        [styles.chosenTag]: chosen,
-      })}
-      role={'checkbox'}
-      aria-checked={chosen}
-      onClick={onClick}
-    >
+    <label>
+      <input
+        className={classNames(styles.tag, {
+          [styles.chosenTag]: chosen,
+        })}
+        type={'checkbox'}
+        checked={chosen}
+        onClick={onClick}
+      />
       {tag.name}
-    </div>
+    </label>
   );
 };
 

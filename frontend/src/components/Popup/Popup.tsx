@@ -45,7 +45,8 @@ export const Popup = ({
   if (open) {
     return (
       <>
-        <div
+        <dialog
+          open={true}
           className={classNames(styles.popup, {
             [styles.popupReverse]: closeButtonOnBottom,
             [styles.relative]: !!relative,
@@ -60,8 +61,12 @@ export const Popup = ({
             <Text texts={texts} value="CLOSE" />
           </Button>
           <span>{children}</span>
-        </div>
-        <div className={styles.overlay} onClick={closeModal} />
+        </dialog>
+        <div
+          aria-hidden="true"
+          className={styles.overlay}
+          onClick={closeModal}
+        />
       </>
     );
   }
