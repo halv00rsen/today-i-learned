@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import {
   BrowserRouter,
   Redirect,
@@ -8,6 +8,7 @@ import {
 import { ContentWrapper } from '../components/ContentWrapper';
 import { Header } from '../components/Header';
 import { Spinner } from '../components/Spinner/Spinner';
+import { TagContextWrapper } from '../context/TagContext';
 import {
   AuthenticatedUser,
   useUserStatus,
@@ -79,43 +80,45 @@ const SecureRoute = ({ path, children, exact }: ISecureRoute) => {
 
 export const AppRouter = () => {
   return (
-    <BrowserRouter>
-      <Header />
-      <ContentWrapper>
-        <Suspense fallback={<Spinner />}>
-          <Switch>
-            <Route exact path="/settings">
-              <SettingsView />
-            </Route>
-            <SecureRoute path="/settings/admin">
-              {(userStatus) => (
-                <AdminView userStatus={userStatus} />
-              )}
-            </SecureRoute>
-            <Route path="/login">
-              <LoginView />
-            </Route>
-            <SecureRoute path="/add-post">
-              {({ user }) => <AddPostView user={user} />}
-            </SecureRoute>
-            <SecureRoute path="/edit">
-              {() => <EditView />}
-            </SecureRoute>
-            <SecureRoute path="/my-posts">
-              {({ user }) => <UserPostsView userId={user.uid} />}
-            </SecureRoute>
-            <Route path="/post/:postId">
-              <PostView />
-            </Route>
-            <Route path="/" exact>
-              <Home />
-            </Route>
-            <Route path="*">
-              <div>Finner ikke siden du leter etter.</div>
-            </Route>
-          </Switch>
-        </Suspense>
-      </ContentWrapper>
-    </BrowserRouter>
+    <TagContextWrapper>
+      <BrowserRouter>
+        <Header />
+        <ContentWrapper>
+          <Suspense fallback={<Spinner />}>
+            <Switch>
+              <Route exact path="/settings">
+                <SettingsView />
+              </Route>
+              <SecureRoute path="/settings/admin">
+                {(userStatus) => (
+                  <AdminView userStatus={userStatus} />
+                )}
+              </SecureRoute>
+              <Route path="/login">
+                <LoginView />
+              </Route>
+              <SecureRoute path="/add-post">
+                {({ user }) => <AddPostView user={user} />}
+              </SecureRoute>
+              <SecureRoute path="/edit">
+                {() => <EditView />}
+              </SecureRoute>
+              <SecureRoute path="/my-posts">
+                {({ user }) => <UserPostsView userId={user.uid} />}
+              </SecureRoute>
+              <Route path="/post/:postId">
+                <PostView />
+              </Route>
+              <Route path="/" exact>
+                <Home />
+              </Route>
+              <Route path="*">
+                <div>Finner ikke siden du leter etter.</div>
+              </Route>
+            </Switch>
+          </Suspense>
+        </ContentWrapper>
+      </BrowserRouter>
+    </TagContextWrapper>
   );
 };
