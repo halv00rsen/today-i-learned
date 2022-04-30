@@ -24,7 +24,8 @@
   background-color: #f8f8f8;
 }
 
-.tools {
+.toolsWrapper {
+  display: flex;
   border-top: 1px solid black;
   position: fixed;
   width: 100%;
@@ -33,9 +34,16 @@
   bottom: 0;
   left: 0;
   background-color: var(--background-second);
+}
+
+.tools {
+  width: 100%;
+  max-width: var(--page-max-width);
+  min-width: var(--page-min-width);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 0 auto;
 }
 
 .popupAchor {

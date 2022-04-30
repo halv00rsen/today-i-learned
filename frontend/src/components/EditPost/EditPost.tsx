@@ -180,111 +180,119 @@ export const EditPost = ({
         </div>
       </OnDesktop>
       <MobileView disabled={disabled} texts={texts} />
-      <div className={styles.tools}>
-        {persistedStatus === 'saved' ? (
-          <div style={{ color: 'green' }}>
-            <FontAwesomeIcon
-              icon={faCheckCircle}
-              className={styles.statusIcon}
-            />
-            <Text texts={texts} value="PERSISTED" tag="text" />
-          </div>
-        ) : (
-          <div>
-            <FontAwesomeIcon
-              icon={faPencil}
-              className={styles.statusIcon}
-            />
-            <Text texts={texts} value="EDITING" tag="text" />
-          </div>
-        )}
-        <div className={styles.buttonRow}>
-          <div>
-            <label>
-              <Text value="publish" texts={texts} tag="label" />
-              <input
-                data-test-id="publish-checkbox"
-                type="checkbox"
-                checked={published}
-                onChange={(e) => setPublished(e.target.checked)}
+      <div className={styles.toolsWrapper}>
+        <div className={styles.tools}>
+          {persistedStatus === 'saved' ? (
+            <div style={{ color: 'green' }}>
+              <FontAwesomeIcon
+                icon={faCheckCircle}
+                className={styles.statusIcon}
               />
-            </label>
-          </div>
-          <div className={styles.popupAchor}>
-            <Popup
-              open={editTags}
-              onClose={() => setEditTags(false)}
-              closeButtonOnBottom={true}
-              relative={{ direction: 'above' }}
-            >
-              <Text value="HASHTAG.TITLE" texts={texts} tag="h3" />
-              <div className={styles.tags}>
-                {tags.map((tag) => (
-                  <React.Fragment key={tag}>
-                    <div>{tag}</div>
-                    <div>
-                      <IconButton
-                        inline={true}
-                        onClick={() => removeTag(tag)}
-                        icon={<FontAwesomeIcon icon={faRemove} />}
-                      />
-                    </div>
-                  </React.Fragment>
-                ))}
-              </div>
-              <Input
-                data-test-id="edit-post-tag"
-                type="text"
-                value={tag}
-                onChange={(e) => setTag(e.target.value)}
+              <Text texts={texts} value="PERSISTED" tag="text" />
+            </div>
+          ) : (
+            <div>
+              <FontAwesomeIcon
+                icon={faPencil}
+                className={styles.statusIcon}
               />
-              <Button
-                inline={true}
-                onClick={addTag}
-                data-test-id="add-tag-button"
+              <Text texts={texts} value="EDITING" tag="text" />
+            </div>
+          )}
+          <div className={styles.buttonRow}>
+            <div>
+              <label>
+                <Text value="publish" texts={texts} tag="label" />
+                <input
+                  data-test-id="publish-checkbox"
+                  type="checkbox"
+                  checked={published}
+                  onChange={(e) => setPublished(e.target.checked)}
+                />
+              </label>
+            </div>
+            <div className={styles.popupAchor}>
+              <Popup
+                open={editTags}
+                onClose={() => setEditTags(false)}
+                closeButtonOnBottom={true}
+                relative={{ direction: 'above' }}
               >
                 <Text
-                  value="HASHTAG.ADD"
+                  value="HASHTAG.TITLE"
+                  texts={texts}
+                  tag="h3"
+                />
+                <div className={styles.tags}>
+                  {tags.map((tag) => (
+                    <React.Fragment key={tag}>
+                      <div>{tag}</div>
+                      <div>
+                        <IconButton
+                          inline={true}
+                          onClick={() => removeTag(tag)}
+                          icon={
+                            <FontAwesomeIcon icon={faRemove} />
+                          }
+                        />
+                      </div>
+                    </React.Fragment>
+                  ))}
+                </div>
+                <Input
+                  data-test-id="edit-post-tag"
+                  type="text"
+                  value={tag}
+                  onChange={(e) => setTag(e.target.value)}
+                />
+                <Button
+                  inline={true}
+                  onClick={addTag}
+                  data-test-id="add-tag-button"
+                >
+                  <Text
+                    value="HASHTAG.ADD"
+                    texts={texts}
+                    tag="text"
+                  />
+                </Button>
+              </Popup>
+              <Button
+                data-test-id="open-edit-tags-button"
+                inline={true}
+                onClick={() => setEditTags(!editTags)}
+              >
+                <Text
+                  value="HASHTAG.TITLE"
                   texts={texts}
                   tag="text"
                 />
               </Button>
-            </Popup>
+            </div>
             <Button
-              data-test-id="open-edit-tags-button"
-              inline={true}
-              onClick={() => setEditTags(!editTags)}
+              data-test-id="save-post-button"
+              onClick={() =>
+                onClick({
+                  ...partialPost,
+                  published,
+                })
+              }
+              disabled={disabled}
             >
-              <Text
-                value="HASHTAG.TITLE"
-                texts={texts}
-                tag="text"
-              />
+              <Text value="save" texts={texts} tag="text" />
+            </Button>
+            <Button
+              data-test-id="delete-post-button"
+              onClick={() => {
+                clearStorage();
+                onRemove();
+              }}
+              className={styles.deleteButton}
+              disabled={disabled}
+            >
+              <Text value="delete" texts={texts} tag="text" />
             </Button>
           </div>
-          <Button
-            data-test-id="save-post-button"
-            onClick={() =>
-              onClick({
-                ...partialPost,
-                published,
-              })
-            }
-            disabled={disabled}
-          >
-            <Text value="save" texts={texts} tag="text" />
-          </Button>
-          <Button
-            data-test-id="delete-post-button"
-            onClick={() => {
-              clearStorage();
-              onRemove();
-            }}
-            className={styles.deleteButton}
-            disabled={disabled}
-          >
-            <Text value="delete" texts={texts} tag="text" />
-          </Button>
         </div>
       </div>
     </PostsCreatingContext.Provider>
