@@ -7,7 +7,7 @@ import {
   getFirestore,
   initializeFirestore,
   connectFirestoreEmulator,
-} from '@firebase/firestore';
+} from 'firebase/firestore/lite';
 import { getAuth, connectAuthEmulator } from '@firebase/auth';
 
 declare global {
@@ -40,7 +40,6 @@ if (import.meta.env.DEV && window.Cypress) {
     "Only used for Cypress as XHR requests and firestore don't work."
   );
   initializeFirestore(firebaseApp, {
-    experimentalForceLongPolling: true,
     ignoreUndefinedProperties: true,
   });
 } else {

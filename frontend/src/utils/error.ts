@@ -1,4 +1,4 @@
-import { FirestoreErrorCode } from 'firebase/firestore';
+import { FirestoreErrorCode } from 'firebase/firestore/lite';
 
 export const getFirestoreError = (
   code: FirestoreErrorCode

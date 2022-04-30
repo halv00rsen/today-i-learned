@@ -1,7 +1,7 @@
 import {
   FirestoreError,
   FirestoreErrorCode,
-} from 'firebase/firestore';
+} from 'firebase/firestore/lite';
 import { useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router-dom';
 import { useMessageAlert } from '../components/Alert/Alert';

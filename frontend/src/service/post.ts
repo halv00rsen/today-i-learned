@@ -9,9 +9,6 @@ import {
   limit,
   orderBy,
   QueryDocumentSnapshot,
-  DocumentData,
-} from '@firebase/firestore';
-import {
   getDoc,
   getDocs,
   query,
@@ -19,7 +16,8 @@ import {
   startAfter,
   Timestamp,
   updateDoc,
-} from 'firebase/firestore';
+  DocumentData,
+} from 'firebase/firestore/lite';
 import { firestore } from '../firebase';
 import { isNonEmptyArray, NonEmptyArray } from '../utils/array';
 import { PartialPost, StoredPost } from '../utils/types/domain';

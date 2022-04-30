@@ -5,7 +5,7 @@ import { Markdown } from '../Editor/Markdown';
 import { Tag } from '../Tag/Tag';
 import styles from './Post.module.css';
 import classNames from 'classnames';
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp } from 'firebase/firestore/lite';
 import { getFormattedDateWithTime } from '../../utils/time';
 import { Button } from '../Button/Button';
 import { Texts } from '../../utils/texts';

@@ -4,7 +4,7 @@ import { storePost } from '../service/post';
 import { Redirect, useHistory } from 'react-router';
 import { EditPost } from '../components/EditPost/EditPost';
 import { PartialPost } from '../utils/types/domain';
-import { FirestoreError } from 'firebase/firestore';
+import { FirestoreError } from 'firebase/firestore/lite';
 import { getFirestoreError } from '../utils/error';
 import { useTextsPrefix } from '../context/TextContext';
 import { Text } from '../components/Texts/Text';

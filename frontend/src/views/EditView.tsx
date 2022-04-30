@@ -7,7 +7,7 @@ import { StoredPost } from '../utils/types/domain';
 import {
   FirestoreError,
   FirestoreErrorCode,
-} from 'firebase/firestore';
+} from 'firebase/firestore/lite';
 import { getFirestoreError } from '../utils/error';
 import { useTextsPrefix } from '../context/TextContext';
 import { useMessageAlert } from '../components/Alert/Alert';

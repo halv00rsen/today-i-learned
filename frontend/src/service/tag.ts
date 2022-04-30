@@ -4,7 +4,7 @@ import {
   DocumentSnapshot,
   getDocs,
   setDoc,
-} from 'firebase/firestore';
+} from 'firebase/firestore/lite';
 import { firestore } from '../firebase';
 
 export interface Tag {
