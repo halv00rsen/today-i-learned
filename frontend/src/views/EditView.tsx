@@ -97,6 +97,7 @@ export const EditView = () => {
                   type: 'loaded',
                   post: editStatus.post,
                 });
+                history.push('/');
               })
               .catch((err: FirestoreError) => {
                 setEditStatus({
