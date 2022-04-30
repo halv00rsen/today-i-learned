@@ -1,3 +1,10 @@
 .code {
   font-size: 14px;
 }
+
+.nativeCodeBlock {
+  color: white;
+  background-color: black;
+  display: block;
+  padding: 12px;
+}

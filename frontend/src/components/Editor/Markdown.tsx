@@ -1,26 +1,39 @@
-import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { atomOneDark } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import ReactMarkdown, { Components } from 'react-markdown';
+import { lazy, Suspense } from 'react';
+import classNames from 'classnames';
 import styles from './Markdown.module.css';
+
+const CodeSyntax = lazy(() =>
+  import('./CodeSyntax').then((module) => ({
+    default: module.CodeSyntax,
+  }))
+);
 
 const components: Components = {
   code({ inline, className, children, ...props }) {
     const match = /language-(\w+)/.exec(className || '');
     const stringChildren = String(children).replace(/\n$/, '');
+    const language = match?.[1];
 
-    return !inline && match ? (
-      <SyntaxHighlighter
-        style={atomOneDark}
-        language={match[1]}
-        PreTag="div"
-        codeTagProps={{ className: styles.code }}
+    const DefaultCodeBlock = () => (
+      <code
+        className={classNames(
+          className,
+          styles.code,
+          styles.nativeCodeBlock
+        )}
+        {...props}
       >
-        {stringChildren}
-      </SyntaxHighlighter>
-    ) : (
-      <code className={className} {...props}>
         {children}
       </code>
+    );
+
+    return !inline && language ? (
+      <Suspense fallback={<DefaultCodeBlock />}>
+        <CodeSyntax language={language} code={stringChildren} />
+      </Suspense>
+    ) : (
+      <DefaultCodeBlock />
     );
   },
 };
