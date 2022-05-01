@@ -1,10 +1,3 @@
-@media only screen and (max-width: 768px) {
-  .unrelative {
-    left: 20px;
-    right: 20px;
-  }
-}
-
 .closeButton {
   margin-bottom: 1em;
 }
@@ -18,10 +11,24 @@
   padding: var(--default-padding);
   display: flex;
   flex-direction: column;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  width: unset;
+  align-items: flex-end;
+}
+
+@media only screen and (max-width: 1000px) {
+  .popup {
+    margin: 0 15px;
+  }
 }
 
 .unrelative {
   top: 20px;
+}
+
+.fullWidth {
+  align-items: stretch;
 }
 
 .relative {

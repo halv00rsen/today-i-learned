@@ -10,6 +10,7 @@ interface Props {
   open: boolean;
   onClose: () => void;
   closeButtonOnBottom?: boolean;
+  wideCloseButton?: boolean;
   relative?: {
     direction: 'above' | 'below';
   };
@@ -20,6 +21,7 @@ export const Popup = ({
   open,
   onClose,
   closeButtonOnBottom = false,
+  wideCloseButton = true,
   relative,
 }: Props) => {
   const texts = useTextsPrefix('SHARED');
@@ -52,6 +54,7 @@ export const Popup = ({
             [styles.relative]: !!relative,
             [styles.unrelative]: !relative,
             [styles[relative?.direction || 'below']]: !!relative,
+            [styles.fullWidth]: wideCloseButton,
           })}
         >
           <Button

@@ -22,7 +22,7 @@ const TagComponent = ({ tag, chosen, onClick }: TagProps) => {
         })}
         type={'checkbox'}
         checked={chosen}
-        onClick={onClick}
+        onChange={onClick}
       />
       {tag.name}
     </label>
