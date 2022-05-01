@@ -20,7 +20,10 @@ const components: Components = {
         className={classNames(
           className,
           styles.code,
-          styles.nativeCodeBlock
+          styles.nativeCodeBlock,
+          {
+            [styles.inline]: inline,
+          }
         )}
         {...props}
       >
