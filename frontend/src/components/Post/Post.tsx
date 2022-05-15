@@ -222,7 +222,7 @@ export const Post = ({
         <Markdown content={post.content} />
       </Content>
       <Footer>
-        <div>
+        <div className={styles.tags}>
           {post.tags.map((tag) => (
             <Tag key={tag} tag={tag} />
           ))}
