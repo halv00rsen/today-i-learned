@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Timestamp } from 'firebase/firestore/lite';
 import React, {
   createContext,
+  createRef,
   useContext,
   useEffect,
   useState,
@@ -136,6 +137,7 @@ export const EditPost = ({
       tags: tags.filter((t) => t !== tag),
     });
   };
+  const tagInputRef = createRef<HTMLInputElement>();
 
   const addTag = () => {
     const lowercaseTag = tag.toLowerCase();
@@ -239,23 +241,32 @@ export const EditPost = ({
                     </React.Fragment>
                   ))}
                 </div>
-                <Input
-                  data-test-id="edit-post-tag"
-                  type="text"
-                  value={tag}
-                  onChange={(e) => setTag(e.target.value)}
-                />
-                <Button
-                  inline={true}
-                  onClick={addTag}
-                  data-test-id="add-tag-button"
+                <form
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    addTag();
+                    tagInputRef.current?.focus();
+                  }}
                 >
-                  <Text
-                    value="HASHTAG.ADD"
-                    texts={texts}
-                    tag="text"
+                  <Input
+                    data-test-id="edit-post-tag"
+                    type="text"
+                    value={tag}
+                    ref={tagInputRef}
+                    onChange={(e) => setTag(e.target.value)}
                   />
-                </Button>
+                  <Button
+                    inline={true}
+                    type="submit"
+                    data-test-id="add-tag-button"
+                  >
+                    <Text
+                      value="HASHTAG.ADD"
+                      texts={texts}
+                      tag="text"
+                    />
+                  </Button>
+                </form>
               </Popup>
               <Button
                 data-test-id="open-edit-tags-button"
