@@ -1,5 +1,16 @@
+.settingsRowWrapper {
+  position: fixed;
+  bottom: 10px;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+}
+
 .settingsRow {
   position: relative;
   display: flex;
   justify-content: flex-end;
+  max-width: var(--page-max-width);
+  margin: auto;
+  padding: 0 10px;
 }

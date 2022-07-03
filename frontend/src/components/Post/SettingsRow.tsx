@@ -16,16 +16,18 @@ export const SettingsRow = () => {
   }, []);
 
   return (
-    <div className={styles.settingsRow}>
-      <Button
-        size="small"
-        onClick={() => setShowFilter(!showFilter)}
-      >
-        <Text value="SHARED.FILTER" texts={texts} tag="text" />
-      </Button>
-      <Popup onClose={closeFilter} open={showFilter}>
-        <FitlerContainer onFinished={closeFilter} />
-      </Popup>
+    <div className={styles.settingsRowWrapper}>
+      <div className={styles.settingsRow}>
+        <Button
+          size="small"
+          onClick={() => setShowFilter(!showFilter)}
+        >
+          <Text value="SHARED.FILTER" texts={texts} tag="text" />
+        </Button>
+        <Popup onClose={closeFilter} open={showFilter}>
+          <FitlerContainer onFinished={closeFilter} />
+        </Popup>
+      </div>
     </div>
   );
 };

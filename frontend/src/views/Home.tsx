@@ -7,7 +7,6 @@ export const Home = () => {
   const { activeTags } = useTagProvider();
   return (
     <div>
-      <SettingsRow />
       <PostsContainer
         getInitialPosts={() => {
           return getInitialPublishedPosts({
@@ -15,6 +14,7 @@ export const Home = () => {
           });
         }}
       />
+      <SettingsRow />
     </div>
   );
 };
