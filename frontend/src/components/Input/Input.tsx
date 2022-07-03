@@ -11,8 +11,8 @@ export const Input = React.forwardRef<
   return (
     <input
       ref={ref}
-      className={classNames(rest.className, styles.input)}
       {...rest}
+      className={classNames(styles.input, rest.className)}
     />
   );
 });
