@@ -20,6 +20,14 @@
   justify-content: space-around;
 }
 
-.chosenTag {
-  background-color: aqua;
+.header {
+  margin-bottom: var(--default-margin);
+}
+
+.content {
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  overflow-x: auto;
 }

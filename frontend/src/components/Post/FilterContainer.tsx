@@ -1,33 +1,11 @@
-import classNames from 'classnames';
 import { useState } from 'react';
 import { useTagProvider } from '../../context/TagContext';
 import { useTextsPrefix } from '../../context/TextContext';
 import { Tag } from '../../service/tag';
 import { Button } from '../Button/Button';
+import { Checkbox } from '../Checkbox/Checkbox';
 import { Text } from '../Texts/Text';
 import styles from './FilterContainer.module.css';
-
-interface TagProps {
-  tag: Tag;
-  chosen: boolean;
-  onClick: () => void;
-}
-
-const TagComponent = ({ tag, chosen, onClick }: TagProps) => {
-  return (
-    <label>
-      <input
-        className={classNames(styles.tag, {
-          [styles.chosenTag]: chosen,
-        })}
-        type={'checkbox'}
-        checked={chosen}
-        onChange={onClick}
-      />
-      {tag.name}
-    </label>
-  );
-};
 
 interface Props {
   onFinished: () => void;
@@ -44,18 +22,23 @@ export const FitlerContainer = ({ onFinished }: Props) => {
 
   return (
     <div>
-      <Text value="TITLE" texts={texts} tag="h3" />
-      <div>
+      <Text
+        value="TITLE"
+        texts={texts}
+        tag="h3"
+        className={styles.header}
+      />
+      <div className={styles.content}>
         {allTags.map((tag) => {
           const chosen = chosenTags.some(
             (t) => t.name === tag.name
           );
           return (
-            <TagComponent
+            <Checkbox
               key={tag.id}
-              tag={tag}
-              chosen={chosen}
-              onClick={() => {
+              checked={chosen}
+              label={tag.name}
+              onChange={() => {
                 if (chosen) {
                   setChosenTags(
                     chosenTags.filter((t) => t.name !== tag.name)
