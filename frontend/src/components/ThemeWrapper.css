@@ -11,6 +11,8 @@
   --focus-color: gray;
   --button-color: #f2e29f;
   --button-color-focus: #f3e6b4;
+  --form-control-color: rgb(121, 156, 81);
+  --form-control-disabled: gray;
 }
 
 /* Generated with https://coolors.co/bbdb9b-abc4a1-9db4ab-8d9d90-878e76 */
@@ -22,4 +24,6 @@
   --focus-color: rgb(145, 145, 145);
   --button-color: #bbdb9b;
   --button-color-focus: #abd881;
+  --form-control-color: rgb(121, 156, 81);
+  --form-control-disabled: gray;
 }
