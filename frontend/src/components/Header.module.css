@@ -32,10 +32,11 @@
 }
 
 .headerLink:hover {
-  opacity: 0.7;
+  text-decoration: underline;
 }
 
 .headerLink {
+  padding: var(--default-padding) 0;
   text-decoration: none;
 }
 
