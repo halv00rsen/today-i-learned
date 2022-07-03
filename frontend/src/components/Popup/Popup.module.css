@@ -39,6 +39,7 @@
 
 .unrelative {
   top: 20px;
+  max-height: 95vh;
 }
 
 .relative {
