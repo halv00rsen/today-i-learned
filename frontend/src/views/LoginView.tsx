@@ -6,6 +6,7 @@ import { firebaseAuth } from '../firebase';
 import { useTextsPrefix } from '../context/TextContext';
 import { getText, Text } from '../components/Texts/Text';
 import { Button } from '../components/Button/Button';
+import { Input } from '../components/Input/Input';
 
 const inputStyle: React.CSSProperties = {
   margin: '0 0 1em',
@@ -48,7 +49,7 @@ export const LoginView = () => {
       <Text value="TITLE" texts={texts} tag="h3" />
       {error && <Text value="ERROR" texts={texts} tag="div" />}
       {logError && <div>{logError}</div>}
-      <input
+      <Input
         type="text"
         name="email"
         value={email}
@@ -59,7 +60,7 @@ export const LoginView = () => {
           value: 'EMAIL.PLACEHOLDER',
         })}
       />
-      <input
+      <Input
         type="password"
         name="password"
         value={password}
