@@ -326,7 +326,7 @@ const EditorView = ({
   return (
     <>
       <div>
-        <input
+        <Input
           data-test-id="edit-post-title"
           type="text"
           disabled={disabled}

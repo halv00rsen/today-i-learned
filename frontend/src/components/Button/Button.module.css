@@ -4,7 +4,6 @@
   border: 2px solid var(--default-border-color);
   color: black;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 .iconButton {
@@ -15,9 +14,9 @@
 .button:hover {
   opacity: 0.9;
 }
-
 .button:focus {
-  border: 2px solid orange;
+  outline: 3px solid var(--focus-color);
+  outline-offset: -3px;
 }
 
 .center {

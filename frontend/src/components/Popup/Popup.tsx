@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import FocusTrap from 'focus-trap-react';
 import { useCallback, useEffect } from 'react';
 import { useTextsPrefix } from '../../context/TextContext';
 import { Button } from '../Button/Button';
@@ -46,32 +47,34 @@ export const Popup = ({
 
   if (open) {
     return (
-      <>
-        <dialog
-          open={true}
-          className={classNames(styles.popup, {
-            [styles.popupReverse]: closeButtonOnBottom,
-            [styles.relative]: !!relative,
-            [styles.unrelative]: !relative,
-            [styles[relative?.direction || 'below']]: !!relative,
-            [styles.fullWidth]: wideCloseButton,
-          })}
-        >
-          <Button
-            data-test-id="popup-close-button"
-            className={styles.closeButton}
-            onClick={closeModal}
+      <FocusTrap>
+        <div>
+          <dialog
+            open={true}
+            className={classNames(styles.popup, {
+              [styles.popupReverse]: closeButtonOnBottom,
+              [styles.relative]: !!relative,
+              [styles.unrelative]: !relative,
+              [styles[relative?.direction || 'below']]: !!relative,
+              [styles.fullWidth]: wideCloseButton,
+            })}
           >
-            <Text texts={texts} value="CLOSE" />
-          </Button>
-          <span>{children}</span>
-        </dialog>
-        <div
-          aria-hidden="true"
-          className={styles.overlay}
-          onClick={closeModal}
-        />
-      </>
+            <Button
+              data-test-id="popup-close-button"
+              className={styles.closeButton}
+              onClick={closeModal}
+            >
+              <Text texts={texts} value="CLOSE" />
+            </Button>
+            <span>{children}</span>
+          </dialog>
+          <div
+            aria-hidden="true"
+            className={styles.overlay}
+            onClick={closeModal}
+          />
+        </div>
+      </FocusTrap>
     );
   }
   return null;

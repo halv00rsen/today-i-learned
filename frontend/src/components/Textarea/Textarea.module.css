@@ -1,11 +1,11 @@
-.input {
+.textarea {
   padding: 7px;
   border: 2px solid #ccc;
   background-color: #f8f8f8;
   margin: 7px auto;
 }
 
-.input:focus {
+.textarea:focus {
   outline: 3px solid var(--focus-color);
   outline-offset: -3px;
 }

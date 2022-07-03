@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Textarea } from '../Textarea/Textarea';
 import styles from './Editor.module.css';
 
 interface Props {
@@ -21,7 +22,7 @@ export const Editor = ({
 
   return (
     <div className={styles.editor}>
-      <textarea
+      <Textarea
         data-test-id="editor"
         className={styles.textarea}
         disabled={disabled}

@@ -8,7 +8,9 @@
   --background-second: #9aa899;
   --theme-background-color-hover: #e6fc9f;
   --default-border-color: black;
+  --focus-color: gray;
   --button-color: #f2e29f;
+  --button-color-focus: #f3e6b4;
 }
 
 /* Generated with https://coolors.co/bbdb9b-abc4a1-9db4ab-8d9d90-878e76 */
@@ -17,5 +19,7 @@
   --background-second: #878e76;
   --theme-background-color-hover: #a0b697;
   --default-border-color: black;
+  --focus-color: rgb(145, 145, 145);
   --button-color: #bbdb9b;
+  --button-color-focus: #abd881;
 }
