@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Timestamp } from 'firebase/firestore/lite';
 import React, {
   createContext,
-  createRef,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -137,7 +137,20 @@ export const EditPost = ({
       tags: tags.filter((t) => t !== tag),
     });
   };
-  const tagInputRef = createRef<HTMLInputElement>();
+  const [tagInput, setTagInput] =
+    useState<HTMLInputElement | null>(null);
+  const setTagInputRef = useCallback(
+    (element: HTMLInputElement | null) => {
+      setTagInput(element);
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (tagInput) {
+      tagInput.focus();
+    }
+  }, [tagInput]);
 
   const addTag = () => {
     const lowercaseTag = tag.toLowerCase();
@@ -244,14 +257,14 @@ export const EditPost = ({
                   onSubmit={(event) => {
                     event.preventDefault();
                     addTag();
-                    tagInputRef.current?.focus();
+                    tagInput?.focus();
                   }}
                 >
                   <Input
                     data-test-id="edit-post-tag"
                     type="text"
                     value={tag}
-                    ref={tagInputRef}
+                    ref={setTagInputRef}
                     onChange={(e) => setTag(e.target.value)}
                   />
                   <Button
