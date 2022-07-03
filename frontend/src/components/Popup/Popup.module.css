@@ -1,5 +1,18 @@
 .closeButton {
-  margin-bottom: 1em;
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  border-radius: 50%;
+  font-weight: 600;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeButton:hover {
+  opacity: 1;
 }
 
 .popup {
@@ -9,12 +22,9 @@
   z-index: 10;
   background-color: beige;
   padding: var(--default-padding);
-  display: flex;
-  flex-direction: column;
   max-width: var(--page-max-width);
   margin: 0 auto;
   width: unset;
-  align-items: flex-end;
 }
 
 @media only screen and (max-width: 1000px) {
@@ -23,12 +33,12 @@
   }
 }
 
-.unrelative {
-  top: 20px;
+.children {
+  width: 100%;
 }
 
-.fullWidth {
-  align-items: stretch;
+.unrelative {
+  top: 20px;
 }
 
 .relative {
@@ -47,10 +57,6 @@
 .below {
   top: 100%;
   left: 50%;
-}
-
-.popupReverse {
-  flex-direction: column-reverse;
 }
 
 .overlay {

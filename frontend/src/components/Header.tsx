@@ -80,11 +80,7 @@ const MobileLinkMenu = () => {
       <Button size="small" onClick={() => setOpen(true)}>
         <Text value="MENU" texts={texts} />
       </Button>
-      <Popup
-        open={open}
-        onClose={() => setOpen(false)}
-        closeButtonOnBottom
-      >
+      <Popup open={open} onClose={() => setOpen(false)}>
         <div className={styles.mobileLinks}>
           <LogoTitle />
           <LinkMenu onLinkClick={() => setOpen(false)} />

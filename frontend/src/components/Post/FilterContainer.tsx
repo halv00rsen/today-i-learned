@@ -44,7 +44,7 @@ export const FitlerContainer = ({ onFinished }: Props) => {
 
   return (
     <div>
-      <Text value="TITLE" texts={texts} />
+      <Text value="TITLE" texts={texts} tag="h3" />
       <div>
         {allTags.map((tag) => {
           const chosen = chosenTags.some(

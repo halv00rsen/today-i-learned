@@ -23,11 +23,7 @@ export const SettingsRow = () => {
       >
         <Text value="SHARED.FILTER" texts={texts} tag="text" />
       </Button>
-      <Popup
-        onClose={closeFilter}
-        open={showFilter}
-        wideCloseButton={false}
-      >
+      <Popup onClose={closeFilter} open={showFilter}>
         <FitlerContainer onFinished={closeFilter} />
       </Popup>
     </div>

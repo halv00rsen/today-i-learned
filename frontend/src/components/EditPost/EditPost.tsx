@@ -217,7 +217,6 @@ export const EditPost = ({
               <Popup
                 open={editTags}
                 onClose={() => setEditTags(false)}
-                closeButtonOnBottom={true}
                 relative={{ direction: 'above' }}
               >
                 <Text

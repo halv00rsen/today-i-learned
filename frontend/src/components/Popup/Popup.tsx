@@ -3,15 +3,13 @@ import FocusTrap from 'focus-trap-react';
 import { useCallback, useEffect } from 'react';
 import { useTextsPrefix } from '../../context/TextContext';
 import { Button } from '../Button/Button';
-import { Text } from '../Texts/Text';
+import { getText } from '../Texts/Text';
 import styles from './Popup.module.css';
 
 interface Props {
   children: React.ReactNode;
   open: boolean;
   onClose: () => void;
-  closeButtonOnBottom?: boolean;
-  wideCloseButton?: boolean;
   relative?: {
     direction: 'above' | 'below';
   };
@@ -21,8 +19,6 @@ export const Popup = ({
   children,
   open,
   onClose,
-  closeButtonOnBottom = false,
-  wideCloseButton = true,
   relative,
 }: Props) => {
   const texts = useTextsPrefix('SHARED');
@@ -52,21 +48,20 @@ export const Popup = ({
           <dialog
             open={true}
             className={classNames(styles.popup, {
-              [styles.popupReverse]: closeButtonOnBottom,
               [styles.relative]: !!relative,
               [styles.unrelative]: !relative,
               [styles[relative?.direction || 'below']]: !!relative,
-              [styles.fullWidth]: wideCloseButton,
             })}
           >
             <Button
               data-test-id="popup-close-button"
+              aria-label={getText({ texts, value: 'CLOSE' })}
               className={styles.closeButton}
               onClick={closeModal}
             >
-              <Text texts={texts} value="CLOSE" />
+              X
             </Button>
-            <span>{children}</span>
+            <span className={styles.children}>{children}</span>
           </dialog>
           <div
             aria-hidden="true"

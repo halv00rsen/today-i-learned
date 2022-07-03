@@ -55,7 +55,7 @@ const no: Omit<Texts, typeof LANGUAGE_KEY> = {
   'post.not_published': 'Ikke publisert',
   'posts.last': 'Ingen flere poster',
   'posts.error': 'En feil skjedde under lasting',
-  'filters.title': 'Velg hvilke emneknagger du vil filtrere på',
+  'filters.title': 'Velg Nøkkelord',
   'admin.title': 'Administrasjon',
   'cookie.title': 'Tillat bruken av cookies',
   'cookie.info':
@@ -129,7 +129,7 @@ const en: Omit<Texts, typeof LANGUAGE_KEY> = {
   'post.not_published': 'Not published',
   'posts.last': 'Last post reached',
   'posts.error': 'An error happend during loading',
-  'filters.title': 'Choose which hashtags to filter on',
+  'filters.title': 'Pick Keywords',
   'admin.title': 'Administration',
   'cookie.title': 'Allow usage of cookies',
   'cookie.info':
