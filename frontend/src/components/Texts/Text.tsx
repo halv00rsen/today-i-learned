@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { createElement } from 'react';
 import {
   getLanguage,
@@ -23,9 +24,15 @@ interface Props {
   texts: Texts;
   value: string;
   tag?: Tag;
+  className?: string;
 }
 
-export const Text = ({ value, texts, tag = 'div' }: Props) => {
+export const Text = ({
+  value,
+  texts,
+  tag = 'div',
+  className,
+}: Props) => {
   const text = getText({ texts, value });
 
   if (tag === 'text') {
@@ -34,7 +41,7 @@ export const Text = ({ value, texts, tag = 'div' }: Props) => {
   return createElement(
     tag,
     {
-      className: styles.div,
+      className: classNames(styles.div, className),
     },
     text
   );
