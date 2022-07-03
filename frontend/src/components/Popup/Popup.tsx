@@ -41,6 +41,15 @@ export const Popup = ({
     };
   }, [open, closeModal]);
 
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflowY = 'hidden';
+    }
+    return () => {
+      document.body.style.overflowY = 'auto';
+    };
+  }, [open]);
+
   if (open) {
     return (
       <FocusTrap>
