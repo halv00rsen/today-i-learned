@@ -1,3 +1,14 @@
+.previewWrapper {
+  padding: var(--default-padding);
+  display: flex;
+  justify-content: center;
+  overflow-y: auto;
+}
+
+.chosenPreview {
+  background-color: red;
+}
+
 .splitView {
   display: flex;
   justify-content: space-between;
@@ -13,6 +24,11 @@
 
 .noMargin {
   margin: 0;
+}
+
+.preview {
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .headerInput {

@@ -4,6 +4,7 @@ import {
   faRemove,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import { Timestamp } from 'firebase/firestore/lite';
 import React, {
   createContext,
@@ -131,6 +132,8 @@ export const EditPost = ({
   const { tags } = partialPost;
   const [tag, setTag] = useState('');
 
+  const [openPreview, setOpenPreview] = useState(false);
+
   const removeTag = (tag: string) => {
     setPartialPost({
       ...partialPost,
@@ -191,8 +194,13 @@ export const EditPost = ({
       <OnDesktop>
         <div className={styles.splitView}>
           <EditorView disabled={disabled} texts={texts} />
+
           <Preview />
         </div>
+        <PreviewMode
+          close={() => setOpenPreview(false)}
+          open={openPreview}
+        />
       </OnDesktop>
       <MobileView disabled={disabled} texts={texts} />
       <div className={styles.toolsWrapper}>
@@ -315,6 +323,11 @@ export const EditPost = ({
             >
               <Text value="delete" texts={texts} tag="text" />
             </Button>
+            <OnDesktop>
+              <Button onClick={() => setOpenPreview(true)}>
+                Preview
+              </Button>
+            </OnDesktop>
           </div>
         </div>
       </div>
@@ -367,11 +380,94 @@ const EditorView = ({
   );
 };
 
+type PreviewSize =
+  | 'small-mobile'
+  | 'mobile'
+  | 'tablet'
+  | 'desktop';
+
+const getSize = (size: PreviewSize): number => {
+  switch (size) {
+    case 'desktop':
+      return 800;
+    case 'tablet':
+      return 600;
+    case 'mobile':
+      return 400;
+    case 'small-mobile':
+    default:
+      return 300;
+  }
+};
+
+const PreviewMode = ({
+  open,
+  close,
+}: {
+  open: boolean;
+  close: () => void;
+}) => {
+  const [previewSize, setPreviewSize] =
+    useState<PreviewSize>('desktop');
+
+  const openPreviewFunc = (size: PreviewSize) => {
+    setPreviewSize(size);
+  };
+
+  return (
+    <Popup onClose={close} open={open}>
+      <div className={styles.splitView}>
+        <Button
+          className={classNames({
+            [styles.chosenPreview]: previewSize === 'small-mobile',
+          })}
+          onClick={() => openPreviewFunc('small-mobile')}
+        >
+          Small Mobile
+        </Button>
+        <Button
+          className={classNames({
+            [styles.chosenPreview]: previewSize === 'mobile',
+          })}
+          onClick={() => openPreviewFunc('mobile')}
+        >
+          Mobile
+        </Button>
+        <Button
+          className={classNames({
+            [styles.chosenPreview]: previewSize === 'tablet',
+          })}
+          onClick={() => openPreviewFunc('tablet')}
+        >
+          Tablet
+        </Button>
+        <Button
+          className={classNames({
+            [styles.chosenPreview]: previewSize === 'desktop',
+          })}
+          onClick={() => openPreviewFunc('desktop')}
+        >
+          Desktop
+        </Button>
+      </div>
+      <div className={styles.previewWrapper}>
+        <div
+          style={{
+            width: `${getSize(previewSize)}px`,
+          }}
+        >
+          <Preview />
+        </div>
+      </div>
+    </Popup>
+  );
+};
+
 const Preview = () => {
   const { partialPost } = useContext(PostsCreatingContext);
 
   return (
-    <div>
+    <div className={styles.preview}>
       <Post
         className={styles.noMargin}
         post={{
