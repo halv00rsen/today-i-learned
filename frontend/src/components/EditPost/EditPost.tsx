@@ -16,6 +16,7 @@ import React, {
 import { Texts } from '../../utils/texts';
 import { PartialPost, StoredPost } from '../../utils/types/domain';
 import { Button, IconButton } from '../Button/Button';
+import { Checkbox } from '../Checkbox/Checkbox';
 import { Editor } from '../Editor/Editor';
 import { Input } from '../Input/Input';
 import { Popup } from '../Popup/Popup';
@@ -223,17 +224,13 @@ export const EditPost = ({
             </div>
           )}
           <div className={styles.buttonRow}>
-            <div>
-              <label>
-                <Text value="publish" texts={texts} tag="label" />
-                <input
-                  data-test-id="publish-checkbox"
-                  type="checkbox"
-                  checked={published}
-                  onChange={(e) => setPublished(e.target.checked)}
-                />
-              </label>
-            </div>
+            <Checkbox
+              data-test-id="publish-checkbox"
+              label={getText({ texts, value: 'publish' })}
+              checked={published}
+              onChange={(e) => setPublished(e.target.checked)}
+            />
+
             <div className={styles.popupAchor}>
               <Popup
                 open={editTags}
