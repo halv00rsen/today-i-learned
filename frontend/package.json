@@ -18,8 +18,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "build-test": "tsc && vite build --mode test",
+    "build": "vite build",
+    "build-test": "vite build --mode test",
     "tsc": "tsc",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
