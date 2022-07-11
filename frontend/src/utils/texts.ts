@@ -35,7 +35,7 @@ const no: Omit<Texts, typeof LANGUAGE_KEY> = {
   'login.action': 'Logg inn',
   'login.error':
     'En feil skjedde ved innloggin. Vennligst prøv igjen.',
-  'newpost.title': 'Legg til nytt innlegg',
+  'newpost.title': 'Tittel',
   'newpost.hashtag.title': 'Emneknagger',
   'newpost.hashtag.add': 'Legg til',
   'newpost.preview.title': 'Forhåndsvisning av innlegg',
@@ -109,7 +109,7 @@ const en: Omit<Texts, typeof LANGUAGE_KEY> = {
   'login.action': 'Log in',
   'login.error':
     'An error occured during login. Please try again.',
-  'newpost.title': 'Add new post',
+  'newpost.title': 'Header',
   'newpost.hashtag.title': 'Tags',
   'newpost.hashtag.add': 'Add',
   'newpost.preview.title': 'Preview of post',

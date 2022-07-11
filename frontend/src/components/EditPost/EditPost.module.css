@@ -9,13 +9,16 @@
   background-color: red;
 }
 
-.splitView {
+.previewButtons {
   display: flex;
-  justify-content: space-between;
 }
 
-.splitView > * {
-  width: 48%;
+.previewButtons > * {
+  margin-right: 10px;
+}
+
+.editorWrapper {
+  background-color: white;
 }
 
 .deleteButton {

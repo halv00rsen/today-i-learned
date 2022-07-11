@@ -1,3 +1,4 @@
+import '@toast-ui/editor/dist/toastui-editor.css';
 import {
   faCheckCircle,
   faPencil,
@@ -17,14 +18,13 @@ import { Texts } from '../../utils/texts';
 import { PartialPost, StoredPost } from '../../utils/types/domain';
 import { Button, IconButton } from '../Button/Button';
 import { Checkbox } from '../Checkbox/Checkbox';
-import { Editor } from '../Editor/Editor';
 import { Input } from '../Input/Input';
 import { Popup } from '../Popup/Popup';
 import { Post } from '../Post/Post';
-import { OnDesktop, OnMobile } from '../ScreenSize/ScreenSize';
-import { Tabs } from '../Tabs/Tabs';
 import { getText, Text } from '../Texts/Text';
+import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import styles from './EditPost.module.css';
+import { useMediaQuery } from '../../utils/useMediaQuery';
 
 interface PostContext {
   partialPost: PartialPost;
@@ -128,6 +128,8 @@ export const EditPost = ({
     'saved' | 'changing'
   >('saved');
 
+  const isDesktop = useMediaQuery('(min-width: 601px)');
+
   const [editTags, setEditTags] = useState(false);
 
   const { tags } = partialPost;
@@ -192,18 +194,15 @@ export const EditPost = ({
         partialPost,
       }}
     >
-      <OnDesktop>
-        <div className={styles.splitView}>
-          <EditorView disabled={disabled} texts={texts} />
-
-          <Preview />
-        </div>
-        <PreviewMode
-          close={() => setOpenPreview(false)}
-          open={openPreview}
-        />
-      </OnDesktop>
-      <MobileView disabled={disabled} texts={texts} />
+      <EditorView
+        disabled={disabled}
+        texts={texts}
+        verticalPreview={isDesktop}
+      />
+      <PreviewMode
+        close={() => setOpenPreview(false)}
+        open={openPreview}
+      />
       <div className={styles.toolsWrapper}>
         <div className={styles.tools}>
           {persistedStatus === 'saved' ? (
@@ -320,11 +319,9 @@ export const EditPost = ({
             >
               <Text value="delete" texts={texts} tag="text" />
             </Button>
-            <OnDesktop>
-              <Button onClick={() => setOpenPreview(true)}>
-                Preview
-              </Button>
-            </OnDesktop>
+            <Button onClick={() => setOpenPreview(true)}>
+              Preview
+            </Button>
           </div>
         </div>
       </div>
@@ -335,8 +332,10 @@ export const EditPost = ({
 const EditorView = ({
   texts,
   disabled,
+  verticalPreview,
 }: {
   texts: Texts;
+  verticalPreview: boolean;
   disabled: boolean;
 }) => {
   const { partialPost, setPartialPost } = useContext(
@@ -345,32 +344,48 @@ const EditorView = ({
 
   const { content, title } = partialPost;
 
+  const [editor, setEditor] = useState<ToastEditor | null>(null);
+
+  const setRef = useCallback((editor: ToastEditor | null) => {
+    setEditor(editor);
+  }, []);
+
+  const savePost = () => {
+    if (editor) {
+      setPartialPost({
+        ...partialPost,
+        content: editor.getInstance().getMarkdown(),
+      });
+    }
+  };
+
   return (
     <>
-      <div>
-        <Input
-          data-test-id="edit-post-title"
-          type="text"
-          disabled={disabled}
-          value={title}
-          placeholder={getText({ texts, value: 'TITLE' })}
-          className={styles.headerInput}
-          onChange={(e) =>
-            setPartialPost({
-              ...partialPost,
-              title: e.target.value,
-            })
-          }
-        />
-        <Editor
-          disabled={disabled}
-          onChange={(content) =>
-            setPartialPost({
-              ...partialPost,
-              content,
-            })
-          }
+      <Input
+        data-test-id="edit-post-title"
+        type="text"
+        disabled={disabled}
+        value={title}
+        placeholder={getText({ texts, value: 'TITLE' })}
+        className={styles.headerInput}
+        onChange={(e) =>
+          setPartialPost({
+            ...partialPost,
+            title: e.target.value,
+          })
+        }
+      />
+      <div className={styles.editorWrapper}>
+        <ToastEditor
+          initialEditType="markdown"
           initialValue={content}
+          previewStyle={verticalPreview ? 'vertical' : 'tab'}
+          previewHighlight={true}
+          usageStatistics={false}
+          hideModeSwitch={true}
+          height={verticalPreview ? '75vh' : '70vh'}
+          onChange={savePost}
+          ref={setRef}
         />
       </div>
     </>
@@ -413,14 +428,14 @@ const PreviewMode = ({
 
   return (
     <Popup onClose={close} open={open}>
-      <div className={styles.splitView}>
+      <div className={styles.previewButtons}>
         <Button
           className={classNames({
             [styles.chosenPreview]: previewSize === 'small-mobile',
           })}
           onClick={() => openPreviewFunc('small-mobile')}
         >
-          Small Mobile
+          Small Mobile ({getSize('small-mobile')}px)
         </Button>
         <Button
           className={classNames({
@@ -428,7 +443,7 @@ const PreviewMode = ({
           })}
           onClick={() => openPreviewFunc('mobile')}
         >
-          Mobile
+          Mobile ({getSize('mobile')}px)
         </Button>
         <Button
           className={classNames({
@@ -436,7 +451,7 @@ const PreviewMode = ({
           })}
           onClick={() => openPreviewFunc('tablet')}
         >
-          Tablet
+          Tablet ({getSize('tablet')}px)
         </Button>
         <Button
           className={classNames({
@@ -444,28 +459,23 @@ const PreviewMode = ({
           })}
           onClick={() => openPreviewFunc('desktop')}
         >
-          Desktop
+          Desktop ({getSize('desktop')}px)
         </Button>
       </div>
       <div className={styles.previewWrapper}>
-        <div
-          style={{
-            width: `${getSize(previewSize)}px`,
-          }}
-        >
-          <Preview />
-        </div>
+        <Preview minWidth={`${getSize(previewSize)}px`} />
       </div>
     </Popup>
   );
 };
 
-const Preview = () => {
+const Preview = ({ minWidth }: { minWidth: string }) => {
   const { partialPost } = useContext(PostsCreatingContext);
 
   return (
     <div className={styles.preview}>
       <Post
+        style={{ minWidth, width: minWidth }}
         className={styles.noMargin}
         post={{
           ...partialPost,
@@ -476,34 +486,5 @@ const Preview = () => {
         }}
       />
     </div>
-  );
-};
-
-const MobileView = ({
-  texts,
-  disabled,
-}: {
-  texts: Texts;
-  disabled: boolean;
-}) => {
-  return (
-    <OnMobile>
-      <Tabs
-        tabs={[
-          {
-            id: 'editor',
-            tabTitle: 'Editor',
-            content: (
-              <EditorView disabled={disabled} texts={texts} />
-            ),
-          },
-          {
-            id: 'preview',
-            tabTitle: 'Preview',
-            content: <Preview />,
-          },
-        ]}
-      />
-    </OnMobile>
   );
 };

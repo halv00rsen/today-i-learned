@@ -46,7 +46,7 @@ describe('posts view', () => {
 
       const { content, title, tags } = newPost;
       cy.get('[data-test-id="edit-post-title"]').type(title);
-      cy.get('[data-test-id="editor"]').type(content);
+      cy.get('[contenteditable=true]').first().type(content);
 
       cy.get('[data-test-id="open-edit-tags-button"]').click();
       tags.forEach((tag) => {
