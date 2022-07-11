@@ -8,7 +8,11 @@ export default defineConfig({
   plugins: [
     react(),
     visualizer(),
-    checker({ typescript: true, enableBuild: false }),
+    checker({
+      typescript: true,
+      enableBuild: false,
+      overlay: { initialIsOpen: false },
+    }),
   ],
   server: {
     proxy: {
