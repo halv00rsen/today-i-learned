@@ -11,7 +11,7 @@ export default defineConfig({
     checker({
       typescript: true,
       enableBuild: false,
-      overlay: { initialIsOpen: false },
+      overlay: { initialIsOpen: false, position: 'tr' },
     }),
   ],
   server: {
