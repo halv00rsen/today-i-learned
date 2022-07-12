@@ -221,7 +221,6 @@ export const Post = ({
         </div>
       </Header>
       <Content>
-        {post.subtitle && <div>{post.subtitle}</div>}
         <Markdown content={post.content} />
       </Content>
       <Footer>

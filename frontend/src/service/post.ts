@@ -29,15 +29,8 @@ const mapToPost = (
   partialPost: Partial<StoredPost>,
   id: string
 ): StoredPost => {
-  const {
-    content,
-    ownerId,
-    subtitle,
-    title,
-    tags,
-    published,
-    publishDate,
-  } = partialPost;
+  const { content, ownerId, title, tags, published, publishDate } =
+    partialPost;
   if (
     content &&
     ownerId &&
@@ -52,7 +45,6 @@ const mapToPost = (
       content,
       ownerId,
       title,
-      subtitle,
       tags,
       published,
       publishDate,

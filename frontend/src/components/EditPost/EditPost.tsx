@@ -50,7 +50,6 @@ const toPartialPost = (
   published: post.published,
   tags: post.tags,
   title: post.title,
-  subtitle: post.subtitle,
 });
 
 const getSanitizedPost = (): { post: PartialPost; id: string } => {

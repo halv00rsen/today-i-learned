@@ -5,7 +5,6 @@ export interface PartialPost {
   content: string;
   tags: string[];
   published: boolean;
-  subtitle?: string;
 }
 
 export interface StoredPost {
@@ -16,6 +15,4 @@ export interface StoredPost {
   tags: string[];
   published: boolean;
   publishDate: Timestamp;
-
-  subtitle?: string;
 }
