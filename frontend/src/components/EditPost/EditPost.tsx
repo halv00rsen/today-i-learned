@@ -435,7 +435,7 @@ const PreviewMode = ({
           })}
           onClick={() => openPreviewFunc('small-mobile')}
         >
-          Small Mobile ({getSize('small-mobile')}px)
+          {getSize('small-mobile')}px
         </Button>
         <Button
           className={classNames({
@@ -443,7 +443,7 @@ const PreviewMode = ({
           })}
           onClick={() => openPreviewFunc('mobile')}
         >
-          Mobile ({getSize('mobile')}px)
+          {getSize('mobile')}px
         </Button>
         <Button
           className={classNames({
@@ -451,7 +451,7 @@ const PreviewMode = ({
           })}
           onClick={() => openPreviewFunc('tablet')}
         >
-          Tablet ({getSize('tablet')}px)
+          {getSize('tablet')}px
         </Button>
         <Button
           className={classNames({
@@ -459,7 +459,7 @@ const PreviewMode = ({
           })}
           onClick={() => openPreviewFunc('desktop')}
         >
-          Desktop ({getSize('desktop')}px)
+          {getSize('desktop')}px
         </Button>
       </div>
       <div className={styles.previewWrapper}>
