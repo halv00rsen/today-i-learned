@@ -17,7 +17,6 @@ import React, {
 import { Texts } from '../../utils/texts';
 import { PartialPost, StoredPost } from '../../utils/types/domain';
 import { Button, IconButton } from '../Button/Button';
-import { Checkbox } from '../Checkbox/Checkbox';
 import { Input } from '../Input/Input';
 import { Popup } from '../Popup/Popup';
 import { Post } from '../Post/Post';
@@ -100,8 +99,9 @@ const clearStorage = () => {
 };
 
 interface Props {
-  onClick: (post: PartialPost) => void;
+  onSave: (post: PartialPost) => void;
   onRemove: () => void;
+  onCancel: () => void;
   texts: Texts;
 
   initialPost?: StoredPost;
@@ -109,17 +109,15 @@ interface Props {
 }
 
 export const EditPost = ({
-  onClick,
+  onSave,
   onRemove,
+  onCancel,
   texts,
   disabled = false,
   initialPost,
 }: Props) => {
   const [partialPost, setPartialPost] = useState<PartialPost>(() =>
     getInitialStoragePost(initialPost)
-  );
-  const [published, setPublished] = useState(
-    initialPost?.published || false
   );
   const { id: postId = NEW_POST_ID } = initialPost || {};
 
@@ -201,6 +199,17 @@ export const EditPost = ({
       <PreviewMode
         close={() => setOpenPreview(false)}
         open={openPreview}
+        disabled={disabled}
+        texts={texts}
+        hidePublishLater={postId !== NEW_POST_ID}
+        onCancel={onCancel}
+        onRemove={onRemove}
+        onSave={({ publish }) => {
+          onSave({
+            ...partialPost,
+            published: publish,
+          });
+        }}
       />
       <div className={styles.toolsWrapper}>
         <div className={styles.tools}>
@@ -222,13 +231,6 @@ export const EditPost = ({
             </div>
           )}
           <div className={styles.buttonRow}>
-            <Checkbox
-              data-test-id="publish-checkbox"
-              label={getText({ texts, value: 'publish' })}
-              checked={published}
-              onChange={(e) => setPublished(e.target.checked)}
-            />
-
             <div className={styles.popupAchor}>
               <Popup
                 open={editTags}
@@ -296,30 +298,10 @@ export const EditPost = ({
               </Button>
             </div>
             <Button
-              data-test-id="save-post-button"
-              onClick={() =>
-                onClick({
-                  ...partialPost,
-                  published,
-                })
-              }
-              disabled={disabled}
+              data-test-id="preview-button"
+              onClick={() => setOpenPreview(true)}
             >
-              <Text value="save" texts={texts} tag="text" />
-            </Button>
-            <Button
-              data-test-id="delete-post-button"
-              onClick={() => {
-                clearStorage();
-                onRemove();
-              }}
-              className={styles.deleteButton}
-              disabled={disabled}
-            >
-              <Text value="delete" texts={texts} tag="text" />
-            </Button>
-            <Button onClick={() => setOpenPreview(true)}>
-              Preview
+              <Text value="button.preview" texts={texts} />
             </Button>
           </div>
         </div>
@@ -413,10 +395,22 @@ const getSize = (size: PreviewSize): number => {
 
 const PreviewMode = ({
   open,
+  disabled,
+  texts,
+  hidePublishLater,
   close,
+  onCancel,
+  onRemove,
+  onSave,
 }: {
   open: boolean;
+  disabled: boolean;
+  texts: Texts;
+  hidePublishLater: boolean;
   close: () => void;
+  onCancel: () => void;
+  onRemove: () => void;
+  onSave: (props: { publish: boolean }) => void;
 }) => {
   const [previewSize, setPreviewSize] =
     useState<PreviewSize>('desktop');
@@ -463,6 +457,48 @@ const PreviewMode = ({
       </div>
       <div className={styles.previewWrapper}>
         <Preview minWidth={`${getSize(previewSize)}px`} />
+      </div>
+      <div>
+        <Button
+          data-test-id="save-post-button"
+          onClick={() => onSave({ publish: true })}
+          disabled={disabled}
+          inline={true}
+        >
+          <Text value="publish" texts={texts} tag="text" />
+        </Button>
+        {!hidePublishLater && (
+          <Button
+            data-test-id="save-post-button"
+            onClick={() => onSave({ publish: false })}
+            disabled={disabled}
+            inline={true}
+          >
+            <Text value="save.later" texts={texts} tag="text" />
+          </Button>
+        )}
+        <Button
+          onClick={() => {
+            clearStorage();
+            onCancel();
+          }}
+          disabled={disabled}
+          inline={true}
+        >
+          <Text value="cancel" texts={texts} />
+        </Button>
+        <Button
+          data-test-id="delete-post-button"
+          onClick={() => {
+            clearStorage();
+            onRemove();
+          }}
+          className={styles.deleteButton}
+          disabled={disabled}
+          inline={true}
+        >
+          <Text value="delete" texts={texts} tag="text" />
+        </Button>
       </div>
     </Popup>
   );

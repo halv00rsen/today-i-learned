@@ -1,10 +1,12 @@
 import { Timestamp } from 'firebase/firestore/lite';
+import { Language } from '../texts';
 
 export interface PartialPost {
   title: string;
   content: string;
   tags: string[];
   published: boolean;
+  language?: Language;
 }
 
 export interface StoredPost {
@@ -15,4 +17,5 @@ export interface StoredPost {
   tags: string[];
   published: boolean;
   publishDate: Timestamp;
+  language?: Language;
 }

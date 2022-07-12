@@ -69,6 +69,7 @@ export const EditView = () => {
           texts={texts}
           initialPost={editStatus.post}
           disabled={editStatus.type === 'updating'}
+          onCancel={() => history.push('/')}
           onRemove={() => {
             deletePost(postId)
               .then(() => {
@@ -83,7 +84,7 @@ export const EditView = () => {
                 );
               });
           }}
-          onClick={(post) => {
+          onSave={(post) => {
             setEditStatus({
               type: 'updating',
               post: {

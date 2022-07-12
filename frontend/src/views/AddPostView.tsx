@@ -43,7 +43,8 @@ export const AddPostView = ({ user }: Props) => {
       )}
       <EditPost
         onRemove={() => history.push('/')}
-        onClick={addPost}
+        onCancel={() => history.push('/')}
+        onSave={addPost}
         disabled={status === 'CREATING'}
         texts={texts}
       />

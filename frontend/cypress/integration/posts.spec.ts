@@ -55,7 +55,7 @@ describe('posts view', () => {
       });
       cy.get('[data-test-id="popup-close-button"]').click();
 
-      cy.get('[data-test-id="publish-checkbox"]').check();
+      cy.get('[data-test-id="preview-button"]').click();
 
       cy.get('[data-test-id="save-post-button"]').click();
 
@@ -64,6 +64,8 @@ describe('posts view', () => {
       cy.get('[data-test-id="post-header"]').contains(title);
 
       cy.get('[data-test-id="edit-post-button"]').first().click();
+
+      cy.get('[data-test-id="preview-button"]').click();
 
       cy.get('[data-test-id="delete-post-button"]').click();
 
