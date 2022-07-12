@@ -13,7 +13,7 @@ const SETTINGS_KEY = 'settings';
 
 const defaultSettings: Settings = {
   language: 'NO',
-  theme: 'dark',
+  theme: 'light',
   cookieConsent: 'not_answered',
 };
 
