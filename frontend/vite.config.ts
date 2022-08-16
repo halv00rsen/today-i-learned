@@ -17,7 +17,7 @@ export default defineConfig({
   server: {
     proxy: {
       // Local proxy to function "user"
-      '/user': 'http://localhost:5000',
+      '/user': 'http://localhost:5123',
     },
   },
 });

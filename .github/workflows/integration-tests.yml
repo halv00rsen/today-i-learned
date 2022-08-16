@@ -51,7 +51,7 @@ jobs:
         with:
           command: npm run e2e:run
           working-directory: frontend
-          wait-on: "http://localhost:5000"
+          wait-on: "http://localhost:5123"
       - uses: actions/upload-artifact@v2
         if: failure()
         with:
