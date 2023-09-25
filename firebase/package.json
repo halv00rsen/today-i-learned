@@ -7,6 +7,6 @@
     "start-e2e-server": "firebase emulators:start --import integration-test-data"
   },
   "dependencies": {
-    "firebase-tools": "^11.2.1"
+    "firebase-tools": "^12.5.4"
   }
 }
